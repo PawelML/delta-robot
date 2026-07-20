@@ -1,7 +1,7 @@
 # P0 kinematics — specification
 
 **Status:** accepted for implementation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -230,6 +230,38 @@ Before implementing formulas, the first test slice must document whether any
 adapter is required between the paper's triangle notation and this radius-based
 contract. The adapter itself must be independently tested.
 
+### 10.1 Williams adapter and reference-fixture slice
+
+The paper describes both triangles by side length, while the authoritative P0
+geometry describes the modeled joint locations by center-to-joint radius. A
+small boundary adapter is therefore required. It shall:
+
+- accept `s_B`, `s_P`, `L`, `l` in metres and explicit joint limits in radians,
+- return the radius-based geometry contract from section 7,
+- calculate `r_b = s_B / (2 * sqrt(3))` and `r_p = s_P / sqrt(3)`,
+- copy `L` and `l` without scaling,
+- reject non-finite or non-positive lengths and invalid joint-limit ordering,
+- contain no IK or FK formula.
+
+The four published examples shall be stored as typed, immutable SI fixtures.
+Their displayed precision defines the later solver-test tolerances:
+
+- angles displayed to `0.1 deg`: absolute tolerance
+  `0.05 deg + 1e-12 rad`,
+- positions displayed to `0.001 m`: absolute tolerance
+  `0.0005 m + 1e-12 m`.
+
+The `1e-12` additions cover only floating-point boundary representation; they
+do not loosen the source rounding interval. The Williams paper does not publish
+joint limits, so its shared validation fixture uses explicit non-restrictive
+test limits `[-pi, +pi]`. These limits are not a DIY robot design decision.
+
+In this slice, tests verify the adapter independently against precomputed radii
+and verify exact transcription, units and tolerances of all four fixtures. The
+fixtures become executable IK/FK oracle tests as soon as the corresponding
+solver is added. Until then, passing fixture tests is not evidence that any
+kinematic formula is correct.
+
 ## 11. Additional test properties
 
 The future implementation must cover:
@@ -270,6 +302,10 @@ This specification slice is complete when:
 
 - coordinate, arm and angle conventions are unambiguous,
 - the external Williams examples are recorded as an independent oracle,
+- the Williams side-length adapter is tested against independently precomputed
+  radius values,
+- all four published examples are available as typed SI fixtures with
+  source-precision tolerances,
 - the Python project exposes typed SI position, angle and assembly-mode values,
 - Ruff, Mypy, Pytest and at least one Hypothesis test run successfully,
 - no FK or IK implementation is claimed yet.
