@@ -1,0 +1,146 @@
+{
+  "candidates": [
+    {
+      "candidate": {
+        "belt_pitch_length_m": 0.535,
+        "belt_width_m": 0.015,
+        "candidate_id": "16_80_535",
+        "large_pulley_catalogue": null,
+        "large_teeth": 80,
+        "published_rating_available": false,
+        "published_stock_pair": false,
+        "small_pulley_catalogue": null,
+        "small_teeth": 16
+      },
+      "geometry": {
+        "centre_distance_m": 0.13810954746094847,
+        "large_pitch_diameter_m": 0.12732395447351627,
+        "reconstructed_pitch_length_m": 0.535,
+        "small_pitch_diameter_m": 0.025464790894703257,
+        "small_teeth_in_mesh": 6.076506689854151,
+        "small_wrap_angle_deg": 136.7214005217184,
+        "small_wrap_angle_rad": 2.386238597041879
+      },
+      "reasons": [
+        "no_applicable_published_power_rating",
+        "published_stock_pulley_pair_not_confirmed"
+      ],
+      "status": "rejected"
+    },
+    {
+      "candidate": {
+        "belt_pitch_length_m": 0.6,
+        "belt_width_m": 0.015,
+        "candidate_id": "18_90_600",
+        "large_pulley_catalogue": "Gates P90-5MGT-15 with 1610-20 mm bushing",
+        "large_teeth": 90,
+        "published_rating_available": true,
+        "published_stock_pair": true,
+        "small_pulley_catalogue": "Gates P18-5MGT-15AL",
+        "small_teeth": 18
+      },
+      "geometry": {
+        "centre_distance_m": 0.15436686875740535,
+        "large_pitch_diameter_m": 0.1432394487827058,
+        "reconstructed_pitch_length_m": 0.6,
+        "small_pitch_diameter_m": 0.02864788975654116,
+        "small_teeth_in_mesh": 6.821243598696146,
+        "small_wrap_angle_deg": 136.4248719739229,
+        "small_wrap_angle_rad": 2.3810631975566903
+      },
+      "reasons": [],
+      "status": "recommended"
+    },
+    {
+      "candidate": {
+        "belt_pitch_length_m": 0.625,
+        "belt_width_m": 0.015,
+        "candidate_id": "20_100_625",
+        "large_pulley_catalogue": null,
+        "large_teeth": 100,
+        "published_rating_available": false,
+        "published_stock_pair": false,
+        "small_pulley_catalogue": null,
+        "small_teeth": 20
+      },
+      "geometry": {
+        "centre_distance_m": 0.14888977252440494,
+        "large_pitch_diameter_m": 0.15915494309189535,
+        "reconstructed_pitch_length_m": 0.6250000000000001,
+        "small_pitch_diameter_m": 0.03183098861837907,
+        "small_teeth_in_mesh": 7.187339341632682,
+        "small_wrap_angle_deg": 129.37210814938828,
+        "small_wrap_angle_rad": 2.2579692474530133
+      },
+      "reasons": [
+        "no_applicable_published_power_rating",
+        "published_stock_pulley_pair_not_confirmed"
+      ],
+      "status": "rejected"
+    }
+  ],
+  "inertias": {
+    "belt_estimated_kg": 0.01715,
+    "large_pulley_kg_m2": 0.00572262695158,
+    "small_pulley_kg_m2": 4.0875906797e-06,
+    "source_note": "pulley WR2 from Gates catalogue; belt mass scales the official 1000 mm product mass linearly and remains an estimate"
+  },
+  "operating_point": {
+    "belt_power_service_factor": 1.5,
+    "belt_speed_m_s": 0.495712684510937,
+    "capacity_status": "passes",
+    "capacity_utilization": 0.26265311853560985,
+    "conservative_radial_load_n": 367.79723850778373,
+    "design_belt_power_w": 64.07790157539269,
+    "installation_tension_each_span_n": 100.08498634336125,
+    "interpolated_catalogue_capacity_w": 243.96398539888332,
+    "maximum_motor_speed_rpm": 330.4751230072913,
+    "maximum_trajectory_belt_power_w": 42.71860105026179,
+    "peak_design_motor_torque_nm": 2.401083715716091,
+    "pitch_line_tension_difference_n": 167.62726582106123
+  },
+  "recommendation": {
+    "adjustment_travel_m": 0.025,
+    "belt": "Gates 600-5MGT-15",
+    "large_pulley": "Gates P90-5MGT-15 with 1610-20 mm bushing",
+    "ratio": 5.0,
+    "small_pulley": "Gates P18-5MGT-15AL on supported 3/8 inch jackshaft",
+    "status": "provisional_for_p1_bench"
+  },
+  "schema": "delta-robot-p1-transmission-selection/v1",
+  "shaft_screens": {
+    "input_jackshaft": {
+      "bearing_reaction_each_n": 183.89861925389187,
+      "bearing_span_m": 0.05,
+      "bending_stress_mpa": 54.19055884532306,
+      "diameter_m": 0.009525,
+      "maximum_bending_moment_nm": 4.597465481347297,
+      "radial_load_upper_bound_n": 367.79723850778373,
+      "torsional_stress_mpa": 14.150847778734056,
+      "transmitted_torque_nm": 2.401083715716091,
+      "von_mises_stress_mpa": 59.475676932163864
+    },
+    "output_shaft": {
+      "bearing_reaction_each_n": 183.89861925389187,
+      "bearing_span_m": 0.07,
+      "bending_stress_mpa": 8.19514479896876,
+      "diameter_m": 0.02,
+      "maximum_bending_moment_nm": 6.436451673886216,
+      "radial_load_upper_bound_n": 367.79723850778373,
+      "torsional_stress_mpa": 6.878598158406078,
+      "transmitted_torque_nm": 10.80487672072241,
+      "von_mises_stress_mpa": 14.460488793624757
+    }
+  },
+  "sources": {
+    "gates_gt3_manual": "https://www.gates.com/content/dam/documents-library/catalogs/powergrip-gt3-drive-design-manual-en.pdf",
+    "gates_precision_manual": "https://www.gates.com/content/dam/gates/home/knowledge-center/resource-library/catalogs/light-power-and-precision-manual.pdf",
+    "leadshine_manual": "https://www.leadshine.com/upfiles/downloads/f85ab001e8edd4c7f05e5c32ea6671fd_1766721032370.pdf"
+  },
+  "unverified": [
+    "actual belt tension and alignment",
+    "supplier stock and finished bores",
+    "keyway and fatigue stress concentrations",
+    "bearing fits, runout, vibration and compliance"
+  ]
+}
