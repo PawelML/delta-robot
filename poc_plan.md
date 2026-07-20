@@ -1,8 +1,8 @@
 # Robot delta DIY — wstępny HLD i plan POC
 
-**Status:** draft 0.1 do przeglądu
+**Status:** active HLD v0.2 — cyfrowe P0 zakończone, fizyczne P1 oczekuje
 **Charakter projektu:** warsztatowy demonstrator R&D, nie maszyna produkcyjna
-**Źródło wymagań zakupowych:** po walidacji modelu; obecny `BOM_delta.md` jest listą hipotez, nie zamrożonym BOM-em
+**Źródło wymagań zakupowych:** `BOM_delta.md` jest kontrolowaną listą kandydatów P1, nie zamrożonym BOM-em trzech osi
 
 Zasady realizacji projektu są opisane w `docs/development-process.md`, a instrukcje obowiązujące narzędzia kodujące w `AGENTS.md`.
 
@@ -89,38 +89,36 @@ Model matematyczny w Pythonie ──> testy automatyczne
         Budowa P2 → P3 → P4
 ```
 
-Model Python jest źródłem prawdy dla obliczeń. Three.js służy do wizualizacji wyników i interaktywnego poznawania mechanizmu. Na początku komunikacja między nimi odbywa się przez pliki JSON; ROS2 i pełniejsza symulacja mogą zostać dodane po ustabilizowaniu geometrii.
+Model Python jest źródłem prawdy dla obliczeń. Three.js służy do wizualizacji
+wyników i interaktywnego poznawania mechanizmu. Komunikacja odbywa się przez
+wersjonowane pliki JSON. Ewentualne ROS2 lub pełniejsza symulacja wymagają
+osobnej decyzji po fizycznym P1/P2; nie są domyślną kontynuacją P0.
 
 ## 4. Architektura repozytorium
 
-Planowana struktura:
+Aktualna struktura odpowiedzialności:
 
 ```text
 delta-robot/
 ├── BOM_delta.md
 ├── poc_plan.md
 ├── delta_model/
-│   ├── geometry.py
-│   ├── inverse_kinematics.py
-│   ├── forward_kinematics.py
-│   ├── workspace.py
-│   ├── trajectory.py
-│   └── motor_sizing.py
-├── tests/
-├── visualizer/
-│   ├── src/
-│   │   ├── app.js
-│   │   ├── delta_geometry.js
-│   │   └── ui.html
-│   ├── build.sh
-│   └── index.html
-└── artifacts/
-    ├── workspace.json
-    ├── trajectories.json
-    └── motor_requirements.json
+│   ├── geometria, IK, FK i kinematyka różniczkowa
+│   ├── workspace, dobór geometrii i trajektoria
+│   ├── dynamika, dobór napędu i przekładni
+│   └── p1_bench/ — komendy, telemetria, Modbus i ocena gate'u
+├── scripts/ — odtwarzalne generatory raportów i artefaktów
+├── tests/ — niezależne przypadki, własności i regresje
+├── visualizer/ — konsument JSON w Three.js
+├── cad/ — parametryczny model stanowiska P1 w ForgeCAD
+├── artifacts/ — wersjonowane wyniki JSON/CSV oraz CAD
+└── docs/ — specyfikacje, decyzje i pakiet wykonawczy
 ```
 
-Wizualizator wykorzysta sprawdzone wzorce z `/home/pawelo/CODE/digital-twin/station_configurator`: scenę Three.js, kamerę orbitalną, panel parametrów, `localStorage`, animację cyklu, statystyki i ostrzeżenia. Nie zostaną przeniesione modele optyczne, geometria szafy ani uproszczony model czasu tamtego stanowiska.
+Wizualizator wykorzystuje wzorce sceny i interakcji zaczerpnięte ze
+`station_configurator`, ale nie przejmuje jego modeli optycznych ani modelu
+czasu. Python pozostaje jedynym źródłem kinematyki; Three.js konsumuje
+wersjonowane artefakty.
 
 ## 5. Kluczowe interfejsy
 
@@ -269,7 +267,9 @@ Model nie może pomijać bezwładności ruchomych ramion ani opierać doboru sil
 
 ## 9. Specyfikacja jednego napędu
 
-Specyfikacja zostanie zaktualizowana po P0 i pierwszym przebiegu modelu dynamicznego. Musi zawierać:
+Specyfikacja została obliczona i zapisana w
+`docs/specs/p1-single-drive.md`. Kandydatem do testu jednej osi jest Leadshine
+`iSV2-RS6040V48G` z przekładnią Gates 5MGT 18/90. Kontrakt zawiera:
 
 - wymagany zakres kąta osi,
 - maksymalną prędkość i przyspieszenie osi,
@@ -282,7 +282,9 @@ Specyfikacja zostanie zaktualizowana po P0 i pierwszym przebiegu modelu dynamicz
 - sposób wykrycia błędu pozycji,
 - kryteria temperaturowe testu stołowego.
 
-Zakup trzech kompletów napędów nastąpi dopiero po zaliczeniu P1. Wcześniej kupowany jest najwyżej jeden reprezentatywny komplet do testów.
+Wynik obliczeniowy nie zastępuje testu. Zakup trzech kompletów nastąpi dopiero
+po zaliczeniu P1; wcześniej kupowany jest najwyżej jeden reprezentatywny
+komplet.
 
 ## 10. Alternatywy sterowania
 
@@ -292,33 +294,50 @@ Zakup trzech kompletów napędów nastąpi dopiero po zaliczeniu P1. Wcześniej 
 | ROS2 + MCU | ROS2 na komputerze, deterministyczne generowanie ruchu i I/O na mikrokontrolerze | Największa wartość edukacyjna i rekrutacyjna, lecz większy zakres implementacji |
 | PLC/motion controller | Przemysłowy kontroler ruchu | Najbliżej wdrożenia przemysłowego, ale zbyt kosztowne i ciężkie dla pierwszego POC |
 
-Preferowana ścieżka do dalszego zatwierdzenia: ROS2 + MCU. Klipper pozostaje możliwym narzędziem do szybkiej walidacji mechaniki, nie jest jeszcze decyzją architektoniczną.
+Na P1 Mesa 7I96S + LinuxCNC jest kandydatem na aparaturę do generowania
+Pulse+Direction i przechwycenia zewnętrznego enkodera, a nie wyborem kontrolera
+docelowego robota. Decyzja między ROS2 + MCU, PLC/motion controllerem lub innym
+stosem pozostaje odroczona do czasu pomiarów P1 i wymagań P2. P0/P1 nie
+wprowadzają ROS2 ani Klippera.
 
 ## 11. Przejście przez projekt krok po kroku
 
-1. Użytkownik zmienia geometrię w wizualizatorze i obserwuje ramiona oraz workspace.
-2. Python waliduje tę samą konfigurację na dużej liczbie punktów.
-3. Użytkownik wybiera trajektorię testową i widzi kąty oraz limity osi.
-4. Model dynamiczny wylicza wymagania napędu.
-5. Powstaje specyfikacja jednego napędu, a następnie test stołowy.
-6. Wyniki testu aktualizują model i dopiero wtedy zamrażają BOM v1.
-7. Robot jest składany i uruchamiany na ograniczonych prędkościach.
-8. Kalibracja wiąże model cyfrowy z rzeczywistą geometrią.
-9. Dodawany jest chwyt statyczny i pomiar skuteczności.
-10. Na końcu dochodzą kamera, enkoder i tracking taśmy.
+1. **Zakończone:** P0 waliduje geometrię, workspace i trajektorię w Pythonie i
+   pokazuje wyniki w Three.js.
+2. **Zakończone cyfrowo:** model dynamiczny, dobór 5:1, kandydat serwa,
+   symulator stanowiska oraz kandydacki CAD P1.
+3. **Teraz:** rozstrzygnięcie ofert, zasilania/regeneracji, dostępności aparatury
+   i dokładnych wersji części według `docs/p1-procurement-checklist.md`.
+4. Zakup wyłącznie elementów jednej osi potrzebnych do P1 i zwymiarowania.
+5. Pomiar dostarczonych części, zamknięcie pasowań/retencji i dopiero wtedy
+   wydanie rysunków do obróbki.
+6. Budowa i pomiar stanowiska; wyniki P1 aktualizują model i zamrażają BOM v1.
+7. Budowa P2 na ograniczonych prędkościach i kalibracja rzeczywistej geometrii.
+8. P3 dodaje chwyt statyczny, a P4 kamerę, enkoder i tracking taśmy.
 
 ## 12. Konkretne ryzyka do rozstrzygnięcia
 
-1. Zakładany workspace Ø400 × 150 mm może wymagać konfiguracji zbyt bliskich osobliwościom; P0 musi pokazać użyteczny, nie tylko geometrycznie osiągalny zakres.
-2. Redukcja 5:1 może ograniczyć maksymalną prędkość osi poniżej potrzeb cyklu 25-305-25; rozstrzyga to model i P1.
-3. Pasek GT2 oraz drukowane koło 100T mogą ugiąć się na tyle, że powtarzalność wyjścia przekroczy 0,1°; P1 musi to zmierzyć na rzeczywistym zestawie.
-4. Enkoder w closed-loop stepperze może być dostępny tylko dla drivera, więc system nadrzędny nie będzie znał rzeczywistej pozycji osi; trzeba sprawdzić interfejs konkretnego drivera przed zakupem.
-5. Kamera 2D nie wystarczy sama do wiarygodnego pomiaru przestrzennej powtarzalności XYZ; metoda metrologiczna zostanie osobno zaprojektowana przed P2.
-6. Cel 2,0–2,5 pick/s może przekraczać możliwości pierwszej mechaniki i efektora; pozostaje celem eksperymentalnym, nie warunkiem powodzenia.
-7. Model Three.js może rozjechać się z modelem Python, jeśli oba będą niezależnie liczyć kinematykę; format JSON i testy zgodności mają temu zapobiec.
-8. Mechanizm delta jest zamkniętym łańcuchem kinematycznym, więc późniejszy model URDF/Gazebo może wymagać uproszczeń albo dedykowanego rozwiązania.
+Cyfrowe P0 rozstrzygnęło próbkowane pokrycie Ø400×150 mm, obszar taśmy
+305×200 mm i obliczeniową prędkość redukcji 5:1. Aktywne ryzyka są następujące:
 
-## 13. Decyzje do zatwierdzenia po przeglądzie
+1. Rzeczywiste tarcie, podatność, niewspółosiowość i masa mogą przekroczyć
+   uproszczenia modelu oraz 30% zapasu; rozstrzyga to dopiero fizyczne P1.
+2. Gates 5MGT 18/90 może mieć większy luz i ugięcie pod zmianą kierunku niż
+   zakłada model; zewnętrzny E6 musi zmierzyć wyjście za przekładnią.
+3. Energia regeneracyjna podczas nawrotów może przeciążyć szynę DC, zasilacz lub
+   rezystor 10 Ω; kompatybilność wymaga pisemnego potwierdzenia i pomiaru.
+4. Mesa 7I96S i dokładne konfiguracje aparatury mogą być niedostępne albo mieć
+   długi termin dostawy; brak identyfikowalnego egzemplarza wstrzymuje zakup.
+5. Rysunki katalogowe nie zamykają pasowań, rowków wpustowych i mocowań;
+   finalne rysunki powstają z wybranych i zmierzonych części.
+6. Kamera 2D nie wystarczy sama do wiarygodnego pomiaru przestrzennej
+   powtarzalności XYZ; metoda metrologiczna zostanie zaprojektowana przed P2.
+7. Cel 2,0–2,5 pick/s może przekraczać możliwości pierwszej mechaniki i
+   efektora; pozostaje celem eksperymentalnym.
+8. Mechanizm delta jest zamkniętym łańcuchem, więc późniejszy model URDF/Gazebo
+   może wymagać uproszczeń albo dedykowanego rozwiązania.
+
+## 13. Przyjęte decyzje
 
 | # | Decyzja | Uzasadnienie |
 |---|---|---|
@@ -329,15 +348,21 @@ Preferowana ścieżka do dalszego zatwierdzenia: ROS2 + MCU. Klipper pozostaje m
 | 5 | P0 przyjmuje geometrię 180/65/280/450 mm do trajektorii i P1 | Jako jedyna z badanych przechodzi cały próbkowany walec Ø400×150 mm z wymaganym zapasem |
 | 6 | P1 odrzuca stepper 2,0–2,2 Nm i bada jedną oś serwo 400 W + 5:1 | Model czasu rzeczywistego wymaga więcej niż holding torque steppera; serwo przechodzi obliczenia dopiero z jawnymi warunkami testu |
 | 7 | Obszar aplikacyjny P0 obejmuje wycentrowany prostokąt 305×200 mm na pełnej wysokości 150 mm | Odpowiada długości profilu 25-305-25 i całej szerokości istniejącej taśmy; oddzielny raport sprawdza go bez utożsamiania prostokąta z całym walcem |
+| 8 | Mesa 7I96S + LinuxCNC jest tylko kandydatem aparatury P1 | Nie zamraża kontrolera przyszłego robota przed pomiarami stanowiska |
+| 9 | Finalne rysunki stanowiska powstają po wyborze i pomiarze części katalogowych | Zapobiega obróbce według nominalnych wymiarów, które nie zamykają pasowań i interfejsów dostarczonej wersji |
 
-Kolejne decyzje będą dopisywane po P0, modelu dynamicznym i teście P1.
+Kolejne decyzje będą dopisywane po fizycznym teście P1.
 
-## 14. Bramka rozpoczęcia kodowania
+## 14. Aktualna bramka: gotowość zakupowa i wykonawcza P1
 
-Kodowanie P0 może rozpocząć się po krótkim przeglądzie tego dokumentu. Przed rozpoczęciem trzeba zatwierdzić jedynie:
+P0 i programistyczna część P1 są gotowe. Przed zakupem i obróbką trzeba:
 
-1. że pierwszym celem jest model Python + wizualizator Three.js,
-2. że parametry tabeli w sekcji 2 są założeniami startowymi,
-3. że zakup pełnego zestawu napędów czeka na wynik P1.
+1. rozwiązać cztery blockery zakupowe z `BOM_delta.md`;
+2. uzyskać pisemne potwierdzenie zasilania i regeneracji;
+3. potwierdzić oryginalną Mesa 7I96S oraz wspólną wycenę aparatury;
+4. kupić najwyżej zestaw jednej osi;
+5. zmierzyć dostarczone części i zamknąć blokery pakietu wykonawczego;
+6. przejść checklistę `docs/p1-procurement-checklist.md`.
 
-Nie trzeba przed P0 wybierać konkretnego silnika, sterownika ROS2, mikrokontrolera ani finalnej konstrukcji ramy.
+Bez wykonania tych kroków nie wolno traktować STEP-u jako finalnego polecenia
+obróbki ani kupować trzech kompletów napędów.

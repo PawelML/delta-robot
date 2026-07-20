@@ -10,6 +10,8 @@ This is a controlled list of candidates, not a frozen three-axis shopping list. 
 authoritative requirements are in `poc_plan.md`, numerical evidence in
 `artifacts/geometry_comparison.json` and `artifacts/dynamic_sizing.json`, and
 the representative drive contract in `docs/specs/p1-single-drive.md`.
+Operacyjna kolejność ofert, zakupów, pomiarów i zwolnienia rysunków znajduje się
+w `docs/p1-procurement-checklist.md`.
 
 ## 1. Evidence that changed the initial BOM
 
@@ -172,9 +174,14 @@ Rebuild the cost table only after:
 
 ## 7. Build order
 
-1. Resolve the four remaining P1 purchasing blockers above.
-2. Build one servo/belt/output-shaft bench axis and measure it.
-3. Retain, reratio, upsize to 750 W or reject based on evidence.
-4. Freeze BOM v1 and buy the remaining two drives only after the P1 gate.
-5. Complete collision/stiffness CAD, build P2, then proceed to vacuum P3 and
+1. Resolve the four remaining P1 purchasing blockers and complete the quotation
+   phase in `docs/p1-procurement-checklist.md`.
+2. Buy at most one set of catalogue/reference components for P1.
+3. Measure delivered parts, close fits, keyways, retention and supplier-specific
+   holes, then release updated fabrication drawings.
+4. Fabricate and assemble one servo/belt/output-shaft bench axis.
+5. Run the physical 1,000-reversal P1 gate and retain, reratio, upsize to 750 W
+   or reject based on evidence.
+6. Freeze BOM v1 and buy the remaining two drives only after the P1 gate.
+7. Complete collision/stiffness CAD, build P2, then proceed to vacuum P3 and
    conveyor tracking P4.

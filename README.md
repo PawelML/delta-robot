@@ -25,6 +25,8 @@ ale jeszcze bez fizycznego zaliczenia**.
 - `docs/specs/p1-test-instrumentation.md` — aparatura i niezależny tor pomiarowy.
 - `docs/p1-bench-fabrication-package.md` — wymiary, datums i blokery wydania
   rysunków stanowiska.
+- `docs/p1-procurement-checklist.md` — kolejność ofert, zakupu jednej osi,
+  pomiarów, obróbki i fizycznego gate'u P1.
 - `AGENTS.md` — instrukcje obowiązujące narzędzia kodujące.
 
 ## Środowisko developerskie
