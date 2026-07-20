@@ -1,7 +1,7 @@
 # P0 workspace sampling and visualizer export — specification
 
-**Status:** accepted for implementation  
-**Version:** 0.2  
+**Status:** accepted for implementation
+**Version:** 0.3
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -136,9 +136,10 @@ window, not a hardware proposal:
   `williams_dimensions_plus_demo_joint_limits_not_diy_geometry`.
 
 The equal axis counts make the first artifact easy to inspect and give a coarse
-46.8 million cubic-millimetre voxel scale (`45 mm` per axis). It is a visual
-map, not a boundary-accuracy claim. Finer or adaptive boundary sampling belongs
-to a later slice if it materially helps select the DIY geometry.
+`45 mm` interval per axis, corresponding to `45^3 = 91,125 mm^3` per sampling
+cell. It is a visual map, not a boundary-accuracy claim. Finer or adaptive
+boundary sampling belongs to a later slice if it materially helps select the
+DIY geometry.
 
 The `+/-45 deg` limits exist only to exercise `joint_limited` rendering before
 real actuator and collision limits are known. They shall not be copied into the
