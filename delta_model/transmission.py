@@ -86,7 +86,7 @@ class OperatingPoint:
 
     maximum_motor_speed_rpm: float
     belt_speed_m_s: float
-    peak_design_motor_torque_nm: float
+    peak_design_transmitted_torque_nm: float
     pitch_line_tension_difference_n: float
     installation_tension_each_span_n: float
     conservative_radial_load_n: float
@@ -221,7 +221,7 @@ def interpolate_selected_belt_capacity_w(motor_speed_rpm: float) -> float:
 def selected_operating_point(
     *,
     maximum_motor_speed_rpm: float,
-    peak_design_motor_torque_nm: float,
+    peak_design_transmitted_torque_nm: float,
     maximum_trajectory_belt_power_w: float,
     belt_power_service_factor: float = 1.50,
     installation_tension_factor: float = 1.50,
@@ -230,7 +230,7 @@ def selected_operating_point(
 
     values = (
         maximum_motor_speed_rpm,
-        peak_design_motor_torque_nm,
+        peak_design_transmitted_torque_nm,
         maximum_trajectory_belt_power_w,
         belt_power_service_factor,
         installation_tension_factor,
@@ -241,7 +241,7 @@ def selected_operating_point(
     radius = pitch_diameter_m(selected.small_teeth) / 2.0
     omega = maximum_motor_speed_rpm * 2.0 * math.pi / 60.0
     belt_speed = omega * radius
-    tension_difference = peak_design_motor_torque_nm / radius
+    tension_difference = peak_design_transmitted_torque_nm / radius
     installation_tension = 15.0 * POUND_FORCE_TO_NEWTON * installation_tension_factor
     radial_load = 2.0 * installation_tension + tension_difference
     design_power = maximum_trajectory_belt_power_w * belt_power_service_factor
@@ -257,7 +257,7 @@ def selected_operating_point(
     return OperatingPoint(
         maximum_motor_speed_rpm=maximum_motor_speed_rpm,
         belt_speed_m_s=belt_speed,
-        peak_design_motor_torque_nm=peak_design_motor_torque_nm,
+        peak_design_transmitted_torque_nm=peak_design_transmitted_torque_nm,
         pitch_line_tension_difference_n=tension_difference,
         installation_tension_each_span_n=installation_tension,
         conservative_radial_load_n=radial_load,
@@ -310,7 +310,7 @@ def inertia_from_wr2_lb_ft2(wr2_lb_ft2: float) -> float:
 def transmission_document(
     *,
     maximum_motor_speed_rpm: float,
-    peak_design_motor_torque_nm: float,
+    peak_design_transmitted_torque_nm: float,
     maximum_trajectory_belt_power_w: float,
 ) -> dict[str, object]:
     """Build the deterministic transmission-selection report."""
@@ -318,20 +318,20 @@ def transmission_document(
     screens = tuple(screen_candidate(candidate) for candidate in VARIANTS)
     operating = selected_operating_point(
         maximum_motor_speed_rpm=maximum_motor_speed_rpm,
-        peak_design_motor_torque_nm=peak_design_motor_torque_nm,
+        peak_design_transmitted_torque_nm=peak_design_transmitted_torque_nm,
         maximum_trajectory_belt_power_w=maximum_trajectory_belt_power_w,
     )
     input_shaft = shaft_screen(
         diameter_m=0.009525,
         bearing_span_m=0.050,
         radial_load_n=operating.conservative_radial_load_n,
-        transmitted_torque_nm=peak_design_motor_torque_nm,
+        transmitted_torque_nm=peak_design_transmitted_torque_nm,
     )
     output_shaft = shaft_screen(
         diameter_m=0.020,
         bearing_span_m=0.070,
         radial_load_n=operating.conservative_radial_load_n,
-        transmitted_torque_nm=peak_design_motor_torque_nm * 5.0 * 0.90,
+        transmitted_torque_nm=peak_design_transmitted_torque_nm * 5.0 * 0.90,
     )
     return {
         "candidates": [

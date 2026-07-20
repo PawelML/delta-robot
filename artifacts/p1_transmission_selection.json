@@ -89,15 +89,15 @@
     "belt_power_service_factor": 1.5,
     "belt_speed_m_s": 0.495712684510937,
     "capacity_status": "passes",
-    "capacity_utilization": 0.26265311853560985,
-    "conservative_radial_load_n": 367.79723850778373,
-    "design_belt_power_w": 64.07790157539269,
+    "capacity_utilization": 0.27883555444651725,
+    "conservative_radial_load_n": 376.49298731150395,
+    "design_belt_power_w": 68.02583313367967,
     "installation_tension_each_span_n": 100.08498634336125,
     "interpolated_catalogue_capacity_w": 243.96398539888332,
     "maximum_motor_speed_rpm": 330.4751230072913,
-    "maximum_trajectory_belt_power_w": 42.71860105026179,
-    "peak_design_motor_torque_nm": 2.401083715716091,
-    "pitch_line_tension_difference_n": 167.62726582106123
+    "maximum_trajectory_belt_power_w": 45.35055542245311,
+    "peak_design_transmitted_torque_nm": 2.5256411422558673,
+    "pitch_line_tension_difference_n": 176.32301462478148
   },
   "recommendation": {
     "adjustment_travel_m": 0.025,
@@ -110,26 +110,26 @@
   "schema": "delta-robot-p1-transmission-selection/v1",
   "shaft_screens": {
     "input_jackshaft": {
-      "bearing_reaction_each_n": 183.89861925389187,
+      "bearing_reaction_each_n": 188.24649365575198,
       "bearing_span_m": 0.05,
-      "bending_stress_mpa": 54.19055884532306,
+      "bending_stress_mpa": 55.47177424858165,
       "diameter_m": 0.009525,
-      "maximum_bending_moment_nm": 4.597465481347297,
-      "radial_load_upper_bound_n": 367.79723850778373,
-      "torsional_stress_mpa": 14.150847778734056,
-      "transmitted_torque_nm": 2.401083715716091,
-      "von_mises_stress_mpa": 59.475676932163864
+      "maximum_bending_moment_nm": 4.706162341393799,
+      "radial_load_upper_bound_n": 376.49298731150395,
+      "torsional_stress_mpa": 14.884930131272752,
+      "transmitted_torque_nm": 2.5256411422558673,
+      "von_mises_stress_mpa": 61.17026379969455
     },
     "output_shaft": {
-      "bearing_reaction_each_n": 183.89861925389187,
+      "bearing_reaction_each_n": 188.24649365575198,
       "bearing_span_m": 0.07,
-      "bending_stress_mpa": 8.19514479896876,
+      "bending_stress_mpa": 8.38890079580841,
       "diameter_m": 0.02,
-      "maximum_bending_moment_nm": 6.436451673886216,
-      "radial_load_upper_bound_n": 367.79723850778373,
-      "torsional_stress_mpa": 6.878598158406078,
-      "transmitted_torque_nm": 10.80487672072241,
-      "von_mises_stress_mpa": 14.460488793624757
+      "maximum_bending_moment_nm": 6.5886272779513195,
+      "radial_load_upper_bound_n": 376.49298731150395,
+      "torsional_stress_mpa": 7.235428900793076,
+      "transmitted_torque_nm": 11.365385140151403,
+      "von_mises_stress_mpa": 15.08071452873537
     }
   },
   "sources": {

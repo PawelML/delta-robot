@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from delta_model.dynamic_sizing import dynamic_sizing_document
+from delta_model.dynamic_sizing import dynamic_sizing_document, refined_drive_trace_csv
 
 
 def main() -> None:
@@ -15,7 +15,10 @@ def main() -> None:
         json.dumps(document, allow_nan=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    trace_output = output.with_name("p1_refined_drive_trace.csv")
+    trace_output.write_text(refined_drive_trace_csv(), encoding="utf-8")
     print(output)
+    print(trace_output)
     if document["status"] != "provisional_pass":
         raise SystemExit("dynamic sizing did not pass its sampling-convergence gate")
 

@@ -4,7 +4,7 @@ from typing import cast
 
 import pytest
 
-from delta_model.dynamic_sizing import dynamic_sizing_document
+from delta_model.dynamic_sizing import dynamic_sizing_document, refined_drive_trace_csv
 
 
 def test_dynamic_sizing_report_matches_committed_artifact() -> None:
@@ -13,7 +13,7 @@ def test_dynamic_sizing_report_matches_committed_artifact() -> None:
     committed = json.loads(artifact_path.read_text(encoding="utf-8"))
 
     assert json.loads(json.dumps(document)) == committed
-    assert document["schema"] == "delta-robot-p1-dynamic-sizing/v1"
+    assert document["schema"] == "delta-robot-p1-dynamic-sizing/v2"
     assert document["status"] == "provisional_pass"
     convergence = cast(dict[str, object], document["convergence"])
     assert convergence["passes_one_percent"] is True
@@ -21,5 +21,15 @@ def test_dynamic_sizing_report_matches_committed_artifact() -> None:
     assert assessment["passes"] is True
     axes = cast(list[dict[str, float]], assessment["axes"])
     assert max(axis["required_peak_torque_nm"] for axis in axes) == pytest.approx(
-        2.401083715716091
+        2.576404322384402
     )
+    equivalent = cast(dict[str, object], document["equivalent_bench_load"])
+    assert cast(float, equivalent["point_mass_at_arm_tip_kg"]) > 0.0
+
+
+def test_refined_drive_trace_matches_committed_csv() -> None:
+    trace = refined_drive_trace_csv()
+    artifact_path = Path(__file__).resolve().parents[1] / "artifacts/p1_refined_drive_trace.csv"
+
+    assert trace == artifact_path.read_text(encoding="utf-8")
+    assert len(trace.splitlines()) == 1002

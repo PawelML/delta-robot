@@ -12,12 +12,17 @@ from delta_model.differential_kinematics import (
 )
 from delta_model.drive_sizing import (
     LEADSHINE_ISV2_RS6040V48G,
+    P1_TRANSMISSION_INERTIA,
+    TransmissionInertiaModel,
     assess_motor_candidate,
+    assess_refined_drive,
 )
 from delta_model.dynamics import (
+    CONSERVATIVE_MASS_CASE,
     NOMINAL_MASS_CASE,
     DynamicMassCase,
     evaluate_dynamic_case,
+    joint_effective_inertias_kg_m2,
     load_torques_for_state,
     platform_load_torques,
 )
@@ -150,3 +155,60 @@ def test_leadshine_candidate_passes_conservative_case_with_rotor_inertia() -> No
     assert max(axis.required_rms_torque_nm for axis in assessment.axes) == pytest.approx(
         1.0264640660097457
     )
+
+
+def test_zero_transmission_inertia_reproduces_legacy_candidate_assessment() -> None:
+    trajectory = generate_trajectory()
+    result = evaluate_dynamic_case(trajectory, CONSERVATIVE_MASS_CASE)
+    legacy = assess_motor_candidate(trajectory, result, LEADSHINE_ISV2_RS6040V48G)
+    zero = TransmissionInertiaModel(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+
+    refined = assess_refined_drive(
+        trajectory,
+        result,
+        LEADSHINE_ISV2_RS6040V48G,
+        zero,
+    )
+
+    for legacy_axis, refined_axis in zip(legacy.axes, refined.axes, strict=True):
+        assert refined_axis.required_peak_torque_nm == pytest.approx(
+            legacy_axis.required_peak_torque_nm, abs=1e-12
+        )
+        assert refined_axis.required_rms_torque_nm == pytest.approx(
+            legacy_axis.required_rms_torque_nm, abs=1e-12
+        )
+
+
+def test_positive_added_inertia_adds_torque_in_acceleration_direction() -> None:
+    trajectory = generate_trajectory()
+    result = evaluate_dynamic_case(trajectory, CONSERVATIVE_MASS_CASE)
+    zero = TransmissionInertiaModel(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    baseline = assess_refined_drive(
+        trajectory, result, LEADSHINE_ISV2_RS6040V48G, zero
+    )
+    refined = assess_refined_drive(
+        trajectory, result, LEADSHINE_ISV2_RS6040V48G, P1_TRANSMISSION_INERTIA
+    )
+    sample_index = 200
+    acceleration = trajectory.samples[sample_index].joint_accelerations.theta_1_rad_s2
+    increment = (
+        refined.motor_torques_nm[sample_index][0]
+        - baseline.motor_torques_nm[sample_index][0]
+    )
+
+    assert acceleration != 0.0
+    assert math.copysign(1.0, increment) == math.copysign(1.0, acceleration)
+
+
+def test_effective_joint_inertias_are_positive_and_symmetric_at_center() -> None:
+    differential = differential_kinematics(
+        SELECTED_GEOMETRY,
+        CartesianPosition(0.0, 0.0, -0.347),
+        AssemblyMode.KNEE_OUT_PLATFORM_BELOW,
+    )
+
+    inertias = joint_effective_inertias_kg_m2(differential, CONSERVATIVE_MASS_CASE)
+
+    assert min(inertias) > 0.0
+    assert inertias[0] == pytest.approx(inertias[1], abs=1e-12)
+    assert inertias[0] == pytest.approx(inertias[2], abs=1e-12)

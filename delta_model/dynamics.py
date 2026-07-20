@@ -109,6 +109,25 @@ def _forward_velocity_jacobian(
     return np.linalg.solve(cartesian_matrix, joint_matrix)
 
 
+def joint_effective_inertias_kg_m2(
+    differential: DifferentialKinematicsResult,
+    mass_case: DynamicMassCase,
+) -> tuple[float, float, float]:
+    """Return the diagonal joint inertias of the endpoint-lumped load model."""
+
+    jacobian = _forward_velocity_jacobian(differential)
+    cartesian_mass = mass_case.translating_mass_kg
+    translational_matrix = cartesian_mass * jacobian.T @ jacobian
+    length = differential.geometry.upper_arm_length_m
+    rotating_inertia = mass_case.upper_arm_each_kg * length * length / 3.0 + (
+        mass_case.knee_share_each_kg * length * length
+    )
+    values = tuple(
+        float(translational_matrix[index, index]) + rotating_inertia for index in range(3)
+    )
+    return (values[0], values[1], values[2])
+
+
 def platform_load_torques(
     differential: DifferentialKinematicsResult,
     force_n: tuple[float, float, float],
