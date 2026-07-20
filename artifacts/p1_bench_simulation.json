@@ -1,0 +1,45 @@
+{
+  "checks": {
+    "brake_resistor_load_within_limit": true,
+    "dc_bus_voltage_within_limit": true,
+    "driver_temperature_within_test_limit": true,
+    "following_error_within_limit": true,
+    "full_speed_stage_executed": true,
+    "lost_motion_within_limit": true,
+    "minimum_reversals": true,
+    "no_drive_alarms": true
+  },
+  "command_plan": {
+    "axis": 2,
+    "endurance_half_period_s": 0.5,
+    "requested_endurance_reversals": 1000,
+    "trajectory": "25-305-25_round_trip_1_hz"
+  },
+  "disposition": "simulation_only",
+  "failed_checks": [],
+  "limitations": [
+    "simulation proves software plumbing only and cannot pass physical P1",
+    "thermal, bus and tracking responses are deterministic test-double behaviour",
+    "hardware command transport and Modbus polling remain unimplemented"
+  ],
+  "metrics": {
+    "alarm_codes": [],
+    "maximum_brake_resistor_load_percent": 3.8590745248178626,
+    "maximum_dc_bus_voltage_v": 48.096476863120444,
+    "maximum_driver_temperature_c": 22.000193808114652,
+    "maximum_output_following_error_deg": 0.333786810713855,
+    "measured_lost_motion_deg": 0.04,
+    "reversal_count": 1004,
+    "sample_count": 2002
+  },
+  "schema": "delta-robot-p1-bench-report/v1",
+  "source": "simulation",
+  "thresholds": {
+    "maximum_brake_resistor_load_percent": 80.0,
+    "maximum_dc_bus_voltage_v": 60.0,
+    "maximum_driver_temperature_c": 60.0,
+    "maximum_lost_motion_deg": 0.1,
+    "maximum_output_following_error_deg": 0.5,
+    "minimum_reversals": 1000
+  }
+}
