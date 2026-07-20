@@ -13,7 +13,7 @@ from delta_model.geometry import DeltaGeometry
 from delta_model.inverse_kinematics import InverseKinematicsResult, inverse_kinematics
 
 SINGULAR_VALUE_RELATIVE_TOLERANCE = 64.0 * sys.float_info.epsilon
-PRACTICALLY_USABLE_MARGIN = 0.15
+PRACTICALLY_USABLE_MARGIN = 0.20
 
 Matrix3 = tuple[
     tuple[float, float, float],

@@ -6,10 +6,8 @@ from typing import cast
 import pytest
 
 from delta_model import AssemblyMode, CartesianPosition, UnreachablePositionError
-from delta_model.reference_artifacts import (
-    REFERENCE_SOURCE_LABEL,
-    generate_reference_artifacts,
-)
+from delta_model.design_geometry import SELECTED_SOURCE_LABEL
+from delta_model.p0_artifacts import generate_p0_artifacts
 from delta_model.visualizer_export import (
     POSE_SCHEMA,
     WORKSPACE_SCHEMA,
@@ -142,9 +140,9 @@ def test_unreachable_pose_does_not_produce_a_partial_document() -> None:
         )
 
 
-def test_reference_artifacts_regenerate_without_a_diff(tmp_path: Path) -> None:
-    generated_workspace, generated_pose = generate_reference_artifacts(tmp_path / "first")
-    second_workspace, second_pose = generate_reference_artifacts(tmp_path / "second")
+def test_p0_artifacts_regenerate_without_a_diff(tmp_path: Path) -> None:
+    generated_workspace, generated_pose = generate_p0_artifacts(tmp_path / "first")
+    second_workspace, second_pose = generate_p0_artifacts(tmp_path / "second")
     repository_artifacts = Path(__file__).resolve().parents[1] / "artifacts"
 
     assert generated_workspace.read_bytes() == second_workspace.read_bytes()
@@ -158,12 +156,12 @@ def test_reference_artifacts_regenerate_without_a_diff(tmp_path: Path) -> None:
         dict[str, object],
         json.loads(generated_workspace.read_text(encoding="utf-8")),
     )
-    assert workspace["source"] == REFERENCE_SOURCE_LABEL
+    assert workspace["source"] == SELECTED_SOURCE_LABEL
     assert workspace["summary"] == {
-        "joint_limited": 3262,
-        "practically_usable": 4491,
-        "reachable": 4491,
-        "total": 9261,
-        "unreachable": 1508,
-        "weak_reachable": 0,
+        "joint_limited": 5423,
+        "practically_usable": 9005,
+        "reachable": 9018,
+        "total": 24025,
+        "unreachable": 9584,
+        "weak_reachable": 13,
     }

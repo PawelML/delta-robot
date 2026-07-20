@@ -1,0 +1,415 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "compact_400",
+      "diameters": [
+        {
+          "best_coarse": {
+            "all_reachable": false,
+            "center_z_m": -0.295,
+            "evaluated_count": 560,
+            "failure": "JointLimitError",
+            "minimum_joint_limit_margin_rad": 0.004236015119764014,
+            "minimum_singularity_margin": 0.4852716620959107,
+            "overall_reserve_ratio": null,
+            "passes": false,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.2246467991473533e-17,
+              0.2,
+              -0.37
+            ]
+          },
+          "best_refined": {
+            "all_reachable": false,
+            "center_z_m": -0.296,
+            "evaluated_count": 7435,
+            "failure": "JointLimitError",
+            "minimum_joint_limit_margin_rad": 0.0002773049854649656,
+            "minimum_singularity_margin": 0.48365529412679825,
+            "overall_reserve_ratio": null,
+            "passes": false,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              0.1879385241571817,
+              0.06840402866513375,
+              -0.251
+            ]
+          },
+          "diameter_m": 0.4
+        },
+        {
+          "best_coarse": {
+            "all_reachable": false,
+            "center_z_m": -0.315,
+            "evaluated_count": 657,
+            "failure": "JointLimitError",
+            "minimum_joint_limit_margin_rad": 0.014343428473135633,
+            "minimum_singularity_margin": 0.4589267219793247,
+            "overall_reserve_ratio": null,
+            "passes": false,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.1481063742006436e-17,
+              0.1875,
+              -0.39
+            ]
+          },
+          "best_refined": {
+            "all_reachable": false,
+            "center_z_m": -0.32,
+            "evaluated_count": 9095,
+            "failure": "JointLimitError",
+            "minimum_joint_limit_margin_rad": 0.0014097481091022157,
+            "minimum_singularity_margin": 0.4705280196756838,
+            "overall_reserve_ratio": null,
+            "passes": false,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              1.1481063742006436e-17,
+              0.1875,
+              -0.395
+            ]
+          },
+          "diameter_m": 0.375
+        },
+        {
+          "best_coarse": {
+            "all_reachable": true,
+            "center_z_m": -0.33,
+            "evaluated_count": 679,
+            "failure": "insufficient_design_reserve",
+            "minimum_joint_limit_margin_rad": 0.031495547617570674,
+            "minimum_singularity_margin": 0.47833785522138755,
+            "overall_reserve_ratio": 0.3609123903880229,
+            "passes": false,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.071565949253934e-17,
+              0.175,
+              -0.405
+            ]
+          },
+          "best_refined": {
+            "all_reachable": true,
+            "center_z_m": -0.328,
+            "evaluated_count": 9232,
+            "failure": "insufficient_design_reserve",
+            "minimum_joint_limit_margin_rad": 0.03701864047162973,
+            "minimum_singularity_margin": 0.4820901695218012,
+            "overall_reserve_ratio": 0.4242023724673125,
+            "passes": false,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              1.071565949253934e-17,
+              0.175,
+              -0.403
+            ]
+          },
+          "diameter_m": 0.35
+        }
+      ],
+      "geometry": {
+        "base_joint_radius_m": 0.18,
+        "lower_arm_length_m": 0.4,
+        "max_joint_angle_rad": 1.3962634015954636,
+        "min_joint_angle_rad": -0.7853981633974483,
+        "platform_joint_radius_m": 0.055,
+        "upper_arm_length_m": 0.2
+      },
+      "rationale": "smallest envelope and shortest moving upper arm"
+    },
+    {
+      "candidate_id": "balanced_430",
+      "diameters": [
+        {
+          "best_coarse": {
+            "all_reachable": true,
+            "center_z_m": -0.325,
+            "evaluated_count": 679,
+            "failure": "insufficient_design_reserve",
+            "minimum_joint_limit_margin_rad": 0.02347506004214117,
+            "minimum_singularity_margin": 0.489340125872112,
+            "overall_reserve_ratio": 0.2690043728461779,
+            "passes": false,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.2246467991473533e-17,
+              0.2,
+              -0.4
+            ]
+          },
+          "best_refined": {
+            "all_reachable": true,
+            "center_z_m": -0.322,
+            "evaluated_count": 9232,
+            "failure": "insufficient_design_reserve",
+            "minimum_joint_limit_margin_rad": 0.02830852545313589,
+            "minimum_singularity_margin": 0.4762371876510395,
+            "overall_reserve_ratio": 0.32439180654067057,
+            "passes": false,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              1.2246467991473533e-17,
+              0.2,
+              -0.397
+            ]
+          },
+          "diameter_m": 0.4
+        },
+        {
+          "best_coarse": {
+            "all_reachable": true,
+            "center_z_m": -0.325,
+            "evaluated_count": 679,
+            "failure": "insufficient_design_reserve",
+            "minimum_joint_limit_margin_rad": 0.07226234126005648,
+            "minimum_singularity_margin": 0.4900982538214795,
+            "overall_reserve_ratio": 0.8280654343870616,
+            "passes": false,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.1481063742006436e-17,
+              0.1875,
+              -0.4
+            ]
+          },
+          "best_refined": {
+            "all_reachable": true,
+            "center_z_m": -0.324,
+            "evaluated_count": 9232,
+            "failure": "insufficient_design_reserve",
+            "minimum_joint_limit_margin_rad": 0.0738973705176782,
+            "minimum_singularity_margin": 0.48577330725591256,
+            "overall_reserve_ratio": 0.8468014895554881,
+            "passes": false,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              1.1481063742006436e-17,
+              0.1875,
+              -0.399
+            ]
+          },
+          "diameter_m": 0.375
+        },
+        {
+          "best_coarse": {
+            "all_reachable": true,
+            "center_z_m": -0.325,
+            "evaluated_count": 679,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.12059187113145575,
+            "minimum_singularity_margin": 0.49236342399654337,
+            "overall_reserve_ratio": 1.3818810518835853,
+            "passes": true,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.071565949253934e-17,
+              0.175,
+              -0.4
+            ]
+          },
+          "best_refined": {
+            "all_reachable": true,
+            "center_z_m": -0.325,
+            "evaluated_count": 9232,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.12059187113145575,
+            "minimum_singularity_margin": 0.4894244385997244,
+            "overall_reserve_ratio": 1.3818810518835853,
+            "passes": true,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              1.071565949253934e-17,
+              0.175,
+              -0.4
+            ]
+          },
+          "diameter_m": 0.35
+        }
+      ],
+      "geometry": {
+        "base_joint_radius_m": 0.21,
+        "lower_arm_length_m": 0.43,
+        "max_joint_angle_rad": 1.3962634015954636,
+        "min_joint_angle_rad": -0.7853981633974483,
+        "platform_joint_radius_m": 0.06,
+        "upper_arm_length_m": 0.24
+      },
+      "rationale": "moderate proportional dimensions within the provisional rod range"
+    },
+    {
+      "candidate_id": "reach_optimized_450",
+      "diameters": [
+        {
+          "best_coarse": {
+            "all_reachable": true,
+            "center_z_m": -0.35,
+            "evaluated_count": 679,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.2048394627140253,
+            "minimum_singularity_margin": 0.5812983820353504,
+            "overall_reserve_ratio": 2.3472873382482082,
+            "passes": true,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.2246467991473533e-17,
+              0.2,
+              -0.425
+            ]
+          },
+          "best_refined": {
+            "all_reachable": true,
+            "center_z_m": -0.347,
+            "evaluated_count": 9232,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.20873516658577884,
+            "minimum_singularity_margin": 0.5713616327636166,
+            "overall_reserve_ratio": 2.3919288162650587,
+            "passes": true,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              1.2246467991473533e-17,
+              0.2,
+              -0.422
+            ]
+          },
+          "diameter_m": 0.4
+        },
+        {
+          "best_coarse": {
+            "all_reachable": true,
+            "center_z_m": -0.35,
+            "evaluated_count": 679,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.24629832507202365,
+            "minimum_singularity_margin": 0.5825548126722757,
+            "overall_reserve_ratio": 2.822370905553629,
+            "passes": true,
+            "sample_count": 679,
+            "weakest_position_m": [
+              1.1481063742006436e-17,
+              0.1875,
+              -0.425
+            ]
+          },
+          "best_refined": {
+            "all_reachable": true,
+            "center_z_m": -0.349,
+            "evaluated_count": 9232,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.24735395141859917,
+            "minimum_singularity_margin": 0.577001740974542,
+            "overall_reserve_ratio": 2.834467492433947,
+            "passes": true,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              0.16237976320958225,
+              0.09374999999999999,
+              -0.274
+            ]
+          },
+          "diameter_m": 0.375
+        },
+        {
+          "best_coarse": {
+            "all_reachable": true,
+            "center_z_m": -0.36,
+            "evaluated_count": 679,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.27342576323812895,
+            "minimum_singularity_margin": 0.6114109500122102,
+            "overall_reserve_ratio": 3.057054750061051,
+            "passes": true,
+            "sample_count": 679,
+            "weakest_position_m": [
+              0.11366583424670756,
+              0.06562499999999998,
+              -0.28500000000000003
+            ]
+          },
+          "best_refined": {
+            "all_reachable": true,
+            "center_z_m": -0.363,
+            "evaluated_count": 9232,
+            "failure": null,
+            "minimum_joint_limit_margin_rad": 0.2690467099917566,
+            "minimum_singularity_margin": 0.6189706398769373,
+            "overall_reserve_ratio": 3.083048194881578,
+            "passes": true,
+            "sample_count": 9232,
+            "weakest_position_m": [
+              1.071565949253934e-17,
+              0.175,
+              -0.438
+            ]
+          },
+          "diameter_m": 0.35
+        }
+      ],
+      "geometry": {
+        "base_joint_radius_m": 0.18,
+        "lower_arm_length_m": 0.45,
+        "max_joint_angle_rad": 1.3962634015954636,
+        "min_joint_angle_rad": -0.7853981633974483,
+        "platform_joint_radius_m": 0.065,
+        "upper_arm_length_m": 0.28
+      },
+      "rationale": "parameter-search candidate for a full 400 mm useful diameter"
+    }
+  ],
+  "limitations": [
+    "sampled evidence is not a continuous-volume proof",
+    "collisions and physical joint articulation are not modelled",
+    "stiffness and dynamic adequacy remain unverified",
+    "selection does not authorize purchases"
+  ],
+  "sampling": {
+    "coarse": {
+      "azimuth_count": 24,
+      "radial_level_count": 5,
+      "z_plane_count": 7
+    },
+    "coarse_z_step_m": 0.005,
+    "final": {
+      "azimuth_count": 72,
+      "radial_level_count": 9,
+      "z_plane_count": 16
+    },
+    "refined_z_step_m": 0.001
+  },
+  "schema": "delta-robot-p0-geometry-comparison/v1",
+  "selected_candidate_id": "reach_optimized_450",
+  "selected_diameter_m": 0.4,
+  "selected_evidence": {
+    "all_reachable": true,
+    "center_z_m": -0.347,
+    "evaluated_count": 9232,
+    "failure": null,
+    "minimum_joint_limit_margin_rad": 0.20873516658577884,
+    "minimum_singularity_margin": 0.5713616327636166,
+    "overall_reserve_ratio": 2.3919288162650587,
+    "passes": true,
+    "sample_count": 9232,
+    "weakest_position_m": [
+      1.2246467991473533e-17,
+      0.2,
+      -0.422
+    ]
+  },
+  "selection_rationale": "only candidate passing the preferred 0.400 m diameter with both reserves",
+  "thresholds": {
+    "cylinder_height_m": 0.15,
+    "diameters_m": [
+      0.4,
+      0.375,
+      0.35
+    ],
+    "joint_limit_reserve_rad": 0.08726646259971647,
+    "singularity_margin": 0.2
+  },
+  "units": {
+    "angle": "rad",
+    "length": "m"
+  }
+}
