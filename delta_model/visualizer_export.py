@@ -9,7 +9,7 @@ from delta_model.geometry import DeltaGeometry
 from delta_model.inverse_kinematics import inverse_kinematics
 from delta_model.workspace import WorkspaceSample
 
-WORKSPACE_SCHEMA = "delta-robot-p0-workspace/v1"
+WORKSPACE_SCHEMA = "delta-robot-p0-workspace/v2"
 POSE_SCHEMA = "delta-robot-p0-pose/v1"
 
 
@@ -50,7 +50,7 @@ def workspace_document(
     *,
     source_label: str,
 ) -> dict[str, object]:
-    """Convert one complete workspace sample to the v1 visualizer contract."""
+    """Convert one complete workspace sample to the v2 visualizer contract."""
 
     document = _common_document(
         WORKSPACE_SCHEMA,
@@ -73,16 +73,34 @@ def workspace_document(
             "points": [
                 {
                     "classification": point.classification.value,
+                    "parallel_margin": (
+                        point.singularity_metrics.parallel_margin
+                        if point.singularity_metrics is not None
+                        else None
+                    ),
                     "position_m": _coordinates(point.position),
+                    "practically_usable": point.practically_usable,
                     "reason": point.reason.value,
+                    "serial_margin": (
+                        point.singularity_metrics.serial_margin
+                        if point.singularity_metrics is not None
+                        else None
+                    ),
+                    "singularity_margin": (
+                        point.singularity_metrics.singularity_margin
+                        if point.singularity_metrics is not None
+                        else None
+                    ),
                 }
                 for point in sample.points
             ],
             "summary": {
                 "joint_limited": sample.summary.joint_limited_count,
+                "practically_usable": sample.summary.practically_usable_count,
                 "reachable": sample.summary.reachable_count,
                 "total": sample.summary.total_count,
                 "unreachable": sample.summary.unreachable_count,
+                "weak_reachable": sample.summary.weak_reachable_count,
             },
         }
     )

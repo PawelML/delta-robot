@@ -36,10 +36,16 @@
           <span>Robot i przeguby</span>
         </label>
         <label class="toggle-row">
-          <input id="toggle-reachable" type="checkbox" checked />
-          <span class="swatch reachable"></span>
-          <span>Osiągalne</span>
-          <strong id="count-reachable-short">—</strong>
+          <input id="toggle-usable" type="checkbox" checked />
+          <span class="swatch usable"></span>
+          <span>Praktycznie użyteczne</span>
+          <strong id="count-usable-short">—</strong>
+        </label>
+        <label class="toggle-row">
+          <input id="toggle-weak" type="checkbox" checked />
+          <span class="swatch weak"></span>
+          <span>Słabe / blisko osobliwości</span>
+          <strong id="count-weak-short">—</strong>
         </label>
         <label class="toggle-row">
           <input id="toggle-limited" type="checkbox" checked />
@@ -82,6 +88,8 @@
         </div>
         <dl class="metrics-list">
           <div><dt>Osiągalne</dt><dd id="metric-reachable">—</dd></div>
+          <div><dt>Praktycznie użyteczne</dt><dd id="metric-usable">—</dd></div>
+          <div><dt>Słabe osiągalne</dt><dd id="metric-weak">—</dd></div>
           <div><dt>Limitowane</dt><dd id="metric-limited">—</dd></div>
           <div><dt>Nieosiągalne</dt><dd id="metric-unreachable">—</dd></div>
           <div><dt>Siatka XYZ</dt><dd id="metric-shape">—</dd></div>
@@ -119,7 +127,7 @@
 
       <div class="warning-box">
         <strong>Geometrycznie osiągalne ≠ użyteczne.</strong>
-        <span>Brak jeszcze metryki osobliwości, kolizji i dynamiki.</span>
+        <span>Fiolet pokazuje osiągalne punkty odrzucone przez próg osobliwości P0. Kolizje i dynamika są oceniane osobno.</span>
       </div>
     </aside>
 

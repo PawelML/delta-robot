@@ -1,4 +1,4 @@
-export const WORKSPACE_SCHEMA = 'delta-robot-p0-workspace/v1';
+export const WORKSPACE_SCHEMA = 'delta-robot-p0-workspace/v2';
 export const POSE_SCHEMA = 'delta-robot-p0-pose/v1';
 export const WORKSPACE_CLASSES = ['reachable', 'joint_limited', 'unreachable'];
 
@@ -116,11 +116,24 @@ export function validateWorkspace(document) {
   );
   const summed = Object.values(expectedCounts).reduce((sum, count) => sum + count, 0);
   if (summed !== total) fail('workspace class counts must sum to summary.total');
+  const practicallyUsable = requireNonNegativeInteger(
+    summary.practically_usable,
+    'summary.practically_usable',
+  );
+  const weakReachable = requireNonNegativeInteger(
+    summary.weak_reachable,
+    'summary.weak_reachable',
+  );
+  if (practicallyUsable + weakReachable !== summary.reachable) {
+    fail('workspace quality counts must sum to summary.reachable');
+  }
 
   if (!Array.isArray(artifact.points) || artifact.points.length !== total) {
     fail('points length must equal summary.total');
   }
   const actualCounts = Object.fromEntries(WORKSPACE_CLASSES.map((name) => [name, 0]));
+  let actualPracticallyUsable = 0;
+  let actualWeakReachable = 0;
   artifact.points.forEach((pointValue, index) => {
     const point = requireObject(pointValue, `points[${index}]`);
     if (!WORKSPACE_CLASSES.includes(point.classification)) {
@@ -130,12 +143,48 @@ export function validateWorkspace(document) {
       fail(`points[${index}].reason contradicts its classification`);
     }
     requireVector3(point.position_m, `points[${index}].position_m`);
+    if (typeof point.practically_usable !== 'boolean') {
+      fail(`points[${index}].practically_usable must be boolean`);
+    }
+    const marginFields = ['parallel_margin', 'serial_margin', 'singularity_margin'];
+    if (point.classification === 'unreachable') {
+      if (point.practically_usable) {
+        fail(`points[${index}] unreachable point cannot be practically usable`);
+      }
+      for (const field of marginFields) {
+        if (point[field] !== null) fail(`points[${index}].${field} must be null`);
+      }
+    } else {
+      for (const field of marginFields) {
+        const margin = requireFiniteNumber(point[field], `points[${index}].${field}`);
+        if (margin < 0 || margin > 1) fail(`points[${index}].${field} must be in [0, 1]`);
+      }
+      if (point.singularity_margin > point.parallel_margin + Number.EPSILON) {
+        fail(`points[${index}].singularity_margin exceeds parallel margin`);
+      }
+      if (point.singularity_margin > point.serial_margin + Number.EPSILON) {
+        fail(`points[${index}].singularity_margin exceeds serial margin`);
+      }
+      if (point.classification === 'joint_limited' && point.practically_usable) {
+        fail(`points[${index}] joint-limited point cannot be practically usable`);
+      }
+    }
+    if (point.practically_usable) actualPracticallyUsable += 1;
+    if (point.classification === 'reachable' && !point.practically_usable) {
+      actualWeakReachable += 1;
+    }
     actualCounts[point.classification] += 1;
   });
   for (const classification of WORKSPACE_CLASSES) {
     if (actualCounts[classification] !== expectedCounts[classification]) {
       fail(`point count for ${classification} contradicts summary`);
     }
+  }
+  if (actualPracticallyUsable !== practicallyUsable) {
+    fail('point count for practically_usable contradicts summary');
+  }
+  if (actualWeakReachable !== weakReachable) {
+    fail('point count for weak_reachable contradicts summary');
   }
 
   const shapeCardinality = shape.x * shape.y * shape.z;
@@ -192,6 +241,25 @@ export function partitionWorkspacePoints(workspace) {
   const partitions = Object.fromEntries(WORKSPACE_CLASSES.map((name) => [name, []]));
   for (const point of workspace.points) {
     partitions[point.classification].push(point.position_m);
+  }
+  return partitions;
+}
+
+export function partitionWorkspaceQualityPoints(workspace) {
+  const partitions = {
+    practically_usable: [],
+    weak_reachable: [],
+    joint_limited: [],
+    unreachable: [],
+  };
+  for (const point of workspace.points) {
+    if (point.practically_usable) {
+      partitions.practically_usable.push(point.position_m);
+    } else if (point.classification === 'reachable') {
+      partitions.weak_reachable.push(point.position_m);
+    } else {
+      partitions[point.classification].push(point.position_m);
+    }
   }
   return partitions;
 }

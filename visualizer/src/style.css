@@ -9,6 +9,7 @@
   --muted: #8c9aad;
   --accent: #62a8ff;
   --reachable: #42d69a;
+  --weak: #d765ff;
   --limited: #ffb454;
   --unreachable: #ff6670;
   --robot: #72b8ff;
@@ -212,6 +213,16 @@ h1 {
 .swatch.reachable {
   color: var(--reachable);
   background: var(--reachable);
+}
+
+.swatch.usable {
+  color: var(--reachable);
+  background: var(--reachable);
+}
+
+.swatch.weak {
+  color: var(--weak);
+  background: var(--weak);
 }
 
 .swatch.limited {

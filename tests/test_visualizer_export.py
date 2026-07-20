@@ -61,7 +61,21 @@ def test_workspace_document_has_versioned_units_geometry_counts_and_points() -> 
     points = cast(list[dict[str, object]], document["points"])
     assert summary["total"] == 8
     assert len(points) == summary["total"]
-    assert set(points[0]) == {"classification", "position_m", "reason"}
+    assert set(points[0]) == {
+        "classification",
+        "parallel_margin",
+        "position_m",
+        "practically_usable",
+        "reason",
+        "serial_margin",
+        "singularity_margin",
+    }
+    assert summary["practically_usable"] + summary["weak_reachable"] == summary["reachable"]
+    assert all(
+        point["singularity_margin"] is not None
+        for point in points
+        if point["classification"] != "unreachable"
+    )
 
 
 def test_pose_document_contains_authoritative_ik_points_and_closes_links() -> None:
@@ -147,7 +161,9 @@ def test_reference_artifacts_regenerate_without_a_diff(tmp_path: Path) -> None:
     assert workspace["source"] == REFERENCE_SOURCE_LABEL
     assert workspace["summary"] == {
         "joint_limited": 3262,
+        "practically_usable": 4491,
         "reachable": 4491,
         "total": 9261,
         "unreachable": 1508,
+        "weak_reachable": 0,
     }

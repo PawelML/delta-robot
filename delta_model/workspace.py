@@ -5,6 +5,11 @@ from dataclasses import dataclass, replace
 from enum import StrEnum
 
 from delta_model.conventions import AssemblyMode, CartesianPosition, JointAngles
+from delta_model.differential_kinematics import (
+    PRACTICALLY_USABLE_MARGIN,
+    SingularityMetrics,
+    differential_kinematics,
+)
 from delta_model.errors import AssemblyConstraintError, JointLimitError
 from delta_model.geometry import DeltaGeometry
 from delta_model.inverse_kinematics import (
@@ -61,6 +66,8 @@ class WorkspacePoint:
     classification: WorkspaceClassification
     reason: WorkspaceReason
     angles: JointAngles | None
+    singularity_metrics: SingularityMetrics | None
+    practically_usable: bool
 
 
 @dataclass(frozen=True, slots=True)
@@ -71,6 +78,8 @@ class WorkspaceSummary:
     reachable_count: int
     joint_limited_count: int
     unreachable_count: int
+    practically_usable_count: int
+    weak_reachable_count: int
 
 
 @dataclass(frozen=True, slots=True)
@@ -135,6 +144,8 @@ def _unreachable_result(
         classification=WorkspaceClassification.UNREACHABLE,
         reason=reason,
         angles=None,
+        singularity_metrics=None,
+        practically_usable=False,
     )
 
 
@@ -171,6 +182,12 @@ def classify_workspace_point(
             classification=WorkspaceClassification.JOINT_LIMITED,
             reason=WorkspaceReason.JOINT_LIMIT,
             angles=unrestricted_result.angles,
+            singularity_metrics=differential_kinematics(
+                unrestricted_geometry,
+                position,
+                assembly_mode,
+            ).metrics,
+            practically_usable=False,
         )
     except (
         UnreachablePositionError,
@@ -179,11 +196,14 @@ def classify_workspace_point(
         AmbiguousAssemblyError,
     ) as error:
         return _unreachable_result(position, error)
+    metrics = differential_kinematics(geometry, position, assembly_mode).metrics
     return WorkspacePoint(
         position=position,
         classification=WorkspaceClassification.REACHABLE,
         reason=WorkspaceReason.REACHABLE,
         angles=result.angles,
+        singularity_metrics=metrics,
+        practically_usable=metrics.singularity_margin >= PRACTICALLY_USABLE_MARGIN,
     )
 
 
@@ -207,11 +227,19 @@ def sample_workspace(
     unreachable_count = sum(
         point.classification is WorkspaceClassification.UNREACHABLE for point in points
     )
+    practically_usable_count = sum(point.practically_usable for point in points)
+    weak_reachable_count = sum(
+        point.classification is WorkspaceClassification.REACHABLE
+        and not point.practically_usable
+        for point in points
+    )
     summary = WorkspaceSummary(
         total_count=len(points),
         reachable_count=reachable_count,
         joint_limited_count=joint_limited_count,
         unreachable_count=unreachable_count,
+        practically_usable_count=practically_usable_count,
+        weak_reachable_count=weak_reachable_count,
     )
     if reachable_count + joint_limited_count + unreachable_count != len(points):
         raise RuntimeError("workspace classification counts do not match grid cardinality")

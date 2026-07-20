@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import {
   assertMatchingArtifacts,
   mapModelToScene,
-  partitionWorkspacePoints,
+  partitionWorkspaceQualityPoints,
   validatePose,
   validateWorkspace,
 } from './data-contract.js';
@@ -20,12 +20,15 @@ const COLORS = {
   attachment: 0x54d7c5,
   center: 0xffdf75,
   reachable: 0x42d69a,
+  practically_usable: 0x42d69a,
+  weak_reachable: 0xd765ff,
   joint_limited: 0xffb454,
   unreachable: 0xff6670,
 };
 
 const POINT_STYLE = {
-  reachable: { opacity: 0.72, sizeFactor: 0.22 },
+  practically_usable: { opacity: 0.72, sizeFactor: 0.22 },
+  weak_reachable: { opacity: 0.82, sizeFactor: 0.25 },
   joint_limited: { opacity: 0.5, sizeFactor: 0.18 },
   unreachable: { opacity: 0.14, sizeFactor: 0.14 },
 };
@@ -235,7 +238,7 @@ function minimumGridInterval(workspace) {
 }
 
 function createWorkspaceLayers(workspace) {
-  const partitions = partitionWorkspacePoints(workspace);
+  const partitions = partitionWorkspaceQualityPoints(workspace);
   const pointInterval = minimumGridInterval(workspace);
   const groups = {};
   for (const [classification, points] of Object.entries(partitions)) {
@@ -399,7 +402,8 @@ function resize() {
 function readVisibilitySettings() {
   const defaults = {
     robot: true,
-    reachable: true,
+    usable: true,
+    weak: true,
     limited: true,
     unreachable: true,
   };
@@ -414,7 +418,8 @@ function bindLayerControls() {
   const settings = readVisibilitySettings();
   const bindings = [
     ['toggle-robot', 'robot', robotGroup],
-    ['toggle-reachable', 'reachable', layerGroups.reachable],
+    ['toggle-usable', 'usable', layerGroups.practically_usable],
+    ['toggle-weak', 'weak', layerGroups.weak_reachable],
     ['toggle-limited', 'limited', layerGroups.joint_limited],
     ['toggle-unreachable', 'unreachable', layerGroups.unreachable],
   ];
@@ -441,10 +446,13 @@ function populateInterface(workspace, pose) {
   $('workspace-schema').textContent = workspace.schema;
   $('pose-schema').textContent = pose.schema;
   $('total-points').textContent = `${summary.total.toLocaleString('pl-PL')} punktów`;
-  $('count-reachable-short').textContent = summary.reachable.toLocaleString('pl-PL');
+  $('count-usable-short').textContent = summary.practically_usable.toLocaleString('pl-PL');
+  $('count-weak-short').textContent = summary.weak_reachable.toLocaleString('pl-PL');
   $('count-limited-short').textContent = summary.joint_limited.toLocaleString('pl-PL');
   $('count-unreachable-short').textContent = summary.unreachable.toLocaleString('pl-PL');
   $('metric-reachable').textContent = formatPercent(summary.reachable, summary.total);
+  $('metric-usable').textContent = formatPercent(summary.practically_usable, summary.total);
+  $('metric-weak').textContent = formatPercent(summary.weak_reachable, summary.total);
   $('metric-limited').textContent = formatPercent(summary.joint_limited, summary.total);
   $('metric-unreachable').textContent = formatPercent(summary.unreachable, summary.total);
   const shape = workspace.grid.shape;
@@ -495,7 +503,11 @@ async function start() {
     configureScene(workspace, pose);
     bindLayerControls();
     populateInterface(workspace, pose);
-    setStatus('ready', 'Dane zweryfikowane', `${workspace.summary.total} punktów · poza osiągalna`);
+    setStatus(
+      'ready',
+      'Dane zweryfikowane',
+      `${workspace.summary.practically_usable} użytecznych · poza osiągalna`,
+    );
     loadingOverlay.classList.add('hidden');
     window.__deltaVisualizer = {
       ready: true,

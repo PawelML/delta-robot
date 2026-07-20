@@ -5,6 +5,7 @@ import test from 'node:test';
 import {
   assertMatchingArtifacts,
   mapModelToScene,
+  partitionWorkspaceQualityPoints,
   partitionWorkspacePoints,
   validatePose,
   validateWorkspace,
@@ -20,6 +21,15 @@ test('committed artifacts satisfy the complete visualizer contract', () => {
   assert.equal(validateWorkspace(workspace), workspace);
   assert.equal(validatePose(pose), pose);
   assert.doesNotThrow(() => assertMatchingArtifacts(workspace, pose));
+});
+
+test('quality partition separates useful and weak reachable points', () => {
+  const partitions = partitionWorkspaceQualityPoints(workspace);
+
+  assert.equal(partitions.practically_usable.length, workspace.summary.practically_usable);
+  assert.equal(partitions.weak_reachable.length, workspace.summary.weak_reachable);
+  assert.equal(partitions.joint_limited.length, workspace.summary.joint_limited);
+  assert.equal(partitions.unreachable.length, workspace.summary.unreachable);
 });
 
 test('model coordinates map to the right-handed scene convention', () => {
@@ -50,6 +60,13 @@ test('workspace validation rejects a wrong schema and contradictory count', () =
   const wrongReason = structuredClone(workspace);
   wrongReason.points[0].reason = 'reachable';
   assert.throws(() => validateWorkspace(wrongReason), /reason contradicts/);
+
+  const invalidMargin = structuredClone(workspace);
+  const solvedPoint = invalidMargin.points.find(
+    (point) => point.classification !== 'unreachable',
+  );
+  solvedPoint.singularity_margin = 2;
+  assert.throws(() => validateWorkspace(invalidMargin), /must be in \[0, 1\]/);
 });
 
 test('validation rejects wrong units and non-finite coordinates', () => {

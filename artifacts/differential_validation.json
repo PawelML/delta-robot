@@ -1,0 +1,17 @@
+{
+  "acceptance": {
+    "max_abs_joint_rate_error_rad_s_lt": 1e-05,
+    "max_constraint_residual_m_s_lt": 1e-10,
+    "p99_abs_joint_rate_error_rad_s_lt": 1e-06
+  },
+  "finite_difference_step_s": 1e-06,
+  "max_abs_joint_rate_error_rad_s": 8.995875155903832e-10,
+  "max_cartesian_speed_m_s": 0.25,
+  "max_constraint_residual_m_s": 2.7755575615628914e-17,
+  "p99_abs_joint_rate_error_rad_s": 4.713714309764058e-10,
+  "random_seed": 20260720,
+  "sample_count": 10000,
+  "sampling_attempts": 11871,
+  "source_geometry": "williams_2016",
+  "status": "pass"
+}

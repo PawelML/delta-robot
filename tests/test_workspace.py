@@ -28,6 +28,7 @@ def test_known_williams_point_is_reachable_with_finite_angles() -> None:
     assert result.classification is WorkspaceClassification.REACHABLE
     assert result.reason is WorkspaceReason.REACHABLE
     assert result.angles is not None
+    assert result.singularity_metrics is not None
     assert all(
         math.isfinite(angle)
         for angle in (
@@ -54,6 +55,8 @@ def test_geometrically_reachable_point_outside_configured_limits_is_joint_limite
     assert result.classification is WorkspaceClassification.JOINT_LIMITED
     assert result.reason is WorkspaceReason.JOINT_LIMIT
     assert result.angles is not None
+    assert result.singularity_metrics is not None
+    assert not result.practically_usable
 
 
 @pytest.mark.parametrize(
@@ -78,6 +81,8 @@ def test_unreachable_points_preserve_diagnostic_reason(
     assert result.classification is WorkspaceClassification.UNREACHABLE
     assert result.reason is expected_reason
     assert result.angles is None
+    assert result.singularity_metrics is None
+    assert not result.practically_usable
 
 
 def test_non_finite_point_remains_a_caller_error() -> None:
@@ -153,3 +158,7 @@ def test_sample_summary_has_exact_cardinality_and_counts() -> None:
         == sample.summary.total_count
     )
     assert sample.summary.reachable_count == 8
+    assert (
+        sample.summary.practically_usable_count + sample.summary.weak_reachable_count
+        == sample.summary.reachable_count
+    )

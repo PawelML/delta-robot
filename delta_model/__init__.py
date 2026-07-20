@@ -1,6 +1,19 @@
 """Authoritative Python model for the rotary delta robot."""
 
 from delta_model.conventions import AssemblyMode, CartesianPoint, CartesianPosition, JointAngles
+from delta_model.differential_kinematics import (
+    PRACTICALLY_USABLE_MARGIN,
+    CartesianVelocity,
+    DifferentialKinematicsError,
+    DifferentialKinematicsResult,
+    InvalidVelocityError,
+    JointRates,
+    SingularDifferentialKinematicsError,
+    SingularityMetrics,
+    cartesian_velocity_for_joint_rates,
+    differential_kinematics,
+    joint_rates_for_cartesian_velocity,
+)
 from delta_model.errors import (
     AssemblyConstraintError,
     JointLimitError,
@@ -44,6 +57,7 @@ from delta_model.workspace import (
 )
 
 __all__ = [
+    "PRACTICALLY_USABLE_MARGIN",
     "AmbiguousAssemblyError",
     "AmbiguousForwardSolutionError",
     "ArmForwardPose",
@@ -52,20 +66,27 @@ __all__ = [
     "AssemblyMode",
     "CartesianPoint",
     "CartesianPosition",
+    "CartesianVelocity",
     "DegeneratePositionError",
     "DegenerateSphereGeometryError",
     "DeltaGeometry",
+    "DifferentialKinematicsError",
+    "DifferentialKinematicsResult",
     "ForwardKinematicsError",
     "ForwardKinematicsResult",
     "GeometryValidationError",
     "GridValidationError",
     "InvalidAnglesError",
     "InvalidPositionError",
+    "InvalidVelocityError",
     "InverseKinematicsError",
     "InverseKinematicsResult",
     "JointAngles",
     "JointLimitError",
+    "JointRates",
     "KinematicsError",
+    "SingularDifferentialKinematicsError",
+    "SingularityMetrics",
     "UnreachableAnglesError",
     "UnreachablePositionError",
     "UnsupportedAssemblyModeError",
@@ -75,11 +96,14 @@ __all__ = [
     "WorkspaceReason",
     "WorkspaceSample",
     "WorkspaceSummary",
+    "cartesian_velocity_for_joint_rates",
     "classify_workspace_point",
+    "differential_kinematics",
     "forward_kinematics",
     "grid_positions",
     "intersect_three_equal_spheres",
     "inverse_kinematics",
+    "joint_rates_for_cartesian_velocity",
     "sample_workspace",
     "solve_arm_inverse",
 ]
