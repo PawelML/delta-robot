@@ -39,7 +39,8 @@ Parametry i ilości pochodzą wyłącznie z `BOM_delta.md`, kontrakt napędu z
 - [ ] Wybrany jeden producent/typ łożysk R6-2RS i 6204-2RS wraz z aktualnymi
   rysunkami i zaleceniami pasowań.
 - [ ] Oferta na sprzęgło 14.000/9.525 mm z wymiarami, momentem, dopuszczalną
-  niewspółosiowością i sposobem zacisku.
+  niewspółosiowością i sposobem zacisku; zweryfikowano prześwit CAD dla
+  rzeczywistej średnicy sprzęgła.
 
 ### Zasilanie, regeneracja i odcięcie DC
 
@@ -57,6 +58,8 @@ Parametry i ilości pochodzą wyłącznie z `BOM_delta.md`, kontrakt napędu z
 
 - [ ] Potwierdzono dostępność oryginalnej, identyfikowalnej Mesa 7I96S lub
   wstrzymano zakup; zamiennik nie jest wybierany bez osobnej oceny interfejsów.
+- [ ] Wybrano stabilizowany zasilacz 5,0 V / co najmniej 1 A dla Mesa i E6,
+  a budżet prądowy oraz spadek napięcia mieszczą się w zakresie 4,75–5,25 V.
 - [ ] Uzyskano wspólną wycenę dokładnej konfiguracji US Digital E6, przewodu,
   pokrywy/bazy i narzędzia centrującego.
 - [ ] Uzyskano wycenę Pico TC-08 PP222 z właściwymi sondami powierzchniowymi
@@ -134,6 +137,7 @@ Wolno zamawiać dopiero, gdy wszystkie warunki są spełnione:
 
 | Dowód | Plik / numer oferty / data |
 |---|---|
+| Rozeznanie dostawców (nie oferta) | `docs/p1-supplier-research-poland-2026-07-20.md` |
 | Oferta napędu i przekładni | |
 | Potwierdzenie zasilania i regeneracji | |
 | Oferta Mesa i interfejsów | |

@@ -48,11 +48,11 @@ flange/bushing and landed price with the selected distributor before payment.
 | Item | Concrete purchase parameter | Qty now | Evidence / acceptance |
 |---|---|---:|---|
 | Integrated servo | Leadshine `iSV2-RS6040V48G`; 24–60 VDC, nominal 48 V; 400 W; 1.27/3.81 Nm rated/peak; 3000/4000 rpm rated/max; brake; Pulse+Direction and Modbus RTU | max. 1 | Exact `G` revision and current manual on delivery; <https://www.leadshine.com/product-detail/iSV2-RS6040V48G.html> |
-| Small pulley | Gates `P18-5MGT-15AL`; 18 teeth, 5MGT, 15 mm belt, aluminium, finished 3/8 inch bore | 1 | Published pitch diameter 28.651 mm and `WR²=0.000097 lb·ft²`; no pulley on the servo shaft |
-| Large pulley | Gates `P90-5MGT-15`; 90 teeth, 5MGT, 15 mm belt, ductile iron, 1610 bushing interface | 1 | Published pitch diameter 143.239 mm and `WR²=0.1358 lb·ft²` |
-| Taper bushing | Gates 1610, finished 20 mm bore, compatible key and screws included/ordered | 1 | Confirm exact metric-bore suffix and key dimensions with distributor |
-| Belt | Gates PowerGrip GT3 `600-5MGT-15`; 600 mm pitch length, 5 mm pitch, 15 mm width, 120 teeth | 1 installed + 1 optional spare | Do not substitute 9 mm width or a different length without regenerating selection artifact |
-| Flexible coupling | Zero-backlash jaw or bellows coupling, bores 14.000 mm and 9.525 mm, rated torque ≥5 Nm, speed ≥1000 rpm | 1 | Document allowed angular/radial/axial misalignment and clamp-screw torque; no set-screw-only generic coupler |
+| Small pulley | Gates `P18-5MGT-15AL`, no. `7845-1518`; 18 teeth, 5MGT, 15 mm belt, aluminium; final bore 3/8 inch required | 1 | Published pitch diameter 28.651 mm and `WR²=0.000097 lb·ft²`; catalogue bore range is not proof of a finished 3/8 inch bore, so confirm machining and retention; no pulley on the servo shaft |
+| Large pulley | Gates `P90-5MGT-15`, no. `7709-1090`; 90 teeth, 5MGT, 15 mm belt, ductile iron, 1610 bushing interface | 1 | Published pitch diameter 143.239 mm and `WR²=0.1358 lb·ft²` |
+| Taper bushing | Gates `1610-20MM`, no. `7858-1620`, finished 20 mm bore, compatible key and screws included/ordered | 1 | Confirm key dimensions and direct compatibility with the quoted P90; a generic 1610-20 is not an automatic substitute |
+| Belt | Gates PowerGrip GT3 `600-5MGT3-15`, no. `9400-55202`; 600 mm pitch length, 5 mm pitch, 15 mm width, 120 teeth | 1 installed + 1 optional spare | Current catalogue name for the selected 600-5MGT-15 geometry; do not substitute 9 mm width or a different length without regenerating selection artifact |
+| Flexible coupling | Zero-backlash jaw or bellows coupling, bores 14.000 mm and 9.525 mm, rated torque ≥5 Nm, speed ≥1000 rpm | 1 | Document allowed angular/radial/axial misalignment and clamp-screw torque; no set-screw-only generic coupler. Regenerate CAD for the real envelope: the first qualifying Ruland candidate is Ø41.3 × 51.7 mm versus the Ø35 × 45 mm placeholder |
 
 Primary transmission evidence is `artifacts/p1_transmission_selection.json` and
 the manufacturer method is the Gates GT3 design manual:
@@ -87,7 +87,8 @@ supplier-pattern items remain explicitly blocked from final machining release.
 | Regenerative resistor | Non-inductive/chassis resistor 10 Ω, ≥100 W continuous nameplate, insulated terminals and ventilated mounting | 1 | Current manual's starting test value for RS6040; never below 5 Ω; monitor temperature, brake load `<80%` and driver `<60°C` during P1 |
 | DC isolation/cutoff | 60 VDC minimum, ≥30 A DC-rated disconnect/contactor operated by a normally-closed mushroom circuit | 1 set | Workshop power cutoff only; verify DC interruption rating, fuse and wiring with an electrician if uncertain |
 | Branch protection/wiring | Fuse/breaker and copper conductors rated for 60 VDC and the selected 12.5 A continuous supply, with PE bonding where applicable | 1 set | Size from actual cable length, installation and manufacturer terminal limits |
-| Motion command and encoder capture | Mesa `7I96S`, used with Ethernet-connected LinuxCNC >=2.8.4; five 5 V differential step/dir channels, encoder input and isolated I/O | 1 | P1 tool, not a final controller decision. Manufacturer store showed out of stock on 2026-07-20: buy only genuine traceable stock |
+| Motion command and encoder capture | Mesa `7I96S`, used with Ethernet-connected LinuxCNC >=2.8.4; five 5 V differential step/dir channels, encoder input and isolated I/O | 1 | P1 tool, not a final controller decision. Manufacturer store showed out of stock, while a European supplier listed stock on 2026-07-20; confirm genuine traceable revision and delivered price |
+| Mesa/encoder logic supply | Regulated 5.0 VDC, at least 1 A continuous, within 4.75–5.25 V at the 7I96S terminals | 1 | Separate purchasing item; include the 7I96S consumption, E6 load and wiring drop, and never feed P4 from 48 V |
 | Modbus diagnostics | Waveshare `USB TO RS485 (C)`, SKU 34620, isolated FT232RNL adapter, plus correct CN5 cable/breakout | 1 | Verify address, baud, A/B/GND reference and measured polling rate on delivered drive |
 | Configuration cable | Leadshine `CABLE-PC-1` or confirmed current equivalent for CN7/commissioning | 1 | Confirm connector compatibility for exact revision |
 | Temperature logger | Pico Technology `USB TC-08`, order code `PP222`, 8 channels, Linux SDK, plus at least four suitable type-K surface/ambient probes | 1 set | Log servo/drive housing, output-bearing housing, regenerative resistor and ambient; confirm probe attachment and temperature range |
@@ -113,6 +114,10 @@ Remaining blockers before ordering the single P1 set:
    fabrication drawings based on delivered component dimensions.
 4. Obtain a combined quote for the exact E6 configuration, TC-08 probes and
    calibrated force gauge; confirm genuine 7I96S availability or pause purchase.
+
+The dated market snapshot, supplier links and RFQ text are recorded in
+`docs/p1-supplier-research-poland-2026-07-20.md`. Public stock is not written
+confirmation and does not close any purchasing blocker.
 
 ## 3. Mechanical candidate BOM for P2
 

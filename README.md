@@ -27,6 +27,8 @@ ale jeszcze bez fizycznego zaliczenia**.
   rysunków stanowiska.
 - `docs/p1-procurement-checklist.md` — kolejność ofert, zakupu jednej osi,
   pomiarów, obróbki i fizycznego gate'u P1.
+- `docs/p1-supplier-research-poland-2026-07-20.md` — datowana migawka cen,
+  dostępności, blokery oraz gotowe zapytania ofertowe dla dostawy do Polski.
 - `AGENTS.md` — instrukcje obowiązujące narzędzia kodujące.
 
 ## Środowisko developerskie

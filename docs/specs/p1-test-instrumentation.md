@@ -1,7 +1,7 @@
 # P1 test instrumentation and data path
 
 **Status:** accepted purchasing candidate; availability checks remain  
-**Version:** 0.1  
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Purpose
@@ -15,10 +15,10 @@ revision, availability and delivered interfaces must be confirmed first.
 
 | Function | Candidate | Required configuration / rationale |
 |---|---|---|
-| Deterministic Pulse+Direction and external encoder capture | Mesa `7I96S` with LinuxCNC >= 2.8.4 | Five differential 5 V step/dir channels and one quadrature encoder input. Use only as P1 bench apparatus, not as a final robot-controller decision. |
+| Deterministic Pulse+Direction and external encoder capture | Mesa `7I96S` with LinuxCNC >= 2.8.4 | Five differential 5 V step/dir channels and one quadrature encoder input. Use only as P1 bench apparatus, not as a final robot-controller decision. Supply from a dedicated regulated 5.0 V / >=1 A source; the manual permits only 4.75–5.25 V and states up to 400 mA without external loads. |
 | Servo diagnostics from Python | Waveshare `USB TO RS485 (C)`, SKU 34620 | Isolated FT232RNL adapter, A/B/GND interface and Linux support. It provides a separate Modbus RTU path for actual position, bus voltage, temperature and alarms. |
-| Independent output angle | US Digital `E6`, 10,000 CPR, 20 mm bore, differential output, index preferred | 40,000 quadrature counts/rev gives `0.009 deg/count`, below the required `0.02 deg` measurement resolution. Mount on the rear extension of the output shaft. |
-| Temperature logger | Pico Technology `USB TC-08`, order code PP222 | Eight thermocouple channels, Linux SDK and published accuracy. Use type-K surface probes on the servo/drive housing, output bearing housing and braking resistor, plus ambient. |
+| Independent output angle | US Digital `E6-10000-787-IE-D-H-D-3` purchasing configuration to be confirmed, plus screened flying-lead cable | 10,000 CPR, 20 mm bore, differential 5 V output and index. 40,000 quadrature counts/rev gives `0.009 deg/count`, below the required `0.02 deg` measurement resolution. Mount on the rear extension of the output shaft. |
+| Temperature logger | Pico Technology `USB TC-08`, order code PP222 | Eight thermocouple channels, Linux SDK and published accuracy. Use attached type-K surface probes on the servo/drive housing, output bearing housing and braking resistor, plus ambient; hand-held contact during the automatic test is not accepted. |
 | Belt installation tension | Gates force-deflection method with Mark-10 `M3-5`, 25 N range and 0.02 N resolution | Deflect the measured free span by `span / 64` and record the force. The exact acceptable force is calculated from the Gates procedure and confirmed on the installed drive; no guessed sonic-frequency target is allowed. |
 
 Primary technical sources:
@@ -71,14 +71,16 @@ belt-tension measurement and channel sample-rate statistics.
 
 The functional selection is closed, but procurement remains blocked until:
 
-1. a genuine 7I96S is available from Mesa or a traceable European distributor
-   (the manufacturer store was out of stock when checked on 2026-07-20);
+1. a genuine 7I96S revision and delivered price are confirmed with the
+   traceable European supplier found in the dated Poland supplier research;
 2. the exact E6 configuration, cable, centring tool and mounting clearance are
    quoted together;
 3. the delivered Leadshine revision and Modbus register scaling are confirmed;
-4. temperature probes are selected and the M3-5 is ordered with its calibration
-   certificate; a lower-cost substitute is allowed only with 0–25 N coverage,
-   <= 0.05 N resolution and traceable calibration.
+4. attached temperature probes are selected and the M3-5 is quoted with a
+   calibration certificate containing data; a lower-cost substitute is allowed
+   only with 0–25 N coverage, <= 0.05 N resolution and traceable calibration;
+5. the regulated 5.0 V supply and the complete Mesa/E6 current budget are
+   selected before wiring.
 
 ## 6. Outside this decision
 

@@ -100,7 +100,10 @@ machining release until they are closed:
    accessible fasteners;
 4. define shaft shoulders, spacers/collars, keyway standard and axial locking;
 5. quote the exact E6 configuration and update its mounting holes/cable path;
-6. verify coupling length, clamp access and actual pulley/bushing dimensions;
+6. verify coupling diameter, length, clamp access and actual pulley/bushing
+   dimensions; the first qualifying Ruland candidate is Ø41.3 × 51.7 mm and
+   exceeds the current Ø35 × 45 mm placeholder, so it requires regenerated CAD
+   and a new collision/assembly check before purchase;
 7. measure base/carrier flatness and align both shaft axes within `0.10 mm` over
    150 mm; align pulley mid-planes within `0.20 mm`;
 8. hand-sweep `-45°`, `0°`, `+80°` with power removed before commissioning.
