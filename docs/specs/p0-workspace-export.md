@@ -1,8 +1,15 @@
 # P0 workspace sampling and visualizer export — specification
 
 **Status:** accepted for implementation
-**Version:** 0.3
+**Version:** 0.4
 **Date:** 2026-07-20
+
+> **Versioning note:** Sections 1–5 preserve the original `v1` export baseline.
+> The current workspace document is `delta-robot-p0-workspace/v2`, extended by
+> `p0-differential-kinematics.md` with quality margins while keeping the three
+> reachability classes unchanged. The current artifact geometry and grid are
+> defined by `p0-diy-geometry-selection.md`; the Williams export below remains a
+> regression fixture, not the active visualizer dataset.
 
 ## 1. Problem
 
@@ -120,11 +127,11 @@ An unreachable pose request raises the existing typed IK error and does not
 write a partial pose document. Three.js may remap axes for display, but must not
 recompute joints or solve kinematics.
 
-## 6. Reference artifacts
+## 6. Historical v1 reference artifacts
 
-Until DIY dimensions are selected, the reproducible demo uses the clearly
-labelled Williams validation dimensions plus a visualization-only joint-limit
-window, not a hardware proposal:
+The original reproducible demo used the clearly labelled Williams validation
+dimensions plus a visualization-only joint-limit window, not a hardware
+proposal:
 
 - workspace bounds: `x,y = [-0.45, +0.45] m`, `z = [-1.45, -0.55] m`,
 - workspace shape: `21 x 21 x 21 = 9,261` points,
@@ -145,7 +152,7 @@ The `+/-45 deg` limits exist only to exercise `joint_limited` rendering before
 real actuator and collision limits are known. They shall not be copied into the
 BOM, motor specification or final geometry without separate justification.
 
-## 7. Walk-through
+## 7. Historical v1 walk-through
 
 1. The generator constructs the published Williams geometry and the grid.
 2. Python visits each finite point in deterministic order.
@@ -162,7 +169,7 @@ BOM, motor specification or final geometry without separate justification.
 
 ## 8. Acceptance tests
 
-This slice is complete when:
+The original v1 slice remains covered by regression tests when:
 
 1. A known Williams point is classified `reachable` and contains finite angles.
 2. The same geometric point under deliberately narrow limits is classified
@@ -177,15 +184,18 @@ This slice is complete when:
 7. The exported pose preserves the IK result and both upper- and lower-link
    closure within the kinematic numerical policy.
 8. Running the reference generator twice produces byte-identical files.
-9. The committed reference artifacts regenerate without a diff.
+9. The current selected-geometry artifacts regenerate without a diff under the
+   specifications that supersede this historical fixture.
 10. Ruff, strict Mypy and Pytest pass.
 
 ## 9. Known uncertainty
 
-- No Jacobian or singularity-distance metric exists yet, so `reachable` must
-  not be presented as safe, fast or useful throughout the cell.
+- Differential kinematics and a sampled singularity margin now exist, but the
+  useful-workspace label still excludes collision clearance and physical
+  validation. The dynamics report is a provisional sizing model, not a safety
+  or production-load certificate.
 - The reduced center-line lower-link model does not detect rod, platform or
   frame collisions.
 - Uniform sampling can miss a thin boundary feature between points.
-- The Williams fixture validates software behavior but says nothing about the
-  final DIY dimensions or motor choice.
+- The Williams fixture remains an independent kinematic regression oracle; it
+  says nothing about the selected DIY dimensions or motor choice.
