@@ -116,7 +116,7 @@ output inertia.
 ## 6. Outputs
 
 `artifacts/dynamic_sizing.json` uses schema
-`delta-robot-p1-dynamic-sizing/v1` and contains:
+`delta-robot-p1-dynamic-sizing/v2` and contains:
 
 - selected geometry and trajectory identity,
 - exact mass assumptions and model limitations,
@@ -189,6 +189,16 @@ convergence check with a maximum relative peak/RMS change of
 | 5:1 motor speed | 330.48 rpm |
 | 5:1 external-load peak, with 30% factor | 2.366 Nm |
 | 5:1 external-load RMS, with 30% factor | 1.013 Nm |
+
+After the selected transmission inertia is included, the implemented v0.3
+result is 2.576 Nm peak, 1.096 Nm RMS and 330.48 rpm at the motor. The candidate
+therefore uses 67.6% of published peak torque and 86.3% of rated torque in the
+accepted 0.90-efficiency case. The complete sample trace is
+`artifacts/p1_refined_drive_trace.csv`.
+
+The maximum external joint inertia maps to a P1 fixture with a 0.250 kg uniform
+280 mm arm plus a 1.035 kg point mass at 280 mm. This is only an inertia
+equivalent and does not reproduce every delta-robot gravity/Jacobian load.
 
 The earlier BOM proposal of a 2.0–2.2 Nm closed-loop stepper is rejected for
 P1: its quoted value is holding torque, while the calculated required peak at

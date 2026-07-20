@@ -4,7 +4,8 @@ Warsztatowy demonstrator robota delta do pick-and-place nad taśmą. Projekt jes
 rozwijany od zweryfikowanego modelu cyfrowego, przez test pojedynczego napędu,
 do fizycznego robota i trackingu ruchomej taśmy.
 
-Aktualny etap: **P0 — model kinematyczny w Pythonie i wizualizator Three.js**.
+Aktualny etap: **cyfrowe P0 zakończone; P1 przygotowane do budowy jednej osi,
+ale jeszcze bez fizycznego zaliczenia**.
 
 ## Dokumentacja
 
@@ -17,6 +18,9 @@ Aktualny etap: **P0 — model kinematyczny w Pythonie i wizualizator Three.js**.
 - `docs/specs/p0-trajectory-25-305-25.md` — jednosekundowy profil ruchu.
 - `docs/specs/p1-dynamics-and-drive-sizing.md` — pierwszy model momentów.
 - `docs/specs/p1-single-drive.md` — kandydat jednego napędu i test P1.
+- `docs/specs/p1-transmission-selection.md` — dokładny dobór przekładni 18/90.
+- `docs/specs/p1-single-axis-bench-lld.md` — stanowisko jednej osi w ForgeCAD.
+- `docs/specs/p1-bench-software.md` — komendy, telemetria i automatyczny gate.
 - `AGENTS.md` — instrukcje obowiązujące narzędzia kodujące.
 
 ## Środowisko developerskie
@@ -38,6 +42,9 @@ uv run python scripts/validate_differential_kinematics.py
 uv run python scripts/compare_diy_geometries.py
 uv run python scripts/generate_p0_artifacts.py
 uv run python scripts/generate_dynamic_sizing.py
+uv run python scripts/select_p1_transmission.py
+uv run python scripts/run_p1_bench_simulation.py
+forgecad run cad/2026/07/20/p1-single-axis-bench/main.forge.js
 ```
 
 Powstają raporty walidacyjne oraz `workspace.json`, `pose.json` i

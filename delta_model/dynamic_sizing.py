@@ -239,7 +239,7 @@ def dynamic_sizing_document() -> dict[str, object]:
             "component_assumptions": {
                 "bushing": "steel annulus OD 57 mm, ID 20 mm, length 25.4 mm",
                 "coupling": "aluminium annulus OD 35 mm, ID 9.525 mm, length 45 mm",
-                "input_shaft": "steel solid cylinder D 9.525 mm, length 110 mm",
+                "input_shaft": "steel solid cylinder D 9.525 mm, length 132.5 mm",
                 "output_shaft": "steel solid cylinder D 20 mm, length 180 mm",
             },
             "density_aluminium_kg_m3": 2700.0,

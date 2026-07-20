@@ -1,7 +1,7 @@
 # P1 single-axis bench software — specification
 
 **Status:** accepted for implementation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -70,6 +70,7 @@ P1 checks:
 - at least 1,000 completed reversals;
 - no drive alarm;
 - output bidirectional lost motion at most 0.10 degrees;
+- maximum sampled output following error at most 0.50 degrees;
 - maximum driver temperature below 60 degrees Celsius during this bench test;
 - maximum brake-resistor load below 80 percent when that field is available;
 - no bus-overvoltage event and no missing/non-finite required sample;
@@ -97,6 +98,11 @@ run whose numerical checks pass returns `simulation_only`, never `passed`.
   `simulation_only` and hardware record `passed`;
 - any threshold violation names the failed check;
 - committed JSON/CSV simulator artifacts are reproducible.
+
+The committed simulator run contains 2,002 telemetry samples, executes the full
+authoritative trajectory and more than 1,000 command reversals, and returns
+`simulation_only`. This validates command/log/report plumbing only; its thermal,
+regeneration and tracking numbers are test-double behaviour, not drive evidence.
 
 ## 8. Physical unknowns
 

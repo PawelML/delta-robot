@@ -40,9 +40,12 @@ Założenia są punktem startowym do weryfikacji, a nie gwarantowanymi parametra
 Wynik P0/P1 z 2026-07-20 (nadal przed pomiarem sprzętu): geometria o promieniach
 bazy/platformy 180/65 mm i ramionach 280/450 mm przechodzi próbkowany walec
 Ø400×150 mm. Pierwszy model dynamiczny dla konserwatywnego detalu 0,50 kg
-wskazuje 8,190 Nm peak i 3,507 Nm RMS na osi wyjściowej. Reprezentatywnym
-kandydatem do **jednego** testu P1 jest serwo 48 V / 400 W z redukcją 5:1,
-zgodnie z `docs/specs/p1-single-drive.md`; nie jest to jeszcze zamrożony BOM.
+wskazuje 8,190 Nm peak i 3,507 Nm RMS na osi wyjściowej. Po doliczeniu wybranej
+przekładni 18/90, pasa 600-5MGT-15, wałów, tulei, sprzęgła i wirnika wymaganie
+silnika wynosi 2,576 Nm peak, 1,096 Nm RMS i 330,48 rpm. Reprezentatywnym
+kandydatem do **jednego** testu P1 jest serwo 48 V / 400 W z tą redukcją 5:1,
+zgodnie z `docs/specs/p1-single-drive.md`; nie jest to jeszcze zamrożony BOM ani
+zaliczony fizyczny gate P1.
 
 Poza zakresem pierwszej wersji znajdują się:
 

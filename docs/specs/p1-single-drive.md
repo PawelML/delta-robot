@@ -1,7 +1,7 @@
 # P1 representative single drive — specification
 
 **Status:** provisional candidate for bench validation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Decision
@@ -16,8 +16,8 @@ Primary manufacturer sources:
 - product page: <https://www.leadshine.com/product-detail/iSV2-RS6040V48G.html>
 - manufacturer datasheet:
   <https://www.leadshine.com/upfiles/downloads/9949e15632cdf92fd2df70eded77ac27_1711076777013.pdf>
-- iSV2-RS manual listing from Leadshine:
-  <https://asia.leadshine.com/upfiles/downloads/76b4e9bf6ceaffe5f3b68a8036f7980d_1755252431270.pdf>
+- iSV2-RS user manual V2.01 from Leadshine:
+  <https://www.leadshine.com/upfiles/downloads/f85ab001e8edd4c7f05e5c32ea6671fd_1766721032370.pdf>
 
 The model is preferred over the earlier NEMA 23 closed-loop stepper because it
 publishes continuous and intermittent servo torque, rotor inertia and rated
@@ -36,23 +36,24 @@ Source: conservative mass case in `artifacts/dynamic_sizing.json`, one-second
 | External load peak torque | 1.820 Nm |
 | External load RMS torque | 0.779 Nm |
 | Design factor | 1.30 |
-| Required peak after factor, before rotor inertia | 2.366 Nm |
-| Required RMS after factor, before rotor inertia | 1.013 Nm |
+| Required peak after factor, before transmission/rotor inertia | 2.366 Nm |
+| Required RMS after factor, before transmission/rotor inertia | 1.013 Nm |
 
 The Leadshine datasheet gives rotor inertia `0.58 kg·cm² = 5.8e-5 kg·m²`.
-Adding `J_motor * N * theta_ddot` at every sample, then applying the same 1.30
-factor, gives the final candidate check:
+Adding it and the selected pulley, bushing, belt, coupling and shaft inertias at
+every sample, then applying the same 1.30 factor, gives the refined check:
 
 | Final requirement | Worst axis | Candidate rating | Utilization |
 |---|---:|---:|---:|
-| RMS torque | 1.026 Nm | 1.27 Nm rated | 80.8% |
-| Peak torque | 2.401 Nm | 3.81 Nm peak | 63.0% |
+| RMS torque | 1.096 Nm | 1.27 Nm rated | 86.3% |
+| Peak torque | 2.576 Nm | 3.81 Nm peak | 67.6% |
 | Speed | 330.48 rpm | 3000 rpm rated | 11.0% |
 
 The motor passes this **calculated** external-load-plus-rotor-inertia screen.
-Pulley inertia, friction, belt preload, hose force and model-form error beyond
+Friction, belt compliance/preload loss, hose force and model-form error beyond
 the 30% factor remain unverified. Passing does not mean the physical axis has
-passed P1.
+passed P1. At assumed efficiency 0.85 the refined requirement is 2.725 Nm peak
+and 1.159 Nm RMS, which still passes but further reduces thermal margin.
 
 ## 3. Candidate hardware contract
 
@@ -71,29 +72,27 @@ Manufacturer values to verify on the delivered part:
 | Holding brake | present on `G` variant; control timing documented before use |
 | Environmental | integrated drive is IP20; mount away from debris and accidental contact |
 
-The exact available encoder/actual-position register and update rate over
-Modbus are **not yet verified**. Before ordering, obtain the current register
-manual or written distributor confirmation. If actual position cannot be read
-at a useful rate, the candidate may still serve the local servo loop but fails
-the project's supervisory feedback requirement and must be reconsidered.
+The current manual documents command position at `0x0B14/15`, actual position
+at `0x0B16/17`, deviation at `0x0B18/19`, DC-bus voltage at `0x0B0A`, driver
+temperature at `0x0B0B` and alarm at `0x0B03`. The actual achievable polling
+rate and exact revision-specific scaling remain physical integration checks.
 
 ## 4. Transmission contract
 
-- nominal reduction: 5.00:1;
-- candidate family: synchronous Gates PowerGrip GT3 / equivalent engineering
-  belt, initially 5M pitch and at least 15 mm width;
-- metal motor pulley and metal or structurally verified output pulley/hub;
-- keyed/clamping output hub; no printed 100-tooth torque-carrying pulley for P1;
-- adjustable centre distance or proper tensioner;
+- nominal reduction: 5.00:1 from Gates 18/90 teeth;
+- small pulley `P18-5MGT-15AL` on a separately supported 3/8 inch jackshaft;
+- large pulley `P90-5MGT-15` with 1610-20 mm bushing on a 20 mm shaft;
+- belt `600-5MGT-15`, nominal centre distance 154.37 mm and at least 25 mm
+  carrier adjustment;
+- input jackshaft coupled to the 14 mm servo shaft; no belt radial load on the
+  servo shaft;
 - guards are not production scope, but hands and loose items remain outside the
   moving belt during every powered test.
 
-The exact tooth counts, centre distance, belt length, shaft overhung load and
-pulley inertia are **open design items**. They must be checked with the Gates
-PowerGrip design procedure and the servo's radial-load limit before purchase.
-The Gates manual explicitly requires selection from design power, pitch,
-sprockets, width, bore and shaft-load checks:
-<https://www.gates.com/content/dam/documents-library/catalogs/powergrip-gt3-drive-design-manual-en.pdf>.
+The reproducible calculation is `artifacts/p1_transmission_selection.json`.
+It reports 6.82 teeth in mesh, 68.0 W design belt power against 244.0 W
+interpolated capacity, and 376.5 N conservative support load. Real tension,
+alignment, fits, runout and compliance remain bench measurements.
 
 ## 5. Resolution and lost-motion target
 
@@ -108,10 +107,12 @@ in software during the test.
 
 ## 6. Bench electrical boundary
 
-The bench supply shall be nominal 48 VDC and support at least the published
-10 A continuous input of one drive. Peak-current and regenerative-energy
-handling must follow the current Leadshine manual; a generic 48 V / 350 W
-supply is not accepted merely because average mechanical power is lower.
+The bench supply shall be nominal 48 VDC. The published 10 Arms value is motor
+phase current, not a justified DC-supply input rating. The provisional one-axis
+BOM therefore uses at least 600 W / 12.5 A continuous, but final peak-current
+and regenerative-energy compatibility must be confirmed with Leadshine and the
+power-supply vendor. A generic 48 V / 350 W supply is not accepted merely
+because average mechanical power is lower.
 
 Provide the workshop minimum already accepted in the HLD: physical drive-power
 cutoff, limited commissioning speed and nobody in the moving-axis envelope.
@@ -137,4 +138,3 @@ This is not a production safety architecture.
 P1 passes only if torque/speed are achieved with at least the calculated 30%
 load factor, temperatures stay within current manufacturer limits, the bus does
 not fault during reversal, and external lost motion is measured and reported.
-

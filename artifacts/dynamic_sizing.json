@@ -3,25 +3,25 @@
     {
       "axes": [
         {
-          "continuous_torque_utilization": 0.48272050981734266,
+          "continuous_torque_utilization": 0.48272861733468203,
           "peak_belt_tension_difference_n": 59.75103178018109,
-          "peak_torque_utilization": 0.29654914291765805,
-          "required_peak_torque_nm": 1.1298522345162771,
-          "required_rms_torque_nm": 0.6130550474680252
+          "peak_torque_utilization": 0.2965568131700972,
+          "required_peak_torque_nm": 1.1298814581780703,
+          "required_rms_torque_nm": 0.6130653440150462
         },
         {
-          "continuous_torque_utilization": 0.8277922655064638,
+          "continuous_torque_utilization": 0.8278196404080517,
           "peak_belt_tension_difference_n": 130.46388652394674,
-          "peak_torque_utilization": 0.6509574685182898,
-          "required_peak_torque_nm": 2.4801479550546843,
-          "required_rms_torque_nm": 1.051296177193209
+          "peak_torque_utilization": 0.6509800790158436,
+          "required_peak_torque_nm": 2.4802341010503643,
+          "required_rms_torque_nm": 1.0513309433182256
         },
         {
-          "continuous_torque_utilization": 0.8277922655064638,
+          "continuous_torque_utilization": 0.8278196404080519,
           "peak_belt_tension_difference_n": 130.46388652394663,
-          "peak_torque_utilization": 0.6509574685182891,
-          "required_peak_torque_nm": 2.480147955054681,
-          "required_rms_torque_nm": 1.051296177193209
+          "peak_torque_utilization": 0.650980079015843,
+          "required_peak_torque_nm": 2.4802341010503617,
+          "required_rms_torque_nm": 1.0513309433182259
         }
       ],
       "case_id": "conservative_with_0.15kg_upper_arm",
@@ -31,25 +31,25 @@
     {
       "axes": [
         {
-          "continuous_torque_utilization": 0.4972346840186615,
+          "continuous_torque_utilization": 0.4972428064276971,
           "peak_belt_tension_difference_n": 61.277156527295446,
-          "peak_torque_utilization": 0.30400797881832464,
-          "required_peak_torque_nm": 1.158270399297817,
-          "required_rms_torque_nm": 0.6314880487037001
+          "peak_torque_utilization": 0.3040156490707638,
+          "required_peak_torque_nm": 1.15829962295961,
+          "required_rms_torque_nm": 0.6314983641631753
         },
         {
-          "continuous_torque_utilization": 0.8452039054803351,
+          "continuous_torque_utilization": 0.845231213029786,
           "peak_belt_tension_difference_n": 133.04848734842778,
-          "peak_torque_utilization": 0.6635895377216648,
-          "required_peak_torque_nm": 2.528276138719543,
-          "required_rms_torque_nm": 1.0734089599600256
+          "peak_torque_utilization": 0.6636121482192188,
+          "required_peak_torque_nm": 2.5283622847152234,
+          "required_rms_torque_nm": 1.0734436405478283
         },
         {
-          "continuous_torque_utilization": 0.8452039054803351,
+          "continuous_torque_utilization": 0.845231213029786,
           "peak_belt_tension_difference_n": 133.04848734842767,
-          "peak_torque_utilization": 0.6635895377216641,
-          "required_peak_torque_nm": 2.5282761387195403,
-          "required_rms_torque_nm": 1.0734089599600256
+          "peak_torque_utilization": 0.663612148219218,
+          "required_peak_torque_nm": 2.5283622847152207,
+          "required_rms_torque_nm": 1.0734436405478283
         }
       ],
       "case_id": "conservative_with_0.20kg_upper_arm",
@@ -59,25 +59,25 @@
     {
       "axes": [
         {
-          "continuous_torque_utilization": 0.5117887743758008,
+          "continuous_torque_utilization": 0.5117969101972518,
           "peak_belt_tension_difference_n": 62.803281274409805,
-          "peak_torque_utilization": 0.3114668147189913,
-          "required_peak_torque_nm": 1.1866885640793567,
-          "required_rms_torque_nm": 0.649971743457267
+          "peak_torque_utilization": 0.3114744849714305,
+          "required_peak_torque_nm": 1.18671778774115,
+          "required_rms_torque_nm": 0.6499820759505098
         },
         {
-          "continuous_torque_utilization": 0.862639354206738,
+          "continuous_torque_utilization": 0.8626665963710489,
           "peak_belt_tension_difference_n": 135.63308817290883,
-          "peak_torque_utilization": 0.6762216069250399,
-          "required_peak_torque_nm": 2.576404322384402,
-          "required_rms_torque_nm": 1.0955519798425573
+          "peak_torque_utilization": 0.6762442174225938,
+          "required_peak_torque_nm": 2.5764904683800824,
+          "required_rms_torque_nm": 1.095586577391232
         },
         {
-          "continuous_torque_utilization": 0.8626393542067382,
+          "continuous_torque_utilization": 0.8626665963710489,
           "peak_belt_tension_difference_n": 135.6330881729087,
-          "peak_torque_utilization": 0.6762216069250392,
-          "required_peak_torque_nm": 2.5764043223843993,
-          "required_rms_torque_nm": 1.0955519798425575
+          "peak_torque_utilization": 0.6762442174225931,
+          "required_peak_torque_nm": 2.57649046838008,
+          "required_rms_torque_nm": 1.095586577391232
         }
       ],
       "case_id": "conservative_with_0.25kg_upper_arm",
@@ -87,25 +87,25 @@
     {
       "axes": [
         {
-          "continuous_torque_utilization": 0.5263794699227485,
+          "continuous_torque_utilization": 0.5263876178482343,
           "peak_belt_tension_difference_n": 64.32940602152416,
-          "peak_torque_utilization": 0.31892565061965794,
-          "required_peak_torque_nm": 1.2151067288608968,
-          "required_rms_torque_nm": 0.6685019268018907
+          "peak_torque_utilization": 0.3189333208720971,
+          "required_peak_torque_nm": 1.21513595252269,
+          "required_rms_torque_nm": 0.6685122746672575
         },
         {
-          "continuous_torque_utilization": 0.8800971966739491,
+          "continuous_torque_utilization": 0.8801243753522202,
           "peak_belt_tension_difference_n": 138.21768899738987,
-          "peak_torque_utilization": 0.6888536761284149,
-          "required_peak_torque_nm": 2.6245325060492606,
-          "required_rms_torque_nm": 1.1177234397759155
+          "peak_torque_utilization": 0.6888762866259688,
+          "required_peak_torque_nm": 2.624618652044941,
+          "required_rms_torque_nm": 1.1177579566973197
         },
         {
-          "continuous_torque_utilization": 0.8800971966739494,
+          "continuous_torque_utilization": 0.8801243753522204,
           "peak_belt_tension_difference_n": 138.21768899738973,
-          "peak_torque_utilization": 0.6888536761284142,
-          "required_peak_torque_nm": 2.624532506049258,
-          "required_rms_torque_nm": 1.1177234397759157
+          "peak_torque_utilization": 0.688876286625968,
+          "required_peak_torque_nm": 2.624618652044938,
+          "required_rms_torque_nm": 1.11775795669732
         }
       ],
       "case_id": "conservative_with_0.30kg_upper_arm",
@@ -116,25 +116,25 @@
   "candidate_assessment": {
     "axes": [
       {
-        "continuous_torque_utilization": 0.5117887743758008,
+        "continuous_torque_utilization": 0.5117969101972518,
         "peak_belt_tension_difference_n": 62.803281274409805,
-        "peak_torque_utilization": 0.3114668147189913,
-        "required_peak_torque_nm": 1.1866885640793567,
-        "required_rms_torque_nm": 0.649971743457267
+        "peak_torque_utilization": 0.3114744849714305,
+        "required_peak_torque_nm": 1.18671778774115,
+        "required_rms_torque_nm": 0.6499820759505098
       },
       {
-        "continuous_torque_utilization": 0.862639354206738,
+        "continuous_torque_utilization": 0.8626665963710489,
         "peak_belt_tension_difference_n": 135.63308817290883,
-        "peak_torque_utilization": 0.6762216069250399,
-        "required_peak_torque_nm": 2.576404322384402,
-        "required_rms_torque_nm": 1.0955519798425573
+        "peak_torque_utilization": 0.6762442174225938,
+        "required_peak_torque_nm": 2.5764904683800824,
+        "required_rms_torque_nm": 1.095586577391232
       },
       {
-        "continuous_torque_utilization": 0.8626393542067382,
+        "continuous_torque_utilization": 0.8626665963710489,
         "peak_belt_tension_difference_n": 135.6330881729087,
-        "peak_torque_utilization": 0.6762216069250392,
-        "required_peak_torque_nm": 2.5764043223843993,
-        "required_rms_torque_nm": 1.0955519798425575
+        "peak_torque_utilization": 0.6762442174225931,
+        "required_peak_torque_nm": 2.57649046838008,
+        "required_rms_torque_nm": 1.095586577391232
       }
     ],
     "candidate": {
@@ -266,20 +266,20 @@
     {
       "efficiency": 0.85,
       "passes": true,
-      "worst_peak_torque_nm": 2.7249714483994527,
-      "worst_rms_torque_nm": 1.1587973129142184
+      "worst_peak_torque_nm": 2.725057594395133,
+      "worst_rms_torque_nm": 1.158831890835632
     },
     {
       "efficiency": 0.9,
       "passes": true,
-      "worst_peak_torque_nm": 2.576404322384402,
-      "worst_rms_torque_nm": 1.0955519798425575
+      "worst_peak_torque_nm": 2.5764904683800824,
+      "worst_rms_torque_nm": 1.095586577391232
     },
     {
       "efficiency": 0.95,
       "passes": true,
-      "worst_peak_torque_nm": 2.4434758412130404,
-      "worst_rms_torque_nm": 1.0389646575449198
+      "worst_peak_torque_nm": 2.443561987208721,
+      "worst_rms_torque_nm": 1.038999274660025
     }
   ],
   "equivalent_bench_load": {
@@ -349,13 +349,13 @@
     "component_assumptions": {
       "bushing": "steel annulus OD 57 mm, ID 20 mm, length 25.4 mm",
       "coupling": "aluminium annulus OD 35 mm, ID 9.525 mm, length 45 mm",
-      "input_shaft": "steel solid cylinder D 9.525 mm, length 110 mm",
+      "input_shaft": "steel solid cylinder D 9.525 mm, length 132.5 mm",
       "output_shaft": "steel solid cylinder D 20 mm, length 180 mm"
     },
     "coupling_kg_m2": 1.7801624099078306e-05,
     "density_aluminium_kg_m3": 2700.0,
     "density_steel_kg_m3": 7850.0,
-    "input_shaft_kg_m2": 6.977858745445341e-07,
+    "input_shaft_kg_m2": 8.405148034286433e-07,
     "large_pulley_kg_m2": 0.00572262695158,
     "measurement_plan": "weigh actual parts and replace geometric estimates",
     "output_shaft_kg_m2": 2.2195352097611887e-05,

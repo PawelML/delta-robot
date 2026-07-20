@@ -165,7 +165,7 @@ def _annular_cylinder_axial_inertia(
 P1_TRANSMISSION_INERTIA = TransmissionInertiaModel(
     small_pulley_kg_m2=inertia_from_wr2_lb_ft2(0.000097),
     input_shaft_kg_m2=_solid_cylinder_axial_inertia(
-        diameter_m=0.009525, length_m=0.110, density_kg_m3=STEEL_DENSITY_KG_M3
+        diameter_m=0.009525, length_m=0.1325, density_kg_m3=STEEL_DENSITY_KG_M3
     ),
     coupling_kg_m2=_annular_cylinder_axial_inertia(
         outer_diameter_m=0.035,

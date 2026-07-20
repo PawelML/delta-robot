@@ -21,7 +21,7 @@ def test_dynamic_sizing_report_matches_committed_artifact() -> None:
     assert assessment["passes"] is True
     axes = cast(list[dict[str, float]], assessment["axes"])
     assert max(axis["required_peak_torque_nm"] for axis in axes) == pytest.approx(
-        2.576404322384402
+        2.5764904683800824
     )
     equivalent = cast(dict[str, object], document["equivalent_bench_load"])
     assert cast(float, equivalent["point_mass_at_arm_tip_kg"]) > 0.0
