@@ -1,7 +1,7 @@
 # P1 simplified dynamics and single-drive sizing — specification
 
 **Status:** accepted for implementation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -174,3 +174,31 @@ permit buying three sets, or claim the 1 Hz cycle is physically achieved. Those
 decisions wait for measured component masses, candidate torque-speed evidence
 and 1,000 bench reversals with temperature and position-error reporting.
 
+## 10. Implemented result
+
+The reproducible report `artifacts/dynamic_sizing.json` passes the 0.5 ms
+convergence check with a maximum relative peak/RMS change of
+`4.99e-6`. For the conservative mass case it reports:
+
+| Quantity | Worst axis result |
+|---|---:|
+| Output peak load torque | 8.190 Nm |
+| Output RMS load torque | 3.507 Nm |
+| Output speed | 6.921 rad/s = 66.10 rpm |
+| Output acceleration | 92.923 rad/s² |
+| 5:1 motor speed | 330.48 rpm |
+| 5:1 external-load peak, with 30% factor | 2.366 Nm |
+| 5:1 external-load RMS, with 30% factor | 1.013 Nm |
+
+The earlier BOM proposal of a 2.0–2.2 Nm closed-loop stepper is rejected for
+P1: its quoted value is holding torque, while the calculated required peak at
+330 rpm already exceeds it before rotor inertia, pulley inertia and friction.
+
+### AI-assisted implementation note
+
+- The original 5:1 stepper proposal appeared plausible from static payload and
+  holding torque alone.
+- The time-domain model found 8.190 Nm output peak and 3.507 Nm output RMS for
+  the conservative 1 Hz cycle, invalidating that selection basis.
+- P1 changes to a 400 W servo candidate and retains the one-drive bench gate;
+  the full three-axis purchase remains blocked.
