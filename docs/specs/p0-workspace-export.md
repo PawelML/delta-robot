@@ -1,7 +1,7 @@
 # P0 workspace sampling and visualizer export — specification
 
 **Status:** accepted for implementation  
-**Version:** 0.1  
+**Version:** 0.2  
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -123,17 +123,26 @@ recompute joints or solve kinematics.
 ## 6. Reference artifacts
 
 Until DIY dimensions are selected, the reproducible demo uses the clearly
-labelled Williams validation fixture, not a hardware proposal:
+labelled Williams validation dimensions plus a visualization-only joint-limit
+window, not a hardware proposal:
 
 - workspace bounds: `x,y = [-0.45, +0.45] m`, `z = [-1.45, -0.55] m`,
 - workspace shape: `21 x 21 x 21 = 9,261` points,
+- illustrative joint limits: `[-45 deg, +45 deg]`, one quarter-turn either side
+  of the defined horizontal zero; this keeps the centered reference pose valid
+  while deliberately producing all three visualizer classifications,
 - pose: platform center `(0, 0, -0.900) m`,
-- source label: `williams_validation_fixture_not_diy_geometry`.
+- source label:
+  `williams_dimensions_plus_demo_joint_limits_not_diy_geometry`.
 
 The equal axis counts make the first artifact easy to inspect and give a coarse
 46.8 million cubic-millimetre voxel scale (`45 mm` per axis). It is a visual
 map, not a boundary-accuracy claim. Finer or adaptive boundary sampling belongs
 to a later slice if it materially helps select the DIY geometry.
+
+The `+/-45 deg` limits exist only to exercise `joint_limited` rendering before
+real actuator and collision limits are known. They shall not be copied into the
+BOM, motor specification or final geometry without separate justification.
 
 ## 7. Walk-through
 
