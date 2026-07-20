@@ -1,13 +1,13 @@
 # P0 Three.js visualizer — specification
 
 **Status:** accepted for implementation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Problem
 
-The Python model now exports a classified Cartesian workspace and one complete
-robot pose, but those files are not yet visible as a mechanism. This slice
+The Python model exports a classified Cartesian workspace, one complete robot
+pose and a sampled 25-305-25 trajectory. This slice
 shall provide a browser-based Three.js view in which a developer can orbit the
 robot, see which regions are reachable, joint-limited or unreachable, and
 inspect the pose and source assumptions without reading raw JSON.
@@ -32,10 +32,11 @@ error instead of drawing a plausible but incomplete robot.
 
 The visualizer accepts exactly:
 
-- `delta-robot-p0-workspace/v1`,
+- `delta-robot-p0-workspace/v2`,
 - `delta-robot-p0-pose/v1`,
-- units `{length: "m", angle: "rad"}`,
-- identical geometry, source label and assembly mode in both documents.
+- `delta-robot-p0-trajectory/v1`,
+- SI units declared by every document,
+- identical geometry, source label and assembly mode in all three documents.
 
 It validates required arrays, finite numbers, positive workspace counts and the
 identity `reachable + joint_limited + unreachable = total = points.length`.
@@ -71,7 +72,8 @@ do not require altering source data:
 
 | Class | Color | Default treatment | Meaning |
 |---|---|---|---|
-| `reachable` | green | visible, strongest | Solved inside the configured limits. |
+| `practically_usable` | green | visible, strongest | Reachable and above the exported P0 singularity threshold. |
+| `weak_reachable` | purple | visible, strongest | Reachable but below the P0 singularity threshold. |
 | `joint_limited` | amber | visible, medium | Link geometry closes but the demo angle window rejects it. |
 | `unreachable` | red | visible, faint | No accepted solution on the supported branch. |
 
@@ -119,10 +121,10 @@ The left panel provides:
 
 - data status and source label,
 - checkboxes for robot and all three workspace classes,
+- play/pause and restart controls for the trajectory,
 - a reset-view action,
 - orbit/pan/zoom instructions,
-- an explicit warning that the limits are visualization-only and that no
-  singularity or collision metric exists yet.
+- an explicit warning that collision and dynamic feasibility remain unverified.
 
 The right panel reports:
 
@@ -132,6 +134,7 @@ The right panel reports:
 - three joint angles in degrees,
 - link lengths and joint radii in millimetres,
 - schema identifiers.
+- live trajectory time, segment, joint rates and joint accelerations.
 
 The camera uses pointer controls matching the proven local configurator:
 left-drag orbit, right-drag pan and wheel zoom. Its initial target and distance
@@ -162,16 +165,18 @@ the data boundary can be tested with Node without WebGL or a browser.
 ## 8. Walk-through
 
 1. Vite serves the app and copies the current generated artifacts.
-2. The app fetches both JSON documents concurrently.
+2. The app fetches all three JSON documents concurrently.
 3. A pure module validates schemas, units, summaries and shared metadata.
 4. Any failure enters an error state and stops before scene construction.
 5. Model coordinates are mapped to the right-handed scene frame.
-6. Three point-cloud buffers are created directly from classified positions.
+6. Four point-cloud buffers are created directly from exported classifications
+   and quality booleans.
 7. Exported pose points build the robot diagram; no solver runs in JavaScript.
 8. The camera fits the combined data bounds.
 9. UI values are filled from the documents, and saved layer visibility is
    applied.
-10. Orbit interaction and resize handling run in the animation loop.
+10. The animation loop interpolates corresponding exported joint coordinates,
+    updates the existing meshes and runs orbit/resize handling.
 
 ## 9. Acceptance tests
 
@@ -185,9 +190,9 @@ This slice is complete when:
 4. The Three.js scene draws three upper arms, six lower rods, both plates and
    all exported diagnostic nodes without disconnected endpoints.
 5. The page exposes all layer toggles, status, counts, dimensions and angles.
-6. A production build succeeds and contains both versioned JSON artifacts.
+6. A production build succeeds and contains all three versioned JSON artifacts.
 7. The browser console has no application errors during a local smoke test.
-8. A visual inspection confirms that the robot, all three workspace classes,
+8. A visual inspection confirms that the robot, all four workspace layers,
    model-axis orientation and UI are legible in the initial view.
 9. Existing Ruff, strict Mypy and Pytest gates remain green.
 
@@ -195,10 +200,28 @@ This slice is complete when:
 
 - The page does not edit dimensions or invoke Python. Regenerating artifacts is
   the source-of-truth path until a later configuration API is specified.
-- No trajectory or 25-305-25 animation exists in this slice.
+- JavaScript does not retime the path or calculate missing samples; it only
+  interpolates adjacent exported coordinates for display.
 - Paired lower-rod spacing and plate thickness are display conventions, not BOM
   dimensions.
-- `reachable` still does not mean collision-free, singularity-safe or
-  dynamically feasible.
-- The Williams-based scale and `+/-45 deg` window remain a software fixture,
-  not the selected DIY robot.
+- `practically_usable` still does not mean collision-free or dynamically
+  feasible.
+- The selected DIY geometry remains provisional until dynamics, CAD clearance
+  and physical tests pass.
+
+## 11. 25-305-25 animation contract
+
+The trajectory adapter validates the complete 1,001-sample schema, ordered
+times, eight segment records, all numeric vectors, three unique arms per sample
+and summary extrema. A mismatch in geometry, source or assembly mode prevents
+the scene from starting.
+
+The scene adds a line showing the exported platform-centre path and loops the
+one-second animation. At render time JavaScript linearly interpolates only
+between corresponding coordinates in adjacent exported samples. It updates the
+existing meshes for three upper arms, six display-only lower rods, platform and
+nodes. It never reconstructs a point from angle or geometry.
+
+`window.__deltaVisualizer` exposes playback state and current sample index for
+a headless smoke test. One visual loop must visit source, destination and source
+in the exported segment order while all links remain connected.
