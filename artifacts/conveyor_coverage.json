@@ -1,0 +1,61 @@
+{
+  "classification_counts": {
+    "joint_limited": 0,
+    "practically_usable": 10416,
+    "reachable": 10416,
+    "unreachable": 0
+  },
+  "footprint": {
+    "center_x_m": 0.0,
+    "center_y_m": 0.0,
+    "length_m": 0.305,
+    "width_m": 0.2
+  },
+  "geometry": {
+    "base_joint_radius_m": 0.18,
+    "lower_arm_length_m": 0.45,
+    "max_joint_angle_rad": 1.3962634015954636,
+    "min_joint_angle_rad": -0.7853981633974483,
+    "platform_joint_radius_m": 0.065,
+    "upper_arm_length_m": 0.28
+  },
+  "result": {
+    "contained_in_useful_cylinder": true,
+    "corner_radius_m": 0.18236296224836884,
+    "minimum_joint_limit_margin_deg": 14.284920627826192,
+    "minimum_joint_limit_margin_rad": 0.24931889834162257,
+    "minimum_singularity_margin": 0.5708459300781495,
+    "passes": true,
+    "radial_reserve_m": 0.01763703775163117,
+    "weakest_joint_position_m": {
+      "x_m": -0.1525,
+      "y_m": 0.1,
+      "z_m": -0.27199999999999996
+    },
+    "weakest_singularity_position_m": {
+      "x_m": -0.10166666666666667,
+      "y_m": 0.06,
+      "z_m": -0.27199999999999996
+    }
+  },
+  "sampling": {
+    "point_count": 10416,
+    "x_count": 31,
+    "y_count": 21,
+    "z_count": 16
+  },
+  "schema": "delta-robot-p0-conveyor-coverage/v1",
+  "thresholds": {
+    "joint_limit_reserve_deg": 5.0,
+    "singularity_margin": 0.2
+  },
+  "units": {
+    "angle": "rad unless suffixed _deg",
+    "length": "m"
+  },
+  "useful_cylinder": {
+    "center_z_m": -0.347,
+    "height_m": 0.15,
+    "radius_m": 0.2
+  }
+}

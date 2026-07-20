@@ -39,7 +39,9 @@ Założenia są punktem startowym do weryfikacji, a nie gwarantowanymi parametra
 
 Wynik P0/P1 z 2026-07-20 (nadal przed pomiarem sprzętu): geometria o promieniach
 bazy/platformy 180/65 mm i ramionach 280/450 mm przechodzi próbkowany walec
-Ø400×150 mm. Pierwszy model dynamiczny dla konserwatywnego detalu 0,50 kg
+Ø400×150 mm. Wewnątrz niego prostokątny obszar taśmy 305×200×150 mm zostawia
+17,64 mm zapasu promieniowego; wszystkie 10 416 próbek przechodzą przyjęte
+marginesy kinematyczne. Pierwszy model dynamiczny dla konserwatywnego detalu 0,50 kg
 wskazuje 8,190 Nm peak i 3,507 Nm RMS na osi wyjściowej. Po doliczeniu wybranej
 przekładni 18/90, pasa 600-5MGT-15, wałów, tulei, sprzęgła i wirnika wymaganie
 silnika wynosi 2,576 Nm peak, 1,096 Nm RMS i 330,48 rpm. Reprezentatywnym
@@ -326,6 +328,7 @@ Preferowana ścieżka do dalszego zatwierdzenia: ROS2 + MCU. Klipper pozostaje m
 | 4 | Pełny zakup trzech napędów nastąpi dopiero po P1 | Ogranicza koszt błędnego doboru napędu lub przełożenia |
 | 5 | P0 przyjmuje geometrię 180/65/280/450 mm do trajektorii i P1 | Jako jedyna z badanych przechodzi cały próbkowany walec Ø400×150 mm z wymaganym zapasem |
 | 6 | P1 odrzuca stepper 2,0–2,2 Nm i bada jedną oś serwo 400 W + 5:1 | Model czasu rzeczywistego wymaga więcej niż holding torque steppera; serwo przechodzi obliczenia dopiero z jawnymi warunkami testu |
+| 7 | Obszar aplikacyjny P0 obejmuje wycentrowany prostokąt 305×200 mm na pełnej wysokości 150 mm | Odpowiada długości profilu 25-305-25 i całej szerokości istniejącej taśmy; oddzielny raport sprawdza go bez utożsamiania prostokąta z całym walcem |
 
 Kolejne decyzje będą dopisywane po P0, modelu dynamicznym i teście P1.
 

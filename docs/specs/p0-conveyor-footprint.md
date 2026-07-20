@@ -31,8 +31,8 @@ orientation does not change containment inside a circular workspace.
 The farthest footprint point in `XY` is a corner:
 
 ```text
-sqrt((0.305 / 2)^2 + (0.200 / 2)^2) = 0.182363 m
-radial reserve to the accepted 0.200 m cylinder = 0.017637 m
+sqrt((0.305 / 2)^2 + (0.200 / 2)^2) = 0.182362962 m
+radial reserve to the accepted 0.200 m cylinder = 0.017637038 m
 ```
 
 ## 3. Output artifact and classifications

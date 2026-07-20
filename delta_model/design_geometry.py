@@ -24,6 +24,16 @@ class UsefulCylinder:
     center_z_m: float
 
 
+@dataclass(frozen=True, slots=True)
+class ConveyorFootprint:
+    """Centred, axis-aligned rectangular application footprint."""
+
+    length_m: float
+    width_m: float
+    center_x_m: float = 0.0
+    center_y_m: float = 0.0
+
+
 def _geometry(
     base_radius_m: float,
     platform_radius_m: float,
@@ -67,4 +77,5 @@ SELECTED_GEOMETRY = next(
 # Set from the reproducible geometry-comparison report. The screening script
 # verifies this value still matches its best refined placement.
 SELECTED_USEFUL_CYLINDER = UsefulCylinder(radius_m=0.200, height_m=0.150, center_z_m=-0.347)
+SELECTED_CONVEYOR_FOOTPRINT = ConveyorFootprint(length_m=0.305, width_m=0.200)
 SELECTED_SOURCE_LABEL = "p0_selected_diy_reach_optimized_450"
