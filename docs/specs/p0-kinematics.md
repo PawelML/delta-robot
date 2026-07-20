@@ -1,7 +1,7 @@
 # P0 kinematics — specification
 
 **Status:** accepted for implementation
-**Version:** 0.2
+**Version:** 0.3
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -159,6 +159,62 @@ IK must distinguish:
 - degenerate geometry,
 - unsupported or ambiguous assembly branch.
 
+#### 8.1 One-arm inverse geometry and complete IK slice
+
+For arm `i`, let `r_i = (r_x, r_y, 0)` be its outward radial unit vector
+from section 5 and let `t_i = (-r_y, r_x, 0)` be the in-plane tangent. The
+shoulder and platform-attachment points are:
+
+- `B_i = r_b * r_i`,
+- `Q_i = (x, y, z) + r_p * r_i`.
+
+Relative to the shoulder, the target attachment has components:
+
+- `d_r = x*r_x + y*r_y + r_p - r_b`,
+- `d_t = -x*r_y + y*r_x`,
+- `d_z = z`.
+
+The upper-arm knee is constrained to the radial motor plane:
+
+`A_i = B_i + L*cos(theta_i)*r_i + (0, 0, -L*sin(theta_i))`.
+
+Enforcing `|Q_i - A_i| = l` gives one scalar equation per arm:
+
+```text
+E*cos(theta_i) + F*sin(theta_i) + G = 0
+
+E = -2*L*d_r
+F =  2*L*z
+G = d_r^2 + d_t^2 + z^2 + L^2 - l^2
+```
+
+The solver shall obtain both mathematical roots using the phase form of this
+equation. For `knee_out_platform_below`, exactly one root must satisfy
+`L*cos(theta_i) > 0`, meaning the knee lies radially outward from its shoulder.
+Zero or multiple outward roots are reported as an ambiguous/degenerate branch;
+the solver does not select a root by array order.
+
+The public `inverse_kinematics` result shall contain the three angles plus, for
+each arm, the shoulder, knee and platform-attachment points in the base frame.
+The one-arm function remains independently testable and pure.
+
+This slice fixes the initial IK error model:
+
+| Error | Meaning |
+|---|---|
+| `InvalidPositionError` | An XYZ input is NaN or infinite |
+| `UnreachablePositionError` | At least one arm's circle and sphere do not intersect |
+| `DegeneratePositionError` | The phase equation or its roots collapse at a numerical/geometric boundary |
+| `AmbiguousAssemblyError` | The requested knee-out rule does not identify exactly one root |
+| `AssemblyConstraintError` | The platform is not below the base as required by the selected mode |
+| `JointLimitError` | The selected geometric solution lies outside an inclusive joint limit |
+| `UnsupportedAssemblyModeError` | A mode other than the implemented branch is requested at runtime |
+
+Feasibility is decided from the discriminant `E^2 + F^2 - G^2`. A relative
+comparison tolerance of `64 * sys.float_info.epsilon` is used only to classify
+a value indistinguishable from zero as a degenerate boundary. It is not used to
+clip a negative discriminant or move an angle inside a joint limit.
+
 ### Forward kinematics
 
 Input:
@@ -307,8 +363,13 @@ This specification slice is complete when:
 - all four published examples are available as typed SI fixtures with
   source-precision tolerances,
 - the Python project exposes typed SI position, angle and assembly-mode values,
+- both Williams IK cases pass as executable solver tests within their published
+  `0.1 deg` precision,
+- returned diagnostic points close both upper- and lower-link lengths,
+- centered-position equality, 120-degree cyclic symmetry, unreachable input,
+  non-finite input and joint-limit rejection are tested,
 - Ruff, Mypy, Pytest and at least one Hypothesis test run successfully,
-- no FK or IK implementation is claimed yet.
+- no FK implementation is claimed yet.
 
 ## 14. Known uncertainty
 

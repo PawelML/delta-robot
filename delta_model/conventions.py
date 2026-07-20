@@ -14,6 +14,15 @@ class CartesianPosition:
 
 
 @dataclass(frozen=True, slots=True)
+class CartesianPoint:
+    """A diagnostic point in the base frame, expressed in metres."""
+
+    x_m: float
+    y_m: float
+    z_m: float
+
+
+@dataclass(frozen=True, slots=True)
 class JointAngles:
     """Actuated shoulder angles for arms 1, 2 and 3, expressed in radians."""
 
