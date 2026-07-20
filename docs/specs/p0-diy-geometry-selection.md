@@ -1,7 +1,7 @@
 # P0 DIY geometry screening — specification
 
 **Status:** accepted for implementation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -40,16 +40,21 @@ Candidate diameters are evaluated in descending preference:
 3. 350 mm (minimum HLD pass).
 
 Height is always 150 mm. The cylinder is centred on model X=Y=0. Its vertical
-centre is not assumed: the selector searches `z=-250..-550 mm` in 1 mm steps
-and chooses the placement with the largest worst-case normalized reserve.
+centre is not assumed: the selector first searches `z=-250..-550 mm` in 5 mm
+steps on a coarse lattice, then fully evaluates 11 placements at 1 mm spacing
+within ±5 mm of the best coarse centre. It chooses the refined placement with
+the largest worst-case normalized reserve.
 
 This range covers the plausible working depth of all candidates without
 approaching the base plane. If no placement passes, that diameter fails.
 
 ## 4. Sampling and reserve
 
-For each candidate, diameter and Z placement, sample a deterministic solid
-cylinder using:
+The coarse placement search uses 7 Z planes, 5 radial levels and 24 azimuths
+(1,015 poses per cylinder). It is a search accelerator, not pass evidence.
+
+For each of the 11 refined Z placements, sample a deterministic solid cylinder
+using:
 
 - 16 Z planes including both ends (10 mm spacing across 150 mm),
 - 9 radial levels including centre and boundary,
@@ -94,7 +99,8 @@ the largest diameter. If candidates pass the same largest diameter, prefer:
 - schema `delta-robot-p0-geometry-comparison/v1`,
 - all exact candidate dimensions and limits,
 - sampling definition and thresholds,
-- best placement and minimum margins for each candidate/diameter,
+- best coarse and refined placement plus minimum margins for each
+  candidate/diameter,
 - pass/fail plus a diagnostic reason,
 - selected candidate and explicit selection rationale,
 - the weakest sampled position for the selected cylinder.
@@ -108,9 +114,11 @@ artifacts must import that configuration rather than repeat dimensions.
 1. Start at the top centre of the cylinder and solve IK/margins.
 2. Move radially through all sampled rings; at each ring rotate through 360°.
 3. Repeat down through all 16 planes. One failure rejects that placement.
-4. Shift the full cylinder 1 mm in Z and repeat until all placements are tested.
-5. Retain the placement whose weakest point has the best combined reserve.
-6. Repeat for Ø400, Ø375 and Ø350 and for all candidates.
+4. Shift the coarse cylinder 5 mm in Z and repeat through the search range.
+5. Around the best coarse centre, evaluate the full 9,232-point cylinder at
+   each 1 mm shift from -5 to +5 mm.
+6. Retain the refined placement whose weakest point has the best combined
+   reserve, then repeat for Ø400, Ø375 and Ø350 and for all candidates.
 7. Select by the deterministic rule above; export its weakest pose so a reviewer
    can inspect the exact limiting configuration.
 8. Generate the dense visualizer workspace around the selected geometry. Green,
@@ -136,7 +144,7 @@ artifacts must import that configuration rather than repeat dimensions.
 - Actual universal/spherical joint articulation may be smaller than the
   kinematic range.
 - Carbon-tube bending and upper-arm torsional stiffness are not yet modelled.
-- The 1 mm / 5° / 10 mm sampling lattice cannot prove behavior between points.
+- The two-stage Z search can miss a better distant local optimum, and the
+  1 mm / 5° / 10 mm final lattice cannot prove behavior between points.
 - `reach_optimized_450` may win kinematically but lose dynamically because its
   280 mm upper arms carry more inertia. P1 must quantify this before BOM freeze.
-
