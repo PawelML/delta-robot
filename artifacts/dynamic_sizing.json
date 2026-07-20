@@ -1,0 +1,205 @@
+{
+  "candidate_assessment": {
+    "axes": [
+      {
+        "continuous_torque_utilization": 0.4962776199785661,
+        "peak_torque_utilization": 0.2958566485085461,
+        "required_peak_torque_nm": 1.1272138308175605,
+        "required_rms_torque_nm": 0.630272577372779
+      },
+      {
+        "continuous_torque_utilization": 0.8082394220549178,
+        "peak_torque_utilization": 0.630205699663016,
+        "required_peak_torque_nm": 2.401083715716091,
+        "required_rms_torque_nm": 1.0264640660097457
+      },
+      {
+        "continuous_torque_utilization": 0.8082394220549178,
+        "peak_torque_utilization": 0.6302056996630153,
+        "required_peak_torque_nm": 2.4010837157160885,
+        "required_rms_torque_nm": 1.0264640660097457
+      }
+    ],
+    "candidate": {
+      "continuous_current_a_rms": 10.0,
+      "encoder_bits": 17,
+      "maximum_speed_rpm": 4000.0,
+      "model": "Leadshine iSV2-RS6040V48G",
+      "peak_current_a": 28.0,
+      "peak_torque_nm": 3.81,
+      "rated_speed_rpm": 3000.0,
+      "rated_torque_nm": 1.27,
+      "rated_voltage_vdc": 48.0,
+      "rotor_inertia_kg_m2": 5.8e-05,
+      "source_url": "https://www.leadshine.com/product-detail/iSV2-RS6040V48G.html"
+    },
+    "design_factor": 1.3,
+    "efficiency": 0.9,
+    "maximum_motor_acceleration_rad_s2": 464.612939527669,
+    "maximum_motor_speed_rpm": 330.4751230072913,
+    "passes": true,
+    "ratio": 5.0
+  },
+  "cases": [
+    {
+      "axes": [
+        {
+          "maximum_abs_acceleration_rad_s2": 48.382211490843225,
+          "maximum_abs_speed_rad_s": 1.5455194685224745,
+          "peak_abs_torque_nm": 2.83384942667315,
+          "peak_position_m": [
+            0.1525,
+            0.0,
+            -0.395352792235
+          ],
+          "peak_time_s": 0.5710000000000001,
+          "rms_torque_nm": 1.5968148486410405
+        },
+        {
+          "maximum_abs_acceleration_rad_s2": 92.9225879055337,
+          "maximum_abs_speed_rad_s": 6.921454790892597,
+          "peak_abs_torque_nm": 5.986521808328326,
+          "peak_position_m": [
+            -0.13290421111955444,
+            0.0,
+            -0.37199999999999994
+          ],
+          "peak_time_s": 0.848,
+          "rms_torque_nm": 2.5665672407995412
+        },
+        {
+          "maximum_abs_acceleration_rad_s2": 92.9225879055338,
+          "maximum_abs_speed_rad_s": 6.921454790892597,
+          "peak_abs_torque_nm": 5.986521808328319,
+          "peak_position_m": [
+            0.1329042111195545,
+            0.0,
+            -0.37199999999999994
+          ],
+          "peak_time_s": 0.7020000000000001,
+          "rms_torque_nm": 2.5665672407995417
+        }
+      ],
+      "mass_case": {
+        "case_id": "nominal_0_30kg_payload",
+        "lower_assemblies_total_kg": 0.3,
+        "payload_kg": 0.3,
+        "platform_tooling_kg": 0.25,
+        "upper_arm_each_kg": 0.2
+      },
+      "sample_count": 1001
+    },
+    {
+      "axes": [
+        {
+          "maximum_abs_acceleration_rad_s2": 48.382211490843225,
+          "maximum_abs_speed_rad_s": 1.5455194685224745,
+          "peak_abs_torque_nm": 3.860786651281494,
+          "peak_position_m": [
+            0.1525,
+            0.0,
+            -0.395352792235
+          ],
+          "peak_time_s": 0.5710000000000001,
+          "rms_torque_nm": 2.169240003756829
+        },
+        {
+          "maximum_abs_acceleration_rad_s2": 92.9225879055337,
+          "maximum_abs_speed_rad_s": 6.921454790892597,
+          "peak_abs_torque_nm": 8.190266618214824,
+          "peak_position_m": [
+            -0.13290421111955444,
+            0.0,
+            -0.37199999999999994
+          ],
+          "peak_time_s": 0.848,
+          "rms_torque_nm": 3.5065796016073505
+        },
+        {
+          "maximum_abs_acceleration_rad_s2": 92.9225879055338,
+          "maximum_abs_speed_rad_s": 6.921454790892597,
+          "peak_abs_torque_nm": 8.190266618214816,
+          "peak_position_m": [
+            0.1329042111195545,
+            0.0,
+            -0.37199999999999994
+          ],
+          "peak_time_s": 0.7020000000000001,
+          "rms_torque_nm": 3.5065796016073505
+        }
+      ],
+      "mass_case": {
+        "case_id": "conservative_0_50kg_payload",
+        "lower_assemblies_total_kg": 0.36,
+        "payload_kg": 0.5,
+        "platform_tooling_kg": 0.3,
+        "upper_arm_each_kg": 0.25
+      },
+      "sample_count": 1001
+    }
+  ],
+  "convergence": {
+    "fine_sample_period_s": 0.0005,
+    "maximum_relative_peak_or_rms_change": 4.987341353301546e-06,
+    "passes_one_percent": true
+  },
+  "limitations": [
+    "all component masses are provisional and must be weighed",
+    "lower-arm assemblies are split equally between platform and knees",
+    "friction, compliance, belt and hose forces are excluded",
+    "generic transmission rows exclude motor and pulley inertia",
+    "candidate assessment includes motor rotor inertia but excludes pulley inertia",
+    "torque-speed and thermal feasibility require manufacturer data and a bench test"
+  ],
+  "model": {
+    "design_factor": 1.3,
+    "gravity_m_s2": 9.80665,
+    "lower_mass_model": "half_translating_half_equally_knee_lumped",
+    "transmission_efficiency": 0.9,
+    "upper_arm_model": "uniform_rigid_link"
+  },
+  "schema": "delta-robot-p1-dynamic-sizing/v1",
+  "source": "p0_selected_diy_reach_optimized_450",
+  "status": "provisional_pass",
+  "trajectory": {
+    "duration_s": 1.0,
+    "name": "25-305-25_round_trip_1_hz",
+    "sample_count": 1001,
+    "sample_period_s": 0.001
+  },
+  "transmissions": [
+    {
+      "efficiency": 0.9,
+      "maximum_motor_acceleration_rad_s2": 278.7677637166014,
+      "maximum_motor_speed_rad_s": 20.764364372677793,
+      "maximum_motor_speed_rpm": 198.2850738043748,
+      "peak_motor_load_torque_nm": 3.033432080820305,
+      "ratio": 3.0,
+      "rms_motor_load_torque_nm": 1.2987331857805,
+      "specified_peak_motor_torque_nm": 3.9434617050663965,
+      "specified_rms_motor_torque_nm": 1.68835314151465
+    },
+    {
+      "efficiency": 0.9,
+      "maximum_motor_acceleration_rad_s2": 464.612939527669,
+      "maximum_motor_speed_rad_s": 34.60727395446299,
+      "maximum_motor_speed_rpm": 330.4751230072913,
+      "peak_motor_load_torque_nm": 1.8200592484921831,
+      "ratio": 5.0,
+      "rms_motor_load_torque_nm": 0.7792399114683001,
+      "specified_peak_motor_torque_nm": 2.3660770230398382,
+      "specified_rms_motor_torque_nm": 1.0130118849087901
+    }
+  ],
+  "units": {
+    "angle": "rad",
+    "angular_acceleration": "rad/s^2",
+    "angular_velocity": "rad/s",
+    "mass": "kg",
+    "torque": "N*m"
+  },
+  "warnings": [
+    "one representative drive only before the P1 bench gate",
+    "selection does not authorize a three-drive purchase"
+  ]
+}
