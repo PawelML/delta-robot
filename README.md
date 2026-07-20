@@ -15,6 +15,8 @@ Aktualny etap: **P0 — model kinematyczny w Pythonie i wizualizator Three.js**.
 - `docs/specs/p0-differential-kinematics.md` — Jacobian i metryki osobliwości.
 - `docs/specs/p0-diy-geometry-selection.md` — porównanie geometrii DIY.
 - `docs/specs/p0-trajectory-25-305-25.md` — jednosekundowy profil ruchu.
+- `docs/specs/p1-dynamics-and-drive-sizing.md` — pierwszy model momentów.
+- `docs/specs/p1-single-drive.md` — kandydat jednego napędu i test P1.
 - `AGENTS.md` — instrukcje obowiązujące narzędzia kodujące.
 
 ## Środowisko developerskie
@@ -35,6 +37,7 @@ workspace'u oraz profil 25-305-25. Artefakty można odtworzyć poleceniami:
 uv run python scripts/validate_differential_kinematics.py
 uv run python scripts/compare_diy_geometries.py
 uv run python scripts/generate_p0_artifacts.py
+uv run python scripts/generate_dynamic_sizing.py
 ```
 
 Powstają raporty walidacyjne oraz `workspace.json`, `pose.json` i
@@ -42,6 +45,11 @@ Powstają raporty walidacyjne oraz `workspace.json`, `pose.json` i
 promień bazy 180 mm, promień platformy 65 mm, ramię górne 280 mm i dolne
 450 mm. Geometria przechodzi próbkowany walec Ø400×150 mm, ale pozostaje
 prowizoryczna do czasu sprawdzenia dynamiki, kolizji i sprzętu.
+
+Pierwszy raport P1 odrzuca wcześniejszy dobór steppera 2,0–2,2 Nm i sprawdza
+jedno zintegrowane serwo 400 W z redukcją 5:1. Jest to kandydat wyłącznie do
+testu stołowego; szczegóły i blokery zakupowe są zapisane w
+`docs/specs/p1-single-drive.md` oraz `BOM_delta.md`.
 
 ## Wizualizator Three.js
 

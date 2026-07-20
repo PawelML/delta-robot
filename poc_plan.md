@@ -37,6 +37,13 @@ Założenia są punktem startowym do weryfikacji, a nie gwarantowanymi parametra
 | Efektor | podciśnieniowy z wakuostatem | Pozwala potwierdzać chwyt niezależnie od samej komendy |
 | Środowisko | prywatny warsztat | Brak przeznaczenia do eksploatacji produkcyjnej |
 
+Wynik P0/P1 z 2026-07-20 (nadal przed pomiarem sprzętu): geometria o promieniach
+bazy/platformy 180/65 mm i ramionach 280/450 mm przechodzi próbkowany walec
+Ø400×150 mm. Pierwszy model dynamiczny dla konserwatywnego detalu 0,50 kg
+wskazuje 8,190 Nm peak i 3,507 Nm RMS na osi wyjściowej. Reprezentatywnym
+kandydatem do **jednego** testu P1 jest serwo 48 V / 400 W z redukcją 5:1,
+zgodnie z `docs/specs/p1-single-drive.md`; nie jest to jeszcze zamrożony BOM.
+
 Poza zakresem pierwszej wersji znajdują się:
 
 - certyfikacja i pełna architektura bezpieczeństwa maszyny produkcyjnej,
@@ -314,6 +321,8 @@ Preferowana ścieżka do dalszego zatwierdzenia: ROS2 + MCU. Klipper pozostaje m
 | 2 | Python jest źródłem prawdy, a wizualizator konsumuje eksportowane dane | Zapobiega powstaniu dwóch rozbieżnych implementacji kinematyki |
 | 3 | Wewnątrz modelu obowiązują SI, baza w `Z=0`, workspace w `Z<0` oraz jawna gałąź knee-out | Zapewnia spójność kodu, testów, wizualizacji i zewnętrznych przykładów referencyjnych |
 | 4 | Pełny zakup trzech napędów nastąpi dopiero po P1 | Ogranicza koszt błędnego doboru napędu lub przełożenia |
+| 5 | P0 przyjmuje geometrię 180/65/280/450 mm do trajektorii i P1 | Jako jedyna z badanych przechodzi cały próbkowany walec Ø400×150 mm z wymaganym zapasem |
+| 6 | P1 odrzuca stepper 2,0–2,2 Nm i bada jedną oś serwo 400 W + 5:1 | Model czasu rzeczywistego wymaga więcej niż holding torque steppera; serwo przechodzi obliczenia dopiero z jawnymi warunkami testu |
 
 Kolejne decyzje będą dopisywane po P0, modelu dynamicznym i teście P1.
 

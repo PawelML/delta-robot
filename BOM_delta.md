@@ -1,88 +1,125 @@
-# BOM — Robot delta DIY (pick-and-place nad taśmą)
+# BOM — robot delta DIY
 
-**Założenia projektowe:** przestrzeń robocza Ø350–400 mm × 150 mm wysokości, udźwig do 0,5 kg, cel 1,5–2,5 picków/s, efektor podciśnieniowy, integracja z istniejącą taśmą z enkoderem i kamerą Gemini 336.
+**Status:** provisional v0.2 after P0 kinematics and first P1 dynamic model
 
----
+**Date:** 2026-07-20
 
-## 1. Napędy (serce budżetu)
+**Purchase rule:** do not buy three drives before the P1 single-axis bench gate
 
-| Pozycja | Specyfikacja | Ilość | Źródło | Cena szac. |
-|---|---|---|---|---|
-| Silnik krokowy closed-loop NEMA 23 + sterownik | 2,0–2,2 Nm, enkoder 1000 linii, komplet silnik+driver (np. zestawy typu 23E2/HSS57) | 3 | AliExpress (~180–220 zł/kpl) lub ebmia.pl / akcesoria-cnc.pl (~330–380 zł/kpl, szybciej + gwarancja PL) | 550–1100 zł |
-| Redukcja pasowa 5:1 | Koło GT2 20T (alu) + koło 100T (druk 3D lub alu z Allegro), pasek GT2 zamknięty 6–9 mm | 3 kpl | Botland / Allegro / AliExpress | 100–180 zł |
+This is a controlled list of candidates, not a frozen shopping list. The
+authoritative requirements are in `poc_plan.md`, numerical evidence in
+`artifacts/geometry_comparison.json` and `artifacts/dynamic_sizing.json`, and
+the representative drive contract in `docs/specs/p1-single-drive.md`.
 
-**Uwagi:**
-- Closed-loop jest nienegocjowalny — otwarty stepper przy dynamice delty zgubi kroki i nie będziesz wiedział kiedy. Enkoder w silniku = wykrywanie zgubienia pozycji.
-- Redukcja pasowa zamiast planetarnej: zero luzu praktycznego przy napiętym pasku, koszt 5× niższy niż przekładnie planetarne (te mają zresztą 15–30 arcmin luzu w tanich wersjach — gorzej niż pasek).
-- Zasilanie sterowników 36–48 V dla momentu przy prędkości.
+## 1. Evidence that changed the initial BOM
 
-## 2. Kinematyka (ramiona i przeguby)
+- Selected kinematic geometry: base joint radius 180 mm, platform joint radius
+  65 mm, upper arms 280 mm and lower arms 450 mm.
+- The complete sampled Ø400×150 mm cylinder passes with minimum singularity
+  margin 0.571 and minimum joint-limit reserve 11.96°.
+- Conservative 0.50 kg / 1 Hz dynamic case requires 8.190 Nm peak and
+  3.507 Nm RMS at the output joint.
+- With 5:1 and 90% provisional efficiency, after a 30% load factor and the
+  candidate motor's rotor inertia, the motor requirement is 2.401 Nm peak,
+  1.026 Nm RMS and 330.48 rpm.
+- The old 2.0–2.2 Nm NEMA 23 closed-loop stepper proposal is rejected: its
+  holding torque is already below the required dynamic peak before pulley
+  inertia, friction and torque-speed droop.
 
-| Pozycja | Specyfikacja | Ilość | Źródło | Cena szac. |
-|---|---|---|---|---|
-| Rurka węglowa | Ø12×10 mm, dł. 400–450 mm (przedramiona) | 6 | Allegro (modelarstwo) / sklepy RC | 100–150 zł |
-| Przeguby kulowe igus KBRM-10 / KGLM-10 | polimerowe, bezobsługowe, M10 lub gwint wewn. | 12 | igus.pl (próbki/sklep) / TME / Allegro | 150–250 zł |
-| Ramiona górne (bicepsy) | druk 3D PETG/PC + wkładki alu LUB frezowane alu na zamówienie (Allegro) | 3 | druk własny / Allegro | 30–250 zł |
-| Pręty gwintowane/łączniki, sprężyny ściągające przeguby | M10, stal | kpl | lokalnie / Castorama | 50 zł |
+## 2. P1 single-drive bench BOM
 
-**Uwagi:**
-- Przeguby magnetyczne z drukarek delta odpadają — przy ruchach bocznych z ładunkiem 0,3–0,5 kg i przyspieszeniach >3 g wypinają się. igus KBRM to standard w tanich deltach przemysłowych.
-- Rozstaw przegubów w parze (równoległobok) trzymaj sztywno — dystanse alu, nie druk.
+Only this section is in near-term scope. Even these parts wait for confirmation
+of the current Modbus register map and a completed belt-drive selection.
 
-## 3. Rama i platforma
+| Item | Candidate / requirement | Qty now | Status |
+|---|---|---:|---|
+| Integrated servo | Leadshine `iSV2-RS6040V48G`, 48 VDC, 400 W, 1.27 Nm rated, 3.81 Nm peak, 17-bit encoder, Pulse+Direction + Modbus RTU, brake | max. 1 | Provisional candidate; primary source: <https://www.leadshine.com/product-detail/iSV2-RS6040V48G.html> |
+| Reduction | 5.00:1 synchronous belt; Gates PowerGrip GT3 or engineering equivalent, initially 5M pitch and at least 15 mm width | 1 set | Tooth counts, belt length and width must pass the Gates design procedure |
+| Pulleys/hubs | Metal motor pulley; metal or structurally verified output pulley; keyed or clamping hubs | 1 set | No printed torque-carrying 100T pulley for P1 |
+| Output shaft support | Shaft, two bearings, rigid housing and representative output arm/inertia | 1 set | Must permit external lost-motion measurement |
+| 48 V bench supply | Nominal 48 VDC, at least the drive's published 10 A continuous requirement | 1 | Exact supply blocked by peak-current and regenerative-energy confirmation |
+| Physical power cutoff | NC mushroom switch operating a correctly rated DC contactor/disconnect | 1 set | Workshop minimum; verify DC interruption rating |
+| Command/diagnostic interface | Pulse+Direction source plus isolated RS485 adapter for Modbus diagnostics | 1 set | Controller architecture for the full robot remains open |
+| External measurement | Dial indicator or external angular reference adequate to resolve 0.10° output lost motion | 1 | Required P1 evidence, not optional tooling |
 
-| Pozycja | Specyfikacja | Ilość | Źródło | Cena szac. |
-|---|---|---|---|---|
-| Profil aluminiowy 3030 | konstrukcja nośna nad taśmą, ~3 mb + narożniki, śruby teowe | kpl | ebmia.pl / Motedis / Allegro | 250–350 zł |
-| Płyta górna (mocowanie silników) | sklejka 15 mm frezowana lub alu 8 mm cięte wodą (Allegro: „cięcie aluminium na wymiar") | 1 | lokalny zakład / Allegro | 80–250 zł |
-| Platforma robocza (traveling plate) | druk PETG-CF lub alu | 1 | druk własny | 20 zł |
+Manufacturer data used for the candidate: 24–60 VDC input, 10 Arms continuous,
+28 A peak, 3000 rpm rated, 4000 rpm maximum, 0.58 kg·cm² rotor inertia. Verify
+the exact delivered revision and datasheet before payment.
 
-## 4. Sterowanie
+Open blockers before ordering the P1 set:
 
-| Pozycja | Specyfikacja | Ilość | Źródło | Cena szac. |
-|---|---|---|---|---|
-| Płyta sterująca | BTT SKR 3 / Octopus (wyjścia step/dir na zewnętrzne drivery) | 1 | Botland / AliExpress | 150–280 zł |
-| Raspberry Pi 4 (4 GB) | host Klipper + API do twojego softu wizyjnego | 1 | Botland / używka | 180–280 zł |
-| Czujniki bazowania | indukcyjne NPN M8 lub krańcówki optyczne | 3 | Botland / TME | 40–80 zł |
-| E-stop grzybkowy + stycznik/przekaźnik na zasilanie silników | NC, rozłączanie mocy, nie tylko sygnału | 1 kpl | TME | 60–100 zł |
+1. Obtain the current iSV2-RS register manual or distributor confirmation that
+   actual encoder position can be read over Modbus at a useful update rate.
+2. Confirm DC-bus regeneration/overvoltage handling for repeated 1 Hz reversal.
+3. Select exact belt, pulley diameters, centre distance and width using the
+   manufacturer procedure, including motor-shaft overhung load:
+   <https://www.gates.com/content/dam/documents-library/catalogs/powergrip-gt3-drive-design-manual-en.pdf>.
+4. Confirm local availability, warranty, total landed price and compatible
+   tuning/communication cables.
 
-**Uwagi:**
-- Klipper ma natywną kinematykę `rotary_delta` — dostajesz planowanie trajektorii, input shaping (tłumienie drgań = krótszy settling time!) i API (Moonraker) do sterowania z Pythona za darmo.
-- Enkoder taśmy podłączasz do RPi/mikrokontrolera obok — tracking realizujesz w swojej warstwie (predykcja pozycji detalu w chwili picku), Klipper dostaje gotowe współrzędne. Na 1,5–2 picki/s to wystarczy; streaming trajektorii w czasie rzeczywistym to etap 2.
+## 3. Mechanical candidate BOM for P2
 
-## 5. Efektor podciśnieniowy
+These quantities describe the selected model geometry but remain blocked until
+the P1 axis is retained.
 
-| Pozycja | Specyfikacja | Ilość | Źródło | Cena szac. |
-|---|---|---|---|---|
-| Pompa próżniowa membranowa 12/24 V | min. -60 kPa, praca ciągła | 1 | Botland / AliExpress | 60–120 zł |
-| Elektrozawór 2/2 + zawór zwalniający | szybkie puszczanie detalu (wdmuch lub odpowietrzenie) | 1–2 | AliExpress / TME | 50–90 zł |
-| Przyssawki silikonowe + przewód PU 4/6 mm | 2–3 rozmiary pod detale testowe | kpl | AliExpress | 30–50 zł |
-| Wakuostat / czujnik podciśnienia analogowy | potwierdzenie chwytu (ważne do liczenia success rate!) | 1 | AliExpress / TME | 30–60 zł |
+| Item | Requirement | Qty | Status / measurement plan |
+|---|---|---:|---|
+| Lower rods | Carbon tube, 450 mm joint-centre length; current mass model starts from Ø12×10 mm | 6 | Final tube and insert design must keep all six rod/joint assemblies at or below the conservative 0.360 kg assumption, or rerun dynamics |
+| Lower joints | Twelve low-clearance joints with articulation covering the full selected cylinder | 12 | igus KBRM/KGLM remains a candidate, not a validated selection; CAD and articulation test required |
+| Upper arms | 280 mm shoulder-to-knee, rigid hub and link | 3 | Each complete arm assumed 0.200 kg nominal / 0.250 kg conservative; weigh representative P1/P2 part |
+| Base joint layout | Three shoulder centres on radius 180 mm at the accepted arm azimuths | 1 set | CAD source of truth still required |
+| Moving platform | Three virtual attachment centres on radius 65 mm | 1 | Platform + vacuum tooling assumed 0.250 kg nominal / 0.300 kg conservative |
+| Parallelogram spacing | Rigid paired-rod spacers and hardware | 6 ends | Width, collisions and bearing angles not yet modelled |
+| Frame | Aluminium extrusion/plate structure around the selected geometry | 1 | Size only after CAD collision and stiffness check; old “3 m of 3030” estimate is not validated |
 
-## 6. Zasilanie i okablowanie
+Every completed mechanical assembly is weighed. A mass above any conservative
+value triggers regeneration of `dynamic_sizing.json` before powered full-speed
+testing.
 
-| Pozycja | Specyfikacja | Ilość | Źródło | Cena szac. |
-|---|---|---|---|---|
-| Zasilacz Mean Well LRS-350-36 (lub 48 V zależnie od driverów) | 350 W | 1 | TME / Botland | 160–220 zł |
-| Zasilacz pomocniczy 12/24 V | pompa, zawory, czujniki | 1 | TME | 50–80 zł |
-| Przewody, złącza GX16, koryta, drobnica | — | kpl | TME / lokalnie | 100–150 zł |
+## 4. Full robot drives and control — blocked
 
----
+| Item | Future quantity | Current decision |
+|---|---:|---|
+| Two additional servo axes | 2 | Buy only after one axis completes 1,000 reversals, temperature, bus-voltage, position-error and lost-motion tests |
+| Full three-axis DC supply / bus | 1 | Size after measured single-axis power and regeneration; the former 350 W supply is withdrawn |
+| Motion controller | 1 | Not selected. P0/P1 do not justify freezing Klipper, ROS2+MCU or a commercial motion controller |
+| Homing sensors | 3 | Type and mounting wait for P2 CAD |
+| Supervisory computer | 1 | Existing computer/Raspberry Pi may be reused; do not buy solely from the old BOM |
 
-## Podsumowanie kosztów
+The previous statement that Klipper `rotary_delta` and Moonraker are already the
+chosen stack is withdrawn. Software architecture will be decided after the
+representative servo's command and feedback interfaces are verified.
 
-| Wariant | Koszt |
-|---|---|
-| **Budżetowy** (Ali, druk własny, sklejka) | **~2 200–2 800 zł** |
-| **Solidny** (napędy z PL z gwarancją, alu cięte, igus) | **~3 500–4 400 zł** |
-| Rezerwa na wpadki (spalony driver, nieudane wydruki, druga iteracja ramion) | +20–25% |
+## 5. Vacuum, perception and conveyor — later gates
 
-Obie ścieżki mieszczą się w 5 tys. zł. Czego tu **nie ma**: 4. oś (obrót detalu) — dokładaj dopiero, gdy demo tego wymaga (+150–250 zł, wał przez środek lub silnik na platformie); osłony/wygrodzenie do pokazów u klienta.
+These remain P3/P4 candidates and are not justified purchases during P1:
 
-## Kolejność budowy (minimalizacja ryzyka)
+| Subsystem | Candidate requirement | Gate |
+|---|---|---|
+| Vacuum source and valve | 12/24 V source, fast release, sized for the actual test part | P3 |
+| Suction cups and tubing | Selected from part surface and mass | P3 |
+| Vacuum switch | Independent grip confirmation | P3 |
+| Camera and lighting | Calibratable view of the conveyor | P4 |
+| Conveyor encoder | Resolution and interface derived from tracking error budget | P4 |
 
-1. **Jeden napęd na stole**: silnik + redukcja + driver + Klipper — zmierz powtarzalność kątową zanim zbudujesz resztę.
-2. Rama + trzy napędy + ramiona → bazowanie, kinematyka, pierwsze ruchy XYZ na wolnych prędkościach.
-3. Pomiar powtarzalności kamerą (fiducjał na platformie) → masz pierwszą liczbę do raportu zanim jeszcze jest efektor.
-4. Efektor + podciśnienie → picki statyczne z tacki.
-5. Integracja z enkoderem taśmy → tracking, krzywa prędkość taśmy vs. success rate.
+## 6. Cost status
+
+The former `2,200–4,400 PLN` total is invalid because it assumed three cheap
+steppers, a GT2 transmission and a 350 W supply that the dynamic model no longer
+supports. Do not use it as a budget commitment.
+
+Rebuild the cost table only after:
+
+1. the exact one-axis servo, belt and supply are confirmed,
+2. landed prices and warranty are checked on the purchase date,
+3. P1 decides whether 400 W / 5:1 is retained,
+4. CAD determines real frame, shafts, bearings and machined parts.
+
+## 7. Build order
+
+1. Resolve the four P1 purchasing blockers above.
+2. Build one servo/belt/output-shaft bench axis and measure it.
+3. Retain, reratio, upsize to 750 W or reject based on evidence.
+4. Freeze BOM v1 and buy the remaining two drives only after the P1 gate.
+5. Complete collision/stiffness CAD, build P2, then proceed to vacuum P3 and
+   conveyor tracking P4.
