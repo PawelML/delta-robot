@@ -1,6 +1,6 @@
 # BOM — robot delta DIY
 
-**Status:** provisional v0.3 — purchase parameters for one P1 bench axis
+**Status:** provisional v0.4 — purchase parameters for one P1 bench axis
 
 **Date:** 2026-07-20
 
@@ -17,6 +17,8 @@ the representative drive contract in `docs/specs/p1-single-drive.md`.
   65 mm, upper arms 280 mm and lower arms 450 mm.
 - The complete sampled Ø400×150 mm cylinder passes with minimum singularity
   margin 0.571 and minimum joint-limit reserve 11.96°.
+- The centred 305×200 mm conveyor footprint has 17.64 mm radial reserve inside
+  that cylinder; all 10,416 full-height samples pass the design margins.
 - Conservative 0.50 kg / 1 Hz dynamic case requires 8.190 Nm peak and
   3.507 Nm RMS at the output joint.
 - With 5:1 and 90% provisional efficiency, after a 30% load factor and the
@@ -63,6 +65,7 @@ the manufacturer method is the Gates GT3 design manual:
 | Output shaft | C45/1045 or equivalent steel, Ø20 mm, prototype length 180 mm | 1 | Add real keyway/retention drawing before machining; pulley between bearings, arm outside support span |
 | Output bearings | `6204-2RS`, 20 × 47 × 14 mm, dynamic rating ≥12 kN | 2 | Normal internal clearance unless supplier/fit calculation justifies otherwise |
 | Base plate | 6082-T6 or 6061-T6 aluminium, 600 × 360 × 12 mm | 1 | Flat, clamped/bolted to bench edge so the +80° arm sweep remains unobstructed |
+| Adjustable input carrier | 6082-T6 or 6061-T6 aluminium, 12 mm plate; carries servo bracket and both input supports as one rigid datum | 1 | Four fixed M8 base slots provide -21 to +4 mm centre-distance adjustment; verify edge distance and clamp access |
 | Bearing housings | Fabricated or machined carriers matching the parametric CAD and actual bearing fits | 1 input + 1 output | CAD envelopes are not fabrication drawings; add shoulders, retainers and fasteners before machining |
 | Output arm | 280 mm shaft centre to load centre; target complete arm/hub mass 0.250 kg | 1 | Weigh and enter actual mass before full-speed run |
 | Adjustable load | 1.035 kg nominal at 280 mm radius, adjustable/removable in small increments | 1 set | This matches maximum calculated joint inertia only; secure mechanically and record actual radius/mass |
@@ -81,12 +84,12 @@ fastener manufacturing drawings.
 | Regenerative resistor | Non-inductive/chassis resistor 10 Ω, ≥100 W continuous nameplate, insulated terminals and ventilated mounting | 1 | Current manual's starting test value for RS6040; never below 5 Ω; monitor temperature, brake load `<80%` and driver `<60°C` during P1 |
 | DC isolation/cutoff | 60 VDC minimum, ≥30 A DC-rated disconnect/contactor operated by a normally-closed mushroom circuit | 1 set | Workshop power cutoff only; verify DC interruption rating, fuse and wiring with an electrician if uncertain |
 | Branch protection/wiring | Fuse/breaker and copper conductors rated for 60 VDC and the selected 12.5 A continuous supply, with PE bonding where applicable | 1 set | Size from actual cable length, installation and manufacturer terminal limits |
-| Motion command source | 5 V differential Pulse+Direction line driver, capability ≥500 kHz, hardware servo-enable output | 1 | P1 tool, not a decision for the final robot controller |
-| Modbus diagnostics | Galvanically isolated RS485 adapter supporting Modbus RTU plus correct CN5 cable/breakout | 1 | Verify address, baud, grounding and achievable polling rate on delivered drive |
+| Motion command and encoder capture | Mesa `7I96S`, used with Ethernet-connected LinuxCNC >=2.8.4; five 5 V differential step/dir channels, encoder input and isolated I/O | 1 | P1 tool, not a final controller decision. Manufacturer store showed out of stock on 2026-07-20: buy only genuine traceable stock |
+| Modbus diagnostics | Waveshare `USB TO RS485 (C)`, SKU 34620, isolated FT232RNL adapter, plus correct CN5 cable/breakout | 1 | Verify address, baud, A/B/GND reference and measured polling rate on delivered drive |
 | Configuration cable | Leadshine `CABLE-PC-1` or confirmed current equivalent for CN7/commissioning | 1 | Confirm connector compatibility for exact revision |
-| Temperature measurement | Contact probe or calibrated IR method covering at least 0–120°C | 1 | Record driver, motor case and regenerative-resistor method/location |
-| Lost-motion reference | External angular encoder with ≤0.02° resolution at output, or dial indicator geometry with equivalent ≤0.02° angular resolution | 1 | Required to judge the 0.10° target; internal encoder counts alone are insufficient |
-| Belt tension measurement | Gates-compatible sonic-frequency measurement or documented span force/deflection tool | 1 | Initial model setting is 100.1 N per span; record actual span, frequency/force and method |
+| Temperature logger | Pico Technology `USB TC-08`, order code `PP222`, 8 channels, Linux SDK, plus at least four suitable type-K surface/ambient probes | 1 set | Log servo/drive housing, output-bearing housing, regenerative resistor and ambient; confirm probe attachment and temperature range |
+| Lost-motion reference | US Digital `E6`, 10,000 CPR, 20 mm bore, 5 V differential quadrature, index preferred; correct cover/base/cable and centring tool | 1 set | 40,000 counts/rev gives 0.009°/count. Capture at the rear output-shaft extension; internal encoder alone is insufficient |
+| Belt tension measurement | Mark-10 `M3-5`, 25 N range, 0.02 N resolution, calibration certificate; fabricated full-width belt contact and fixed deflection stop | 1 set | Nominal tangent span is 143.34 mm and Gates deflection is 2.240 mm. Record actual span/force; the simple 100.1 N string estimate of about 6.26 N is not the acceptance range |
 
 Manufacturer data used for the candidate: 24–60 VDC input, 10 Arms continuous
 motor phase current, 28 A peak current, 3000 rpm rated, 4000 rpm maximum and
@@ -105,7 +108,8 @@ Remaining blockers before ordering the single P1 set:
    and 10 Ω / 100 W resistor combination.
 3. Freeze actual bearing series, fits, shaft retention/keyways and fasteners in
    fabrication drawings based on delivered component dimensions.
-4. Confirm the external angle/temperature/belt-tension measurement method.
+4. Obtain a combined quote for the exact E6 configuration, TC-08 probes and
+   calibrated force gauge; confirm genuine 7I96S availability or pause purchase.
 
 ## 3. Mechanical candidate BOM for P2
 

@@ -19,7 +19,7 @@ revision, availability and delivered interfaces must be confirmed first.
 | Servo diagnostics from Python | Waveshare `USB TO RS485 (C)`, SKU 34620 | Isolated FT232RNL adapter, A/B/GND interface and Linux support. It provides a separate Modbus RTU path for actual position, bus voltage, temperature and alarms. |
 | Independent output angle | US Digital `E6`, 10,000 CPR, 20 mm bore, differential output, index preferred | 40,000 quadrature counts/rev gives `0.009 deg/count`, below the required `0.02 deg` measurement resolution. Mount on the rear extension of the output shaft. |
 | Temperature logger | Pico Technology `USB TC-08`, order code PP222 | Eight thermocouple channels, Linux SDK and published accuracy. Use type-K surface probes on the servo/drive housing, output bearing housing and braking resistor, plus ambient. |
-| Belt installation tension | Gates force-deflection method plus a calibrated 0–50 N digital force gauge with <= 0.01 N display resolution | Deflect the measured free span by `span / 64` and record the force. The exact acceptable force is calculated from the Gates procedure and confirmed on the installed drive; no guessed sonic-frequency target is allowed. |
+| Belt installation tension | Gates force-deflection method with Mark-10 `M3-5`, 25 N range and 0.02 N resolution | Deflect the measured free span by `span / 64` and record the force. The exact acceptable force is calculated from the Gates procedure and confirmed on the installed drive; no guessed sonic-frequency target is allowed. |
 
 Primary technical sources:
 
@@ -30,6 +30,7 @@ Primary technical sources:
 - US Digital E6: <https://www.usdigital.com/products/encoders/incremental/kit/e6/>
 - Pico USB TC-08: <https://www.picotech.com/data-logger/tc-08/usb-tc-08-specifications>
 - Gates GT3 drive design manual: <https://www.gates.com/content/dam/documents-library/catalogs/powergrip-gt3-drive-design-manual-en.pdf>
+- Mark-10 Series 3 force gauge: <https://mark-10.com/products/force-gauges/series-3/>
 
 ## 3. Signals and authoritative records
 
@@ -75,7 +76,9 @@ The functional selection is closed, but procurement remains blocked until:
 2. the exact E6 configuration, cable, centring tool and mounting clearance are
    quoted together;
 3. the delivered Leadshine revision and Modbus register scaling are confirmed;
-4. temperature probes and the force gauge have traceable specifications.
+4. temperature probes are selected and the M3-5 is ordered with its calibration
+   certificate; a lower-cost substitute is allowed only with 0–25 N coverage,
+   <= 0.05 N resolution and traceable calibration.
 
 ## 6. Outside this decision
 

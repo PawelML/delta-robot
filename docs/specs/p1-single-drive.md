@@ -82,8 +82,8 @@ rate and exact revision-specific scaling remain physical integration checks.
 - nominal reduction: 5.00:1 from Gates 18/90 teeth;
 - small pulley `P18-5MGT-15AL` on a separately supported 3/8 inch jackshaft;
 - large pulley `P90-5MGT-15` with 1610-20 mm bushing on a 20 mm shaft;
-- belt `600-5MGT-15`, nominal centre distance 154.37 mm and at least 25 mm
-  carrier adjustment;
+- belt `600-5MGT-15`, nominal centre distance 154.37 mm and carrier adjustment
+  from -21 to +4 mm for installation and tensioning;
 - input jackshaft coupled to the 14 mm servo shaft; no belt radial load on the
   servo shaft;
 - guards are not production scope, but hands and loose items remain outside the
