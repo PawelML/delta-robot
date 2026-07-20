@@ -4,26 +4,30 @@ import math
 import sys
 from dataclasses import dataclass
 
+from delta_model.arm_geometry import (
+    arm_radial_vector,
+    knee_point,
+    platform_attachment_point,
+    shoulder_point,
+)
 from delta_model.conventions import (
     AssemblyMode,
     CartesianPoint,
     CartesianPosition,
     JointAngles,
 )
+from delta_model.errors import (
+    AssemblyConstraintError,
+    JointLimitError,
+    KinematicsError,
+    UnsupportedAssemblyModeError,
+)
 from delta_model.geometry import DeltaGeometry
 
 DISCRIMINANT_RELATIVE_TOLERANCE = 64.0 * sys.float_info.epsilon
 
-_SQRT_3_OVER_2 = math.sqrt(3.0) / 2.0
-_RADIAL_VECTORS = (
-    (0.0, -1.0),
-    (_SQRT_3_OVER_2, 0.5),
-    (-_SQRT_3_OVER_2, 0.5),
-)
-
-
-class InverseKinematicsError(ValueError):
-    """Base class for expected inverse-kinematics failures."""
+class InverseKinematicsError(KinematicsError):
+    """Base class for inverse-specific solver failures."""
 
 
 class InvalidPositionError(InverseKinematicsError):
@@ -40,18 +44,6 @@ class DegeneratePositionError(InverseKinematicsError):
 
 class AmbiguousAssemblyError(InverseKinematicsError):
     """Raised when the assembly rule does not select exactly one root."""
-
-
-class AssemblyConstraintError(InverseKinematicsError):
-    """Raised when a position violates the selected assembly configuration."""
-
-
-class JointLimitError(InverseKinematicsError):
-    """Raised when a geometric solution violates an actuator limit."""
-
-
-class UnsupportedAssemblyModeError(InverseKinematicsError):
-    """Raised when inverse kinematics does not implement the requested branch."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -101,10 +93,7 @@ def solve_arm_inverse(
 
     _validate_position(position)
     _validate_assembly(position, assembly_mode)
-    if arm_index not in (1, 2, 3):
-        raise ValueError("arm_index must be 1, 2 or 3")
-
-    radial_x, radial_y = _RADIAL_VECTORS[arm_index - 1]
+    radial_x, radial_y = arm_radial_vector(arm_index)
     radial_distance = (
         position.x_m * radial_x
         + position.y_m * radial_y
@@ -164,21 +153,9 @@ def solve_arm_inverse(
             f"[{geometry.min_joint_angle_rad}, {geometry.max_joint_angle_rad}] rad"
         )
 
-    shoulder = CartesianPoint(
-        x_m=geometry.base_joint_radius_m * radial_x,
-        y_m=geometry.base_joint_radius_m * radial_y,
-        z_m=0.0,
-    )
-    knee = CartesianPoint(
-        x_m=shoulder.x_m + upper_length * math.cos(angle_rad) * radial_x,
-        y_m=shoulder.y_m + upper_length * math.cos(angle_rad) * radial_y,
-        z_m=-upper_length * math.sin(angle_rad),
-    )
-    attachment = CartesianPoint(
-        x_m=position.x_m + geometry.platform_joint_radius_m * radial_x,
-        y_m=position.y_m + geometry.platform_joint_radius_m * radial_y,
-        z_m=position.z_m,
-    )
+    shoulder = shoulder_point(geometry, arm_index)
+    knee = knee_point(geometry, arm_index, angle_rad)
+    attachment = platform_attachment_point(geometry, position, arm_index)
     return ArmInverseSolution(
         arm_index=arm_index,
         angle_rad=angle_rad,

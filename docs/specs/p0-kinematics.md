@@ -1,7 +1,7 @@
 # P0 kinematics — specification
 
 **Status:** accepted for implementation
-**Version:** 0.3
+**Version:** 0.4
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -233,6 +233,56 @@ return all candidates before assembly-mode filtering, but it must not silently
 discard ambiguity. For the supported branch, the accepted platform is below the
 base (`z < 0`).
 
+#### 8.2 Three-sphere intersection and complete FK slice
+
+For known shoulder angles, the three knee points `A_i` follow directly from
+the upper-arm geometry in section 8.1. Because the moving platform remains
+parallel to the base, subtracting each platform-local attachment offset creates
+three virtual sphere centers:
+
+`C_i = A_i - r_p * r_i`.
+
+The unknown platform center must lie exactly `l` metres from every `C_i`.
+Complete FK is therefore the intersection of three equal-radius spheres.
+
+The implementation shall use coordinate-free trilateration:
+
+1. Build an orthonormal basis from `C_1`, `C_2` and `C_3`.
+2. Solve the in-plane coordinates by subtracting the sphere equations.
+3. Solve the remaining perpendicular coordinate from the first sphere.
+4. Return both mathematical candidates when two intersections exist.
+5. For `knee_out_platform_below`, accept exactly one candidate with `z < 0`.
+
+This algorithm deliberately handles equal and unequal knee heights through one
+path. It avoids the division-by-zero problem of the general component-wise
+algorithm described in Williams Appendix A when all three centers share a
+height; it is mathematically equivalent to sphere intersection, not a second
+delta-specific kinematic formula.
+
+The public `forward_kinematics` result shall contain:
+
+- the selected platform-center position,
+- all mathematical sphere-intersection candidates,
+- the input joint angles,
+- each arm's shoulder, knee, virtual sphere center and selected platform
+  attachment point.
+
+Inputs must be finite, inside inclusive joint limits and consistent with the
+requested knee-out branch (`L*cos(theta_i) > 0`). Expected failures are:
+
+| Error | Meaning |
+|---|---|
+| `InvalidAnglesError` | At least one input angle is NaN or infinite |
+| `UnreachableAnglesError` | The three lower-link spheres have no common point |
+| `DegenerateSphereGeometryError` | Sphere centers are coincident/collinear or meet tangentially within numerical resolution |
+| `AmbiguousForwardSolutionError` | The below-base rule identifies zero or multiple admissible candidates |
+
+Shared `JointLimitError`, `AssemblyConstraintError` and
+`UnsupportedAssemblyModeError` retain the meanings fixed for IK. Relative
+geometric comparisons use `64 * sys.float_info.epsilon` scaled by the relevant
+length or squared-length magnitude. Values classified as a boundary are
+reported, never clipped into a valid sphere intersection or assembly branch.
+
 ### Error model
 
 Expected geometric failures shall use domain-specific exceptions or typed
@@ -300,15 +350,21 @@ small boundary adapter is therefore required. It shall:
 - contain no IK or FK formula.
 
 The four published examples shall be stored as typed, immutable SI fixtures.
-Their displayed precision defines the later solver-test tolerances:
+Their displayed precision and the precision of the published input dimensions
+define the solver-test tolerances:
 
 - angles displayed to `0.1 deg`: absolute tolerance
   `0.05 deg + 1e-12 rad`,
-- positions displayed to `0.001 m`: absolute tolerance
-  `0.0005 m + 1e-12 m`.
+- positions displayed to `0.001 m`: absolute tolerance `0.001649554077 m`.
+  This is the zero-angle fixture's worst-case `0.001149554076 m` displacement
+  over all corners formed by varying each of `s_B`, `s_P`, `L` and `l` by
+  `+/-0.0005 m`, plus the output's `0.0005 m` half-resolution and `1e-12 m`
+  floating-point boundary slack.
 
-The `1e-12` additions cover only floating-point boundary representation; they
-do not loosen the source rounding interval. The Williams paper does not publish
+The `1e-12` additions cover only floating-point boundary representation. The
+larger FK tolerance accounts for uncertainty already present in the rounded
+source dimensions; it is not a numerical allowance for the solver. The
+Williams paper does not publish
 joint limits, so its shared validation fixture uses explicit non-restrictive
 test limits `[-pi, +pi]`. These limits are not a DIY robot design decision.
 
@@ -317,6 +373,16 @@ and verify exact transcription, units and tolerances of all four fixtures. The
 fixtures become executable IK/FK oracle tests as soon as the corresponding
 solver is added. Until then, passing fixture tests is not evidence that any
 kinematic formula is correct.
+
+### AI-assisted implementation note
+
+- The initial `0.0005 m` FK tolerance, based only on displayed output precision,
+  rejected the zero-angle oracle by `0.000048344 m` beyond that interval.
+- Exhaustively evaluating all 16 corners of the four published `1 mm` dimension
+  intervals showed up to `0.001149554076 m` movement in the expected zero-angle
+  result.
+- The reference tolerance now includes that source-data uncertainty. The model
+  formula and solver tolerances were not altered to make the test pass.
 
 ## 11. Additional test properties
 
@@ -368,8 +434,16 @@ This specification slice is complete when:
 - returned diagnostic points close both upper- and lower-link lengths,
 - centered-position equality, 120-degree cyclic symmetry, unreachable input,
   non-finite input and joint-limit rejection are tested,
+- both Williams FK cases pass as executable solver tests within the
+  source-uncertainty tolerance derived in section 10.1, including the
+  equal-knee-height case,
+- a deterministic sample of 10,000 valid Williams-fixture positions in
+  `x,y in [-0.1, 0.1] m`, `z in [-1.15, -0.85] m` passes `IK -> FK` below
+  `1e-5 m`, reporting maximum and 99th-percentile position error; this validates
+  the numerical pipeline but does not freeze the DIY robot geometry,
 - Ruff, Mypy, Pytest and at least one Hypothesis test run successfully,
-- no FK implementation is claimed yet.
+- IK and FK position solutions are implemented; Jacobian, workspace boundary
+  generation and singularity metrics remain later P0 slices.
 
 ## 14. Known uncertainty
 
