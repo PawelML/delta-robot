@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Diagnostyczny wizualizator workspace'u i pozy robota delta."
+    />
+    <title>Delta Robot — workspace P0</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <canvas id="scene" aria-label="Interaktywny model 3D robota delta"></canvas>
+
+    <aside class="panel controls-panel" aria-label="Sterowanie widokiem">
+      <header class="brand">
+        <div class="eyebrow">DELTA ROBOT · P0</div>
+        <h1>Workspace diagnostyczny</h1>
+        <p>Zweryfikowana poza i klasyfikacja punktów z modelu Python.</p>
+      </header>
+
+      <section class="status-card" aria-live="polite">
+        <span id="status-dot" class="status-dot loading"></span>
+        <div>
+          <strong id="status-title">Wczytywanie danych</strong>
+          <small id="status-detail">Sprawdzam kontrakty JSON…</small>
+        </div>
+      </section>
+
+      <section class="control-section">
+        <h2>Warstwy sceny</h2>
+        <label class="toggle-row">
+          <input id="toggle-robot" type="checkbox" checked />
+          <span class="swatch robot"></span>
+          <span>Robot i przeguby</span>
+        </label>
+        <label class="toggle-row">
+          <input id="toggle-reachable" type="checkbox" checked />
+          <span class="swatch reachable"></span>
+          <span>Osiągalne</span>
+          <strong id="count-reachable-short">—</strong>
+        </label>
+        <label class="toggle-row">
+          <input id="toggle-limited" type="checkbox" checked />
+          <span class="swatch limited"></span>
+          <span>Limitowane</span>
+          <strong id="count-limited-short">—</strong>
+        </label>
+        <label class="toggle-row">
+          <input id="toggle-unreachable" type="checkbox" checked />
+          <span class="swatch unreachable"></span>
+          <span>Nieosiągalne</span>
+          <strong id="count-unreachable-short">—</strong>
+        </label>
+      </section>
+
+      <section class="control-section source-section">
+        <h2>Źródło modelu</h2>
+        <code id="source-label">—</code>
+        <p>
+          Wymiary Williamsa i demonstracyjne limity ±45°. To fixture programu,
+          nie geometria ani ograniczenia przyszłego robota DIY.
+        </p>
+      </section>
+
+      <div class="button-row">
+        <button id="reset-view" type="button">Wycentruj widok</button>
+      </div>
+
+      <p class="interaction-hint">
+        <kbd>LPM</kbd> obrót · <kbd>PPM</kbd> przesunięcie ·
+        <kbd>kółko</kbd> zoom
+      </p>
+    </aside>
+
+    <aside class="panel stats-panel" aria-label="Parametry modelu">
+      <section>
+        <div class="section-heading">
+          <h2>Workspace</h2>
+          <span id="total-points" class="metric-chip">— punktów</span>
+        </div>
+        <dl class="metrics-list">
+          <div><dt>Osiągalne</dt><dd id="metric-reachable">—</dd></div>
+          <div><dt>Limitowane</dt><dd id="metric-limited">—</dd></div>
+          <div><dt>Nieosiągalne</dt><dd id="metric-unreachable">—</dd></div>
+          <div><dt>Siatka XYZ</dt><dd id="metric-shape">—</dd></div>
+          <div><dt>Zakres X</dt><dd id="metric-bound-x">—</dd></div>
+          <div><dt>Zakres Y</dt><dd id="metric-bound-y">—</dd></div>
+          <div><dt>Zakres Z</dt><dd id="metric-bound-z">—</dd></div>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Aktualna poza</h2>
+        <dl class="metrics-list">
+          <div><dt>Środek XYZ</dt><dd id="metric-position">—</dd></div>
+          <div><dt>Kąt osi 1</dt><dd id="metric-angle-1">—</dd></div>
+          <div><dt>Kąt osi 2</dt><dd id="metric-angle-2">—</dd></div>
+          <div><dt>Kąt osi 3</dt><dd id="metric-angle-3">—</dd></div>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Geometria</h2>
+        <dl class="metrics-list">
+          <div><dt>Promień bazy</dt><dd id="metric-base-radius">—</dd></div>
+          <div><dt>Promień platformy</dt><dd id="metric-platform-radius">—</dd></div>
+          <div><dt>Ramię górne</dt><dd id="metric-upper-length">—</dd></div>
+          <div><dt>Pręt dolny</dt><dd id="metric-lower-length">—</dd></div>
+        </dl>
+      </section>
+
+      <section class="schema-section">
+        <h2>Kontrakty danych</h2>
+        <code id="workspace-schema">—</code>
+        <code id="pose-schema">—</code>
+      </section>
+
+      <div class="warning-box">
+        <strong>Geometrycznie osiągalne ≠ użyteczne.</strong>
+        <span>Brak jeszcze metryki osobliwości, kolizji i dynamiki.</span>
+      </div>
+    </aside>
+
+    <div id="loading-overlay" class="loading-overlay" aria-live="polite">
+      <div class="loader"></div>
+      <span>Ładowanie zweryfikowanych artefaktów…</span>
+    </div>
+
+    <div id="error-banner" class="error-banner" role="alert" hidden>
+      <strong>Nie można uruchomić wizualizatora</strong>
+      <span id="error-message"></span>
+    </div>
+
+    <div class="axis-legend" aria-label="Mapowanie osi">
+      <span><i class="axis-x"></i>X modelu</span>
+      <span><i class="axis-y"></i>Y modelu</span>
+      <span><i class="axis-z"></i>Z modelu</span>
+    </div>
+
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
