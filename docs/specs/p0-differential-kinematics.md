@@ -1,7 +1,7 @@
 # P0 differential kinematics and singularity margin — specification
 
 **Status:** accepted for implementation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -120,12 +120,12 @@ a serial singularity and one at the best possible alignment of the two vectors.
 
 For P0 visualization and geometry screening only:
 
-- `singularity_margin >= 0.15` is provisionally **usable**;
-- `singularity_margin < 0.15` is **weak / practically unusable**.
+- `singularity_margin >= 0.20` is provisionally **usable**;
+- `singularity_margin < 0.20` is **weak / practically unusable**.
 
-The value `0.15` means neither normalized mechanism has less than 15% of its
+The value `0.20` means neither normalized mechanism has less than 20% of its
 best directional leverage, and the normalized parallel condition number is no
-worse than about `1 / 0.15 = 6.67`. It is a conservative engineering screening
+worse than `1 / 0.20 = 5`. It is a conservative engineering screening
 rule, not a safety limit or a published industry standard. P1/P2 measurements
 may change it; the raw metrics must therefore always be exported.
 
@@ -180,7 +180,7 @@ their meanings do not change.
    zero. `serial_margin` tends toward zero and that motor's required velocity
    for Cartesian motion grows.
 5. Workspace sampling retains `reachable`, but v2 marks a reachable point below
-   0.15 as `practically_usable: false`. Three.js can therefore display it as a
+   0.20 as `practically_usable: false`. Three.js can therefore display it as a
    warning shell without independently evaluating a formula.
 
 ## 9. Acceptance evidence
@@ -208,7 +208,15 @@ input constraint and velocity sections:
 <https://sites.ohio.edu/williams/html/PDF/DeltaKin.pdf>.
 
 The differential equation is independently supported by that publication and
-finite-difference IK. The `0.15` useful threshold is not independently
+finite-difference IK. The `0.20` useful threshold is not independently
 validated. It remains a labelled P0 design assumption until dynamics and
 physical measurements quantify tracking error, vibration and drive reserve.
 
+### AI-assisted implementation note
+
+- The initial 0.15 visualization threshold produced no weak-but-reachable
+  points for the selected DIY geometry because joint limits removed them first.
+- A dense sampled map found reachable points in the 0.15–0.20 band while the
+  required cylinder retained a much larger 0.571 minimum margin.
+- P0 therefore uses one 0.20 threshold for screening, export and visualization;
+  raw margins remain available so later measurements can revise the decision.

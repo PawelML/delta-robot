@@ -1,7 +1,7 @@
 # P0 DIY geometry screening — specification
 
 **Status:** accepted for implementation
-**Version:** 0.2
+**Version:** 0.3
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -71,10 +71,9 @@ A sampled pose passes only when:
 - distance to the nearest joint limit is at least 5° on every arm,
 - `singularity_margin >= 0.20`.
 
-The 0.20 design threshold is deliberately stricter than the 0.15 visualization
-warning threshold. It caps the normalized parallel condition number at 5 and
-leaves 5 percentage points for interpolation between the coarse screening
-samples. It is still a provisional project choice, not a safety standard.
+The 0.20 threshold is shared with workspace visualization so `useful` has one
+meaning throughout P0. It caps the normalized parallel condition number at 5.
+It is still a provisional project choice, not a safety standard.
 
 For a complete passing cylinder define:
 
