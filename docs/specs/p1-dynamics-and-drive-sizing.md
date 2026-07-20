@@ -1,7 +1,7 @@
 # P1 simplified dynamics and single-drive sizing — specification
 
 **Status:** accepted for implementation
-**Version:** 0.2
+**Version:** 0.3
 **Date:** 2026-07-20
 
 ## 1. Problem
@@ -202,3 +202,52 @@ P1: its quoted value is holding torque, while the calculated required peak at
   the conservative 1 Hz cycle, invalidating that selection basis.
 - P1 changes to a 400 W servo candidate and retains the one-drive bench gate;
   the full three-axis purchase remains blocked.
+
+## 11. Refined P1 transmission model
+
+Version 0.3 adds the selected transmission from
+`artifacts/p1_transmission_selection.json`. The earlier simplified result remains
+visible for traceability, but the candidate decision uses sample-by-sample
+motor torque:
+
+```text
+tau_motor = (tau_external + J_output_transmission * alpha_joint)
+            / (ratio * efficiency)
+            + J_input_transmission * alpha_motor
+            + J_rotor * alpha_motor
+```
+
+`J_input_transmission` includes the small pulley, supported input shaft,
+coupling and translating belt inertia referred to the small pulley.
+`J_output_transmission` includes the large pulley, 1610 bushing and output
+shaft. Pulley inertia comes from published Gates `WR²`. Shaft, coupling and
+bushing inertia are explicit geometric estimates with density and dimensions
+stored in the artifact; every one is replaced by measured mass/inertia or
+supplier data before a final three-axis purchase.
+
+The report evaluates upper-arm assembly masses of 0.15, 0.20, 0.25 and 0.30 kg
+while retaining the conservative payload, platform and lower-arm assumptions.
+It also reports an efficiency sensitivity at 0.85, 0.90 and 0.95. The accepted
+screen continues to use 0.90; the other values expose selection sensitivity and
+do not silently alter the HLD.
+
+For each sample the report also calculates small-pulley pitch-line tension
+difference from the absolute torque transmitted through the belt. Installation
+preload remains separate: dynamic tension difference is not added to the load
+model as an invented friction torque.
+
+The P1 CAD representative mass is derived to match the maximum conservative
+external-load joint inertia with a 280 mm bench arm. This is an equivalent
+inertia fixture, not a claim that one point mass reproduces delta-robot gravity,
+Jacobian coupling or every operating pose. The generated bench trajectory
+therefore tests the drive/transmission envelope and controller path; the full
+Python delta model remains authoritative for robot loads.
+
+Version 0.3 output changes `artifacts/dynamic_sizing.json` to schema
+`delta-robot-p1-dynamic-sizing/v2`. It adds component inertia assumptions,
+refined per-axis torque time histories/summaries, arm-mass variants, efficiency
+sensitivity, peak belt-force difference and the equivalent bench load. Tests
+must prove that zero added inertia reproduces the original motor calculation,
+that increasing any positive inertia cannot reduce acceleration torque at a
+sample with fixed acceleration sign, and that committed results are exactly
+reproducible.
