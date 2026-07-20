@@ -66,15 +66,16 @@ the manufacturer method is the Gates GT3 design manual:
 | Output bearings | `6204-2RS`, 20 × 47 × 14 mm, dynamic rating ≥12 kN | 2 | Normal internal clearance unless supplier/fit calculation justifies otherwise |
 | Base plate | 6082-T6 or 6061-T6 aluminium, 600 × 360 × 12 mm | 1 | Flat, clamped/bolted to bench edge so the +80° arm sweep remains unobstructed |
 | Adjustable input carrier | 6082-T6 or 6061-T6 aluminium, 12 mm plate; carries servo bracket and both input supports as one rigid datum | 1 | Four fixed M8 base slots provide -21 to +4 mm centre-distance adjustment; verify edge distance and clamp access |
-| Bearing housings | Fabricated or machined carriers matching the parametric CAD and actual bearing fits | 1 input + 1 output | CAD envelopes are not fabrication drawings; add shoulders, retainers and fasteners before machining |
+| Bearing housings | Fabricated or machined carriers matching the parametric CAD and actual bearing fits | 1 input + 1 output | Candidate package has closed seats and separate face retainers; calculate final fits and add retainer bolt circles from delivered bearings before machining |
 | Output arm | 280 mm shaft centre to load centre; target complete arm/hub mass 0.250 kg | 1 | Weigh and enter actual mass before full-speed run |
 | Adjustable load | 1.035 kg nominal at 280 mm radius, adjustable/removable in small increments | 1 set | This matches maximum calculated joint inertia only; secure mechanically and record actual radius/mass |
 | Fasteners/retainers | Property class and dimensions derived from final housing drawings; prevailing locking method on rotating joints | 1 set | No unspecified friction-only retention for pulley, arm hub or test mass |
 
 Parametric layout source:
 `cad/2026/07/20/p1-single-axis-bench/main.forge.js`. It validates -45°, 0°
-and +80° envelope poses but does not replace shaft keyway, bearing-fit or
-fastener manufacturing drawings.
+and +80° envelope poses. The STEP/report and controlled custom-part dimensions
+are listed in `docs/p1-bench-fabrication-package.md`; open fit, keyway and
+supplier-pattern items remain explicitly blocked from final machining release.
 
 ### 2.3 Electrical, braking and measurements
 

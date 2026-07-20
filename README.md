@@ -23,6 +23,8 @@ ale jeszcze bez fizycznego zaliczenia**.
 - `docs/specs/p1-single-axis-bench-lld.md` — stanowisko jednej osi w ForgeCAD.
 - `docs/specs/p1-bench-software.md` — komendy, telemetria i automatyczny gate.
 - `docs/specs/p1-test-instrumentation.md` — aparatura i niezależny tor pomiarowy.
+- `docs/p1-bench-fabrication-package.md` — wymiary, datums i blokery wydania
+  rysunków stanowiska.
 - `AGENTS.md` — instrukcje obowiązujące narzędzia kodujące.
 
 ## Środowisko developerskie
@@ -63,6 +65,24 @@ Pierwszy raport P1 odrzuca wcześniejszy dobór steppera 2,0–2,2 Nm i sprawdza
 jedno zintegrowane serwo 400 W z redukcją 5:1. Jest to kandydat wyłącznie do
 testu stołowego; szczegóły i blokery zakupowe są zapisane w
 `docs/specs/p1-single-drive.md` oraz `BOM_delta.md`.
+
+## Stanowisko CAD P1
+
+Model jednej osi ma parametry kąta `-45…+80°` i regulacji pasa `-21…+4 mm`.
+Najprościej obejrzeć gotowe wyjścia w
+`artifacts/cad/p1-single-axis-bench-report.pdf` oraz
+`artifacts/cad/p1-single-axis-bench.step`. Źródło można też renderować lokalnie:
+
+```bash
+forgecad render 3d cad/2026/07/20/p1-single-axis-bench/main.forge.js \
+  --view hero --output /tmp/p1-bench.png
+```
+
+Pakiet przechodzi kontrolę złożeń i kolizji w pozycjach -45°, 0° i +80°.
+Pozostaje kandydatem wykonawczym: pasowania łożysk, śruby pierścieni
+ustalających, otwory kołnierza serwa, szczegóły rowków wpustowych i mocowanie
+konkretnej wersji E6 trzeba zamknąć na podstawie dostarczonych części przed
+zleceniem obróbki „dokładnie według modelu”.
 
 ## Wizualizator Three.js
 

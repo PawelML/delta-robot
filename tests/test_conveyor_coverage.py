@@ -1,4 +1,6 @@
+import json
 import math
+from pathlib import Path
 
 import pytest
 
@@ -13,6 +15,7 @@ from delta_model.design_geometry import (
     SELECTED_USEFUL_CYLINDER,
     ConveyorFootprint,
 )
+from scripts.generate_conveyor_coverage import coverage_document
 
 
 def test_selected_305_by_200_footprint_has_analytical_radial_reserve() -> None:
@@ -41,6 +44,15 @@ def test_selected_footprint_passes_full_height_sampling() -> None:
     assert result.minimum_singularity_margin >= 0.20
     assert result.minimum_joint_limit_margin_rad is not None
     assert result.minimum_joint_limit_margin_rad >= math.radians(5.0)
+
+
+def test_coverage_report_matches_committed_artifact() -> None:
+    document = coverage_document()
+    artifact_path = Path(__file__).resolve().parents[1] / "artifacts/conveyor_coverage.json"
+    committed = json.loads(artifact_path.read_text(encoding="utf-8"))
+
+    assert json.loads(json.dumps(document)) == committed
+    assert document["schema"] == "delta-robot-p0-conveyor-coverage/v1"
 
 
 def test_footprint_outside_useful_cylinder_fails_without_clipping() -> None:
