@@ -10,10 +10,20 @@
 
 ## Current scope
 
-- The current implementation target is P0: Python kinematics plus a Three.js visualizer.
-- The Python model is authoritative. Three.js visualizes exported model results and must not become a second independent source of kinematic truth.
-- The existing `BOM_delta.md` is provisional until the model and the P1 single-drive bench test justify an update.
-- Do not introduce ROS2, a motion controller, cloud services, agent frameworks, or production safety architecture into P0 unless the accepted specification explicitly requires them.
+- Digital P0 is complete. The current gate is P1: build and physically validate one representative servo axis with the selected transmission.
+- P1 design calculations, the ForgeCAD bench, the simulated drive and the automated report pipeline are implemented, but P1 has **not** passed until measurements from real hardware satisfy `docs/specs/p1-single-drive.md`.
+- The Python model is authoritative for kinematics, differential kinematics, trajectories, dynamics and transmission calculations. Three.js and ForgeCAD visualize or package exported/modelled results and must not become independent mathematical sources of truth.
+- `BOM_delta.md` is a purchase-level specification for at most one P1 bench axis, but it remains provisional until supplier compatibility checks and the physical P1 gate justify freezing it.
+- Do not purchase or specify three production axes, start P2 construction, or introduce ROS2, a motion controller, cloud services, agent frameworks or production safety architecture unless an accepted specification explicitly advances the project beyond P1.
+
+## Accepted engineering baseline
+
+- The selected provisional delta geometry is: 180 mm base-joint radius, 65 mm platform-joint radius, 280 mm upper arms, 450 mm lower rods and shoulder limits from -45 deg to +80 deg.
+- The accepted useful workspace remains a sampled cylinder `diameter 400 mm x Z height 150 mm`, centred at `Z = -347 mm`. Diameter is an XY dimension; do not confuse conveyor width with vertical Z travel.
+- A centred `305 mm x 200 mm` horizontal conveyor footprint fits inside the 400 mm useful diameter: its corner radius is about 182.4 mm. The stated 200 mm conveyor width therefore does not change the accepted 150 mm Z height.
+- The selected P1 transmission is Gates 5MGT, 18/90 teeth, 15 mm width and a 600 mm belt, using the separately supported input jackshaft from `docs/adr/0002-supported-input-jackshaft.md`.
+- The current drive is a calculated P1 candidate only: Leadshine iSV2-RS6040V48G, 48 V / 400 W, with the selected 5:1 reduction. Do not describe it as validated hardware before the bench test.
+- Exploratory parameter checks may be run without changing accepted requirements. Do not promote them into defaults, artifacts, the BOM or claims of capability until the relevant spec and evidence are updated.
 
 ## Specification-driven workflow
 
@@ -26,6 +36,8 @@ For each non-trivial slice:
 5. Report what evidence supports correctness and what remains uncertain.
 6. Keep changes small enough to understand from one diff.
 
+Generated files in `artifacts/` are evidence, not hand-authored configuration. Regenerate them with the owning script and commit the input/code change together with the resulting artifact. A report marked `simulation_only` can validate software plumbing but can never satisfy a physical P1 acceptance criterion.
+
 ## Validation instead of expert manual code review
 
 The user is not expected to validate advanced kinematic or dynamic code line by line. Correctness must therefore be demonstrated through evidence:
@@ -37,6 +49,8 @@ The user is not expected to validate advanced kinematic or dynamic code line by 
 - comparison with an independent published derivation or implementation when available,
 - numerical error summaries over large sampled datasets,
 - visual inspection in the Three.js model,
+- analytical capacity and stress checks with stated service factors for the transmission,
+- CAD checks at the minimum, nominal and maximum accepted joint positions,
 - later comparison with physical measurements.
 
 Do not claim a model is correct merely because tests using the same derivation pass. State explicitly when an independent oracle is missing.
@@ -53,15 +67,25 @@ Do not claim a model is correct merely because tests using the same derivation p
 
 ## Quality gates
 
-Once configured, run the repository's formatter/linter, type checker and tests before declaring a slice complete. The intended Python baseline is:
+Run the checks relevant to every changed surface before declaring a slice complete. The Python baseline is:
 
-```text
-ruff check
-mypy
-pytest
+```bash
+uv run ruff check .
+uv run mypy
+uv run pytest
 ```
 
 Add Hypothesis tests where continuous geometric input spaces make example-only testing weak. Do not weaken a test or tolerance only to make generated code pass without documenting the reason.
+
+For changes to exported P0/P1 evidence, rerun the owning scripts listed in `README.md` and confirm that only intentional artifact changes remain. For visualizer changes also run:
+
+```bash
+cd visualizer
+npm test
+npm run build
+```
+
+For ForgeCAD changes, run `forgecad run` and the relevant inspection command. A moving bench must be checked at least at the accepted minimum, nominal and maximum output angles; intentional fit/contact overlaps must be distinguished from unexpected collisions.
 
 ## AI-assisted development record
 
