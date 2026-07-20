@@ -30,6 +30,18 @@ from delta_model.inverse_kinematics import (
     inverse_kinematics,
     solve_arm_inverse,
 )
+from delta_model.workspace import (
+    GridValidationError,
+    WorkspaceClassification,
+    WorkspaceGrid,
+    WorkspacePoint,
+    WorkspaceReason,
+    WorkspaceSample,
+    WorkspaceSummary,
+    classify_workspace_point,
+    grid_positions,
+    sample_workspace,
+)
 
 __all__ = [
     "AmbiguousAssemblyError",
@@ -46,6 +58,7 @@ __all__ = [
     "ForwardKinematicsError",
     "ForwardKinematicsResult",
     "GeometryValidationError",
+    "GridValidationError",
     "InvalidAnglesError",
     "InvalidPositionError",
     "InverseKinematicsError",
@@ -56,9 +69,18 @@ __all__ = [
     "UnreachableAnglesError",
     "UnreachablePositionError",
     "UnsupportedAssemblyModeError",
+    "WorkspaceClassification",
+    "WorkspaceGrid",
+    "WorkspacePoint",
+    "WorkspaceReason",
+    "WorkspaceSample",
+    "WorkspaceSummary",
+    "classify_workspace_point",
     "forward_kinematics",
+    "grid_positions",
     "intersect_three_equal_spheres",
     "inverse_kinematics",
+    "sample_workspace",
     "solve_arm_inverse",
 ]
 __version__ = "0.1.0"
