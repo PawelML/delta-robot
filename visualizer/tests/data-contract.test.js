@@ -8,6 +8,7 @@ import {
   partitionWorkspaceQualityPoints,
   partitionWorkspacePoints,
   validatePose,
+  validateTrajectory,
   validateWorkspace,
 } from '../src/data-contract.js';
 
@@ -16,11 +17,29 @@ const workspace = JSON.parse(
   await readFile(new URL('workspace.json', artifactsDirectory), 'utf8'),
 );
 const pose = JSON.parse(await readFile(new URL('pose.json', artifactsDirectory), 'utf8'));
+const trajectory = JSON.parse(
+  await readFile(new URL('trajectory_25_305_25.json', artifactsDirectory), 'utf8'),
+);
 
 test('committed artifacts satisfy the complete visualizer contract', () => {
   assert.equal(validateWorkspace(workspace), workspace);
   assert.equal(validatePose(pose), pose);
-  assert.doesNotThrow(() => assertMatchingArtifacts(workspace, pose));
+  assert.equal(validateTrajectory(trajectory), trajectory);
+  assert.doesNotThrow(() => assertMatchingArtifacts(workspace, pose, trajectory));
+});
+
+test('trajectory validation rejects a bad count, time and arm coordinate', () => {
+  const wrongCount = structuredClone(trajectory);
+  wrongCount.cycle.sample_count += 1;
+  assert.throws(() => validateTrajectory(wrongCount), /samples length/);
+
+  const wrongTime = structuredClone(trajectory);
+  wrongTime.samples[20].time_s = wrongTime.samples[19].time_s;
+  assert.throws(() => validateTrajectory(wrongTime), /must increase/);
+
+  const wrongArm = structuredClone(trajectory);
+  wrongArm.samples[0].arms[0].knee_m[0] = Number.NaN;
+  assert.throws(() => validateTrajectory(wrongArm), /finite number/);
 });
 
 test('quality partition separates useful and weak reachable points', () => {
@@ -92,5 +111,12 @@ test('matching rejects artifacts from different geometry or sources', () => {
   assert.throws(
     () => assertMatchingArtifacts(workspace, wrongGeometry),
     /upper_arm_length_m differs/,
+  );
+
+  const wrongTrajectory = structuredClone(trajectory);
+  wrongTrajectory.geometry.lower_arm_length_m += 0.001;
+  assert.throws(
+    () => assertMatchingArtifacts(workspace, pose, wrongTrajectory),
+    /lower_arm_length_m differs/,
   );
 });

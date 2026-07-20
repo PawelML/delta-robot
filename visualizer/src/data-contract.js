@@ -1,5 +1,6 @@
 export const WORKSPACE_SCHEMA = 'delta-robot-p0-workspace/v2';
 export const POSE_SCHEMA = 'delta-robot-p0-pose/v1';
+export const TRAJECTORY_SCHEMA = 'delta-robot-p0-trajectory/v1';
 export const WORKSPACE_CLASSES = ['reachable', 'joint_limited', 'unreachable'];
 
 const REASONS_BY_CLASS = {
@@ -20,6 +21,17 @@ const GEOMETRY_FIELDS = [
   'lower_arm_length_m',
   'min_joint_angle_rad',
   'max_joint_angle_rad',
+];
+
+const TRAJECTORY_SEGMENTS = [
+  'source_dwell',
+  'outbound_lift',
+  'outbound_transfer',
+  'outbound_lower',
+  'destination_dwell',
+  'return_lift',
+  'return_transfer',
+  'return_lower',
 ];
 
 function fail(message) {
@@ -221,13 +233,118 @@ export function validatePose(document) {
   return artifact;
 }
 
-export function assertMatchingArtifacts(workspace, pose) {
-  for (const field of ['source', 'assembly_mode']) {
-    if (workspace[field] !== pose[field]) fail(`${field} differs between artifacts`);
+export function validateTrajectory(document) {
+  const artifact = validateCommon(document, TRAJECTORY_SCHEMA);
+  const cycle = requireObject(artifact.cycle, 'cycle');
+  const duration = requireFiniteNumber(cycle.duration_s, 'cycle.duration_s');
+  const samplePeriod = requireFiniteNumber(cycle.sample_period_s, 'cycle.sample_period_s');
+  const sampleCount = requireNonNegativeInteger(cycle.sample_count, 'cycle.sample_count');
+  if (duration <= 0 || samplePeriod <= 0 || sampleCount < 2) {
+    fail('trajectory duration, period and sample count must be positive');
   }
-  for (const field of GEOMETRY_FIELDS) {
-    if (workspace.geometry[field] !== pose.geometry[field]) {
-      fail(`geometry.${field} differs between artifacts`);
+  if (!Array.isArray(cycle.segments) || cycle.segments.length !== TRAJECTORY_SEGMENTS.length) {
+    fail('cycle.segments must contain the eight accepted phases');
+  }
+  let segmentDuration = 0;
+  cycle.segments.forEach((segmentValue, index) => {
+    const segment = requireObject(segmentValue, `cycle.segments[${index}]`);
+    if (segment.name !== TRAJECTORY_SEGMENTS[index]) {
+      fail(`cycle.segments[${index}].name is out of order`);
+    }
+    const segmentSeconds = requireFiniteNumber(
+      segment.duration_s,
+      `cycle.segments[${index}].duration_s`,
+    );
+    if (segmentSeconds <= 0) fail(`cycle.segments[${index}].duration_s must be positive`);
+    segmentDuration += segmentSeconds;
+    requireVector3(segment.start_m, `cycle.segments[${index}].start_m`);
+    requireVector3(segment.end_m, `cycle.segments[${index}].end_m`);
+  });
+  if (Math.abs(segmentDuration - duration) > 1e-12) {
+    fail('segment durations must sum to cycle.duration_s');
+  }
+
+  if (!Array.isArray(artifact.samples) || artifact.samples.length !== sampleCount) {
+    fail('samples length must equal cycle.sample_count');
+  }
+  let previousTime = -Infinity;
+  artifact.samples.forEach((sampleValue, index) => {
+    const sample = requireObject(sampleValue, `samples[${index}]`);
+    const time = requireFiniteNumber(sample.time_s, `samples[${index}].time_s`);
+    if (time <= previousTime) fail(`samples[${index}].time_s must increase`);
+    previousTime = time;
+    if (!TRAJECTORY_SEGMENTS.includes(sample.segment)) {
+      fail(`samples[${index}].segment is unknown`);
+    }
+    for (const field of [
+      'platform_center_m',
+      'cartesian_velocity_m_s',
+      'cartesian_acceleration_m_s2',
+      'joint_angles_rad',
+      'joint_rates_rad_s',
+      'joint_accelerations_rad_s2',
+    ]) {
+      requireVector3(sample[field], `samples[${index}].${field}`);
+    }
+    for (const field of [
+      'parallel_margin',
+      'serial_margin',
+      'singularity_margin',
+      'joint_limit_margin_rad',
+    ]) {
+      const value = requireFiniteNumber(sample[field], `samples[${index}].${field}`);
+      if (value < 0) fail(`samples[${index}].${field} must be non-negative`);
+    }
+    if (!Array.isArray(sample.arms) || sample.arms.length !== 3) {
+      fail(`samples[${index}].arms must contain three arms`);
+    }
+    const armIndices = new Set();
+    sample.arms.forEach((armValue, armIndex) => {
+      const arm = requireObject(armValue, `samples[${index}].arms[${armIndex}]`);
+      if (!Number.isInteger(arm.arm_index) || arm.arm_index < 1 || arm.arm_index > 3) {
+        fail(`samples[${index}].arms[${armIndex}].arm_index is invalid`);
+      }
+      armIndices.add(arm.arm_index);
+      requireVector3(arm.shoulder_m, `samples[${index}].arms[${armIndex}].shoulder_m`);
+      requireVector3(arm.knee_m, `samples[${index}].arms[${armIndex}].knee_m`);
+      requireVector3(
+        arm.platform_attachment_m,
+        `samples[${index}].arms[${armIndex}].platform_attachment_m`,
+      );
+    });
+    if (armIndices.size !== 3) fail(`samples[${index}].arm indices must be unique`);
+  });
+  if (Math.abs(artifact.samples[0].time_s) > 1e-12) fail('first sample time must be zero');
+  if (Math.abs(previousTime - duration) > 1e-12) {
+    fail('last sample time must equal cycle.duration_s');
+  }
+
+  const summary = requireObject(artifact.summary, 'summary');
+  requireVector3(summary.maximum_abs_joint_rates_rad_s, 'summary.maximum_abs_joint_rates_rad_s');
+  requireVector3(
+    summary.maximum_abs_joint_accelerations_rad_s2,
+    'summary.maximum_abs_joint_accelerations_rad_s2',
+  );
+  for (const field of [
+    'maximum_cartesian_acceleration_m_s2',
+    'maximum_cartesian_speed_m_s',
+    'minimum_joint_limit_margin_rad',
+    'minimum_singularity_margin',
+  ]) {
+    requireFiniteNumber(summary[field], `summary.${field}`);
+  }
+  return artifact;
+}
+
+export function assertMatchingArtifacts(reference, ...artifacts) {
+  for (const artifact of artifacts) {
+    for (const field of ['source', 'assembly_mode']) {
+      if (reference[field] !== artifact[field]) fail(`${field} differs between artifacts`);
+    }
+    for (const field of GEOMETRY_FIELDS) {
+      if (reference.geometry[field] !== artifact.geometry[field]) {
+        fail(`geometry.${field} differs between artifacts`);
+      }
     }
   }
 }

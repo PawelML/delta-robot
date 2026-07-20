@@ -225,3 +225,11 @@ nodes. It never reconstructs a point from angle or geometry.
 `window.__deltaVisualizer` exposes playback state and current sample index for
 a headless smoke test. One visual loop must visit source, destination and source
 in the exported segment order while all links remain connected.
+
+### AI-assisted implementation note
+
+- Contract tests and the production build passed while the first browser frame
+  still failed because the animation callback was invoked without its timestamp.
+- A headless Chrome smoke test exposed the invalid sample index immediately.
+- Playback now starts through `requestAnimationFrame`; browser execution remains
+  a required gate for future visual-only changes.

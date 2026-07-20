@@ -8,11 +8,13 @@ from hypothesis import strategies as st
 
 from delta_model.conventions import AssemblyMode, CartesianPosition
 from delta_model.differential_kinematics import (
+    CartesianAcceleration,
     CartesianVelocity,
     InvalidVelocityError,
     JointRates,
     cartesian_velocity_for_joint_rates,
     differential_kinematics,
+    joint_accelerations_for_cartesian_motion,
     joint_rates_for_cartesian_velocity,
 )
 from delta_model.williams import WILLIAMS_GEOMETRY
@@ -94,6 +96,60 @@ def test_analytic_joint_rates_match_central_difference_of_independent_ik_calls()
     )
 
     assert finite_difference == pytest.approx(analytical, abs=1e-9)
+
+
+def test_analytic_joint_acceleration_matches_central_difference_of_joint_rates() -> None:
+    position = CartesianPosition(0.12, -0.08, -1.0)
+    velocity = CartesianVelocity(0.17, -0.09, 0.04)
+    acceleration = CartesianAcceleration(0.8, -0.3, 0.2)
+    result = differential_kinematics(WILLIAMS_GEOMETRY, position, ASSEMBLY_MODE)
+    rates = joint_rates_for_cartesian_velocity(result, velocity)
+    analytical = joint_accelerations_for_cartesian_motion(
+        result,
+        velocity,
+        acceleration,
+        rates,
+    )
+    step_s = 1e-6
+
+    def rates_at(offset_s: float) -> tuple[float, float, float]:
+        offset_position = CartesianPosition(
+            position.x_m
+            + velocity.x_m_s * offset_s
+            + 0.5 * acceleration.x_m_s2 * offset_s * offset_s,
+            position.y_m
+            + velocity.y_m_s * offset_s
+            + 0.5 * acceleration.y_m_s2 * offset_s * offset_s,
+            position.z_m
+            + velocity.z_m_s * offset_s
+            + 0.5 * acceleration.z_m_s2 * offset_s * offset_s,
+        )
+        offset_velocity = CartesianVelocity(
+            velocity.x_m_s + acceleration.x_m_s2 * offset_s,
+            velocity.y_m_s + acceleration.y_m_s2 * offset_s,
+            velocity.z_m_s + acceleration.z_m_s2 * offset_s,
+        )
+        offset_result = differential_kinematics(
+            WILLIAMS_GEOMETRY,
+            offset_position,
+            ASSEMBLY_MODE,
+        )
+        return _rate_tuple(joint_rates_for_cartesian_velocity(offset_result, offset_velocity))
+
+    before = rates_at(-step_s)
+    after = rates_at(step_s)
+    finite_difference = tuple(
+        (after[index] - before[index]) / (2.0 * step_s) for index in range(3)
+    )
+
+    assert finite_difference == pytest.approx(
+        (
+            analytical.theta_1_rad_s2,
+            analytical.theta_2_rad_s2,
+            analytical.theta_3_rad_s2,
+        ),
+        abs=1e-7,
+    )
 
 
 @given(scale=st.floats(min_value=0.1, max_value=10.0, allow_nan=False, allow_infinity=False))

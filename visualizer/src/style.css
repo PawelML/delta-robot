@@ -250,7 +250,14 @@ h1 {
 }
 
 .button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
   margin-top: 17px;
+}
+
+#reset-view {
+  grid-column: 1 / -1;
 }
 
 button {

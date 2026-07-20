@@ -3,15 +3,18 @@
 from delta_model.conventions import AssemblyMode, CartesianPoint, CartesianPosition, JointAngles
 from delta_model.differential_kinematics import (
     PRACTICALLY_USABLE_MARGIN,
+    CartesianAcceleration,
     CartesianVelocity,
     DifferentialKinematicsError,
     DifferentialKinematicsResult,
     InvalidVelocityError,
+    JointAccelerations,
     JointRates,
     SingularDifferentialKinematicsError,
     SingularityMetrics,
     cartesian_velocity_for_joint_rates,
     differential_kinematics,
+    joint_accelerations_for_cartesian_motion,
     joint_rates_for_cartesian_velocity,
 )
 from delta_model.errors import (
@@ -64,6 +67,7 @@ __all__ = [
     "ArmInverseSolution",
     "AssemblyConstraintError",
     "AssemblyMode",
+    "CartesianAcceleration",
     "CartesianPoint",
     "CartesianPosition",
     "CartesianVelocity",
@@ -81,6 +85,7 @@ __all__ = [
     "InvalidVelocityError",
     "InverseKinematicsError",
     "InverseKinematicsResult",
+    "JointAccelerations",
     "JointAngles",
     "JointLimitError",
     "JointRates",
@@ -103,6 +108,7 @@ __all__ = [
     "grid_positions",
     "intersect_three_equal_spheres",
     "inverse_kinematics",
+    "joint_accelerations_for_cartesian_motion",
     "joint_rates_for_cartesian_velocity",
     "sample_workspace",
     "solve_arm_inverse",

@@ -8,11 +8,14 @@ import pytest
 from delta_model import AssemblyMode, CartesianPosition, UnreachablePositionError
 from delta_model.design_geometry import SELECTED_SOURCE_LABEL
 from delta_model.p0_artifacts import generate_p0_artifacts
+from delta_model.trajectory import generate_trajectory
 from delta_model.visualizer_export import (
     POSE_SCHEMA,
+    TRAJECTORY_SCHEMA,
     WORKSPACE_SCHEMA,
     pose_document,
     serialize_json_document,
+    trajectory_document,
     workspace_document,
     write_json_document,
 )
@@ -110,6 +113,20 @@ def test_pose_document_contains_authoritative_ik_points_and_closes_links() -> No
         )
 
 
+def test_trajectory_document_contains_complete_sampled_motion() -> None:
+    document = trajectory_document(generate_trajectory(), source_label=SELECTED_SOURCE_LABEL)
+
+    assert document["schema"] == TRAJECTORY_SCHEMA
+    cycle = cast(dict[str, object], document["cycle"])
+    samples = cast(list[dict[str, object]], document["samples"])
+    assert cycle["duration_s"] == pytest.approx(1.0, abs=1e-15)
+    assert cycle["sample_count"] == 1001
+    assert len(samples) == 1001
+    assert samples[0]["time_s"] == 0.0
+    assert samples[-1]["time_s"] == 1.0
+    assert len(cast(list[object], samples[0]["arms"])) == 3
+
+
 def test_json_serialization_is_strict_stable_and_newline_terminated(tmp_path: Path) -> None:
     document: dict[str, object] = {"z": [3, 2, 1], "a": {"finite": 1.0}}
     first = serialize_json_document(document)
@@ -141,16 +158,24 @@ def test_unreachable_pose_does_not_produce_a_partial_document() -> None:
 
 
 def test_p0_artifacts_regenerate_without_a_diff(tmp_path: Path) -> None:
-    generated_workspace, generated_pose = generate_p0_artifacts(tmp_path / "first")
-    second_workspace, second_pose = generate_p0_artifacts(tmp_path / "second")
+    generated_workspace, generated_pose, generated_trajectory = generate_p0_artifacts(
+        tmp_path / "first"
+    )
+    second_workspace, second_pose, second_trajectory = generate_p0_artifacts(
+        tmp_path / "second"
+    )
     repository_artifacts = Path(__file__).resolve().parents[1] / "artifacts"
 
     assert generated_workspace.read_bytes() == second_workspace.read_bytes()
     assert generated_pose.read_bytes() == second_pose.read_bytes()
+    assert generated_trajectory.read_bytes() == second_trajectory.read_bytes()
     assert generated_workspace.read_bytes() == (
         repository_artifacts / "workspace.json"
     ).read_bytes()
     assert generated_pose.read_bytes() == (repository_artifacts / "pose.json").read_bytes()
+    assert generated_trajectory.read_bytes() == (
+        repository_artifacts / "trajectory_25_305_25.json"
+    ).read_bytes()
 
     workspace = cast(
         dict[str, object],

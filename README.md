@@ -12,6 +12,9 @@ Aktualny etap: **P0 — model kinematyczny w Pythonie i wizualizator Three.js**.
 - `docs/development-process.md` — proces spec-driven i zasady walidacji.
 - `docs/specs/p0-kinematics.md` — kontrakt pierwszego modelu kinematycznego.
 - `docs/specs/p0-workspace-export.md` — klasyfikacja workspace'u i kontrakt JSON.
+- `docs/specs/p0-differential-kinematics.md` — Jacobian i metryki osobliwości.
+- `docs/specs/p0-diy-geometry-selection.md` — porównanie geometrii DIY.
+- `docs/specs/p0-trajectory-25-305-25.md` — jednosekundowy profil ruchu.
 - `AGENTS.md` — instrukcje obowiązujące narzędzia kodujące.
 
 ## Środowisko developerskie
@@ -25,16 +28,20 @@ uv run mypy delta_model tests
 uv run pytest
 ```
 
-Model zawiera zweryfikowane IK i FK, próbkowanie workspace'u oraz działający
-wizualizator Three.js. Referencyjne dane można odtworzyć poleceniem:
+Model zawiera zweryfikowane IK, FK, kinematykę różniczkową, próbkowanie
+workspace'u oraz profil 25-305-25. Artefakty można odtworzyć poleceniami:
 
 ```bash
+uv run python scripts/validate_differential_kinematics.py
+uv run python scripts/compare_diy_geometries.py
 uv run python scripts/generate_p0_artifacts.py
 ```
 
-Powstają `artifacts/workspace.json` i `artifacts/pose.json`. Korzystają z
-wymiarów Williamsa i demonstracyjnych limitów osi `+/-45°`, żeby pokazać trzy
-klasy punktów. Nie są geometrią ani limitami projektowanego robota DIY.
+Powstają raporty walidacyjne oraz `workspace.json`, `pose.json` i
+`trajectory_25_305_25.json`. Wizualizacja używa wybranej w P0 geometrii DIY:
+promień bazy 180 mm, promień platformy 65 mm, ramię górne 280 mm i dolne
+450 mm. Geometria przechodzi próbkowany walec Ø400×150 mm, ale pozostaje
+prowizoryczna do czasu sprawdzenia dynamiki, kolizji i sprzętu.
 
 ## Wizualizator Three.js
 
@@ -48,10 +55,13 @@ npm run dev
 Vite wyświetli lokalny adres, domyślnie `http://127.0.0.1:5173`. Wizualizator:
 
 - pokazuje trzy ramiona górne, sześć dolnych prętów i platformę,
-- koloruje punkty osiągalne, limitowane i nieosiągalne,
+- rozdziela punkty użyteczne, słabe przy osobliwościach, limitowane i
+  nieosiągalne,
+- animuje autorytatywny cykl 25-305-25 oraz pokazuje kąty, prędkości i
+  przyspieszenia osi,
 - pozwala obracać, przesuwać i przybliżać scenę,
-- sprawdza wersje schematów, jednostki, liczności i zgodność obu artefaktów,
-- nie implementuje ponownie IK ani FK w JavaScript.
+- sprawdza wersje schematów, jednostki, liczności i zgodność trzech artefaktów,
+- nie implementuje ponownie kinematyki ani metryk w JavaScript.
 
 Build produkcyjny wraz z aktualnymi plikami JSON powstaje przez:
 

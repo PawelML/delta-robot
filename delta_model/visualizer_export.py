@@ -7,10 +7,12 @@ from pathlib import Path
 from delta_model.conventions import AssemblyMode, CartesianPoint, CartesianPosition
 from delta_model.geometry import DeltaGeometry
 from delta_model.inverse_kinematics import inverse_kinematics
+from delta_model.trajectory import Trajectory
 from delta_model.workspace import WorkspaceSample
 
 WORKSPACE_SCHEMA = "delta-robot-p0-workspace/v2"
 POSE_SCHEMA = "delta-robot-p0-pose/v1"
+TRAJECTORY_SCHEMA = "delta-robot-p0-trajectory/v1"
 
 
 def _geometry_document(geometry: DeltaGeometry) -> dict[str, float]:
@@ -139,6 +141,114 @@ def pose_document(
                     result.angles.theta_3_rad,
                 ],
                 "platform_center_m": _coordinates(position),
+            },
+        }
+    )
+    return document
+
+
+def trajectory_document(
+    trajectory: Trajectory,
+    *,
+    source_label: str,
+) -> dict[str, object]:
+    """Convert an authoritative sampled trajectory to the visualizer v1 contract."""
+
+    document = _common_document(
+        TRAJECTORY_SCHEMA,
+        trajectory.geometry,
+        trajectory.assembly_mode,
+        source_label,
+    )
+    document["units"] = {
+        "angle": "rad",
+        "angular_acceleration": "rad/s^2",
+        "angular_velocity": "rad/s",
+        "length": "m",
+        "linear_acceleration": "m/s^2",
+        "linear_velocity": "m/s",
+        "time": "s",
+    }
+    document.update(
+        {
+            "cycle": {
+                "duration_s": trajectory.duration_s,
+                "name": "25-305-25_round_trip_1_hz",
+                "sample_count": len(trajectory.samples),
+                "sample_period_s": trajectory.sample_period_s,
+                "segments": [
+                    {
+                        "duration_s": segment.duration_s,
+                        "end_m": _coordinates(segment.end),
+                        "name": segment.kind.value,
+                        "start_m": _coordinates(segment.start),
+                    }
+                    for segment in trajectory.segments
+                ],
+            },
+            "samples": [
+                {
+                    "arms": [
+                        {
+                            "arm_index": arm.arm_index,
+                            "knee_m": _coordinates(arm.knee_point),
+                            "platform_attachment_m": _coordinates(
+                                arm.platform_attachment_point
+                            ),
+                            "shoulder_m": _coordinates(arm.shoulder_point),
+                        }
+                        for arm in sample.differential.inverse_result.arm_solutions
+                    ],
+                    "cartesian_acceleration_m_s2": [
+                        sample.cartesian.acceleration.x_m_s2,
+                        sample.cartesian.acceleration.y_m_s2,
+                        sample.cartesian.acceleration.z_m_s2,
+                    ],
+                    "cartesian_velocity_m_s": [
+                        sample.cartesian.velocity.x_m_s,
+                        sample.cartesian.velocity.y_m_s,
+                        sample.cartesian.velocity.z_m_s,
+                    ],
+                    "joint_accelerations_rad_s2": [
+                        sample.joint_accelerations.theta_1_rad_s2,
+                        sample.joint_accelerations.theta_2_rad_s2,
+                        sample.joint_accelerations.theta_3_rad_s2,
+                    ],
+                    "joint_angles_rad": [
+                        sample.angles.theta_1_rad,
+                        sample.angles.theta_2_rad,
+                        sample.angles.theta_3_rad,
+                    ],
+                    "joint_limit_margin_rad": sample.joint_limit_margin_rad,
+                    "joint_rates_rad_s": [
+                        sample.joint_rates.theta_1_rad_s,
+                        sample.joint_rates.theta_2_rad_s,
+                        sample.joint_rates.theta_3_rad_s,
+                    ],
+                    "parallel_margin": sample.differential.metrics.parallel_margin,
+                    "platform_center_m": _coordinates(sample.cartesian.position),
+                    "segment": sample.segment.value,
+                    "serial_margin": sample.differential.metrics.serial_margin,
+                    "singularity_margin": sample.differential.metrics.singularity_margin,
+                    "time_s": sample.time_s,
+                }
+                for sample in trajectory.samples
+            ],
+            "summary": {
+                "maximum_abs_joint_accelerations_rad_s2": list(
+                    trajectory.summary.maximum_abs_joint_accelerations_rad_s2
+                ),
+                "maximum_abs_joint_rates_rad_s": list(
+                    trajectory.summary.maximum_abs_joint_rates_rad_s
+                ),
+                "maximum_cartesian_acceleration_m_s2": (
+                    trajectory.summary.maximum_cartesian_acceleration_m_s2
+                ),
+                "maximum_cartesian_speed_m_s": trajectory.summary.maximum_cartesian_speed_m_s,
+                "minimum_joint_limit_margin_rad": (
+                    trajectory.summary.minimum_joint_limit_margin_rad
+                ),
+                "minimum_singularity_margin": trajectory.summary.minimum_singularity_margin,
             },
         }
     )

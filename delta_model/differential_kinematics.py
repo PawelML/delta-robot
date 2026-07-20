@@ -44,12 +44,30 @@ class CartesianVelocity:
 
 
 @dataclass(frozen=True, slots=True)
+class CartesianAcceleration:
+    """Platform-center acceleration in the base frame, in metres per second squared."""
+
+    x_m_s2: float
+    y_m_s2: float
+    z_m_s2: float
+
+
+@dataclass(frozen=True, slots=True)
 class JointRates:
     """Actuated shoulder rates in arm order, expressed in radians per second."""
 
     theta_1_rad_s: float
     theta_2_rad_s: float
     theta_3_rad_s: float
+
+
+@dataclass(frozen=True, slots=True)
+class JointAccelerations:
+    """Actuated shoulder accelerations in arm order, in radians per second squared."""
+
+    theta_1_rad_s2: float
+    theta_2_rad_s2: float
+    theta_3_rad_s2: float
 
 
 @dataclass(frozen=True, slots=True)
@@ -66,6 +84,8 @@ class SingularityMetrics:
 class DifferentialKinematicsResult:
     """Matrices, metrics and solved pose at one platform position."""
 
+    geometry: DeltaGeometry
+    position: CartesianPosition
     inverse_result: InverseKinematicsResult
     cartesian_constraint_matrix: Matrix3
     joint_constraint_matrix_m: Matrix3
@@ -147,6 +167,8 @@ def differential_kinematics(
         serial_margin_by_arm=(serial_by_arm[0], serial_by_arm[1], serial_by_arm[2]),
     )
     return DifferentialKinematicsResult(
+        geometry=geometry,
+        position=position,
         inverse_result=inverse_result,
         cartesian_constraint_matrix=_as_matrix3(cartesian_matrix),
         joint_constraint_matrix_m=_as_matrix3(joint_matrix),
@@ -193,3 +215,88 @@ def cartesian_velocity_for_joint_rates(
     right_hand_side = joint_matrix @ np.asarray(values, dtype=np.float64)
     velocity = np.linalg.solve(cartesian_matrix, right_hand_side)
     return CartesianVelocity(float(velocity[0]), float(velocity[1]), float(velocity[2]))
+
+
+def joint_accelerations_for_cartesian_motion(
+    result: DifferentialKinematicsResult,
+    velocity: CartesianVelocity,
+    acceleration: CartesianAcceleration,
+    rates: JointRates | None = None,
+) -> JointAccelerations:
+    """Map Cartesian motion derivatives to exact joint accelerations."""
+
+    velocity_values = (velocity.x_m_s, velocity.y_m_s, velocity.z_m_s)
+    acceleration_values = (
+        acceleration.x_m_s2,
+        acceleration.y_m_s2,
+        acceleration.z_m_s2,
+    )
+    if not all(math.isfinite(value) for value in (*velocity_values, *acceleration_values)):
+        raise InvalidVelocityError("Cartesian velocity and acceleration components must be finite")
+    solved_rates = rates or joint_rates_for_cartesian_velocity(result, velocity)
+    rate_values = (
+        solved_rates.theta_1_rad_s,
+        solved_rates.theta_2_rad_s,
+        solved_rates.theta_3_rad_s,
+    )
+    if not all(math.isfinite(value) for value in rate_values):
+        raise InvalidVelocityError("joint-rate components must be finite")
+
+    _, joint_matrix = _matrices(result)
+    diagonal = np.diag(joint_matrix)
+    scale = max(float(np.max(np.abs(diagonal))), sys.float_info.min)
+    tolerance = SINGULAR_VALUE_RELATIVE_TOLERANCE * scale
+    if bool(np.any(np.abs(diagonal) <= tolerance)):
+        raise SingularDifferentialKinematicsError("joint constraint matrix is serial-singular")
+
+    geometry = result.geometry
+    lower_length = geometry.lower_arm_length_m
+    upper_length = geometry.upper_arm_length_m
+    cartesian_velocity = np.asarray(velocity_values, dtype=np.float64)
+    cartesian_acceleration = np.asarray(acceleration_values, dtype=np.float64)
+    joint_accelerations: list[float] = []
+    for arm, rate, joint_diagonal in zip(
+        result.inverse_result.arm_solutions,
+        rate_values,
+        diagonal,
+        strict=True,
+    ):
+        radial_x, radial_y = arm_radial_vector(arm.arm_index)
+        sine = math.sin(arm.angle_rad)
+        cosine = math.cos(arm.angle_rad)
+        lower_vector = np.asarray(
+            (
+                arm.platform_attachment_point.x_m - arm.knee_point.x_m,
+                arm.platform_attachment_point.y_m - arm.knee_point.y_m,
+                arm.platform_attachment_point.z_m - arm.knee_point.z_m,
+            ),
+            dtype=np.float64,
+        )
+        knee_first = np.asarray(
+            (
+                -upper_length * sine * radial_x,
+                -upper_length * sine * radial_y,
+                -upper_length * cosine,
+            ),
+            dtype=np.float64,
+        )
+        knee_second = np.asarray(
+            (
+                -upper_length * cosine * radial_x,
+                -upper_length * cosine * radial_y,
+                upper_length * sine,
+            ),
+            dtype=np.float64,
+        )
+        lower_rate = cartesian_velocity - knee_first * rate
+        right_hand_side = (
+            float(np.dot(lower_vector, cartesian_acceleration))
+            + float(np.dot(lower_rate, lower_rate))
+            - float(np.dot(lower_vector, knee_second)) * rate * rate
+        ) / lower_length
+        joint_accelerations.append(right_hand_side / float(joint_diagonal))
+    return JointAccelerations(
+        joint_accelerations[0],
+        joint_accelerations[1],
+        joint_accelerations[2],
+    )

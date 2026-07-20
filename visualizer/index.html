@@ -71,6 +71,8 @@
       </section>
 
       <div class="button-row">
+        <button id="toggle-playback" type="button">Pauza</button>
+        <button id="restart-playback" type="button">Od początku</button>
         <button id="reset-view" type="button">Wycentruj widok</button>
       </div>
 
@@ -103,9 +105,28 @@
         <h2>Aktualna poza</h2>
         <dl class="metrics-list">
           <div><dt>Środek XYZ</dt><dd id="metric-position">—</dd></div>
+          <div><dt>Czas</dt><dd id="metric-trajectory-time">—</dd></div>
+          <div><dt>Segment</dt><dd id="metric-segment">—</dd></div>
           <div><dt>Kąt osi 1</dt><dd id="metric-angle-1">—</dd></div>
           <div><dt>Kąt osi 2</dt><dd id="metric-angle-2">—</dd></div>
           <div><dt>Kąt osi 3</dt><dd id="metric-angle-3">—</dd></div>
+          <div><dt>Prędkość osi 1</dt><dd id="metric-rate-1">—</dd></div>
+          <div><dt>Prędkość osi 2</dt><dd id="metric-rate-2">—</dd></div>
+          <div><dt>Prędkość osi 3</dt><dd id="metric-rate-3">—</dd></div>
+          <div><dt>Przysp. osi 1</dt><dd id="metric-acceleration-1">—</dd></div>
+          <div><dt>Przysp. osi 2</dt><dd id="metric-acceleration-2">—</dd></div>
+          <div><dt>Przysp. osi 3</dt><dd id="metric-acceleration-3">—</dd></div>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Cykl 25-305-25</h2>
+        <dl class="metrics-list">
+          <div><dt>Czas cyklu</dt><dd id="metric-cycle-duration">—</dd></div>
+          <div><dt>Próbki</dt><dd id="metric-cycle-samples">—</dd></div>
+          <div><dt>Min. osobliwość</dt><dd id="metric-min-singularity">—</dd></div>
+          <div><dt>Max prędkość osi</dt><dd id="metric-max-joint-speed">—</dd></div>
+          <div><dt>Max przysp. osi</dt><dd id="metric-max-joint-acceleration">—</dd></div>
         </dl>
       </section>
 
@@ -123,6 +144,7 @@
         <h2>Kontrakty danych</h2>
         <code id="workspace-schema">—</code>
         <code id="pose-schema">—</code>
+        <code id="trajectory-schema">—</code>
       </section>
 
       <div class="warning-box">

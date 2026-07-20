@@ -8,8 +8,10 @@ from delta_model.design_geometry import (
     SELECTED_SOURCE_LABEL,
     SELECTED_USEFUL_CYLINDER,
 )
+from delta_model.trajectory import generate_trajectory
 from delta_model.visualizer_export import (
     pose_document,
+    trajectory_document,
     workspace_document,
     write_json_document,
 )
@@ -34,12 +36,13 @@ P0_POSE = CartesianPosition(
 ASSEMBLY_MODE = AssemblyMode.KNEE_OUT_PLATFORM_BELOW
 
 
-def generate_p0_artifacts(output_directory: Path) -> tuple[Path, Path]:
+def generate_p0_artifacts(output_directory: Path) -> tuple[Path, Path, Path]:
     """Generate the selected DIY workspace map and one complete pose."""
 
     workspace_sample = sample_workspace(SELECTED_GEOMETRY, P0_GRID, ASSEMBLY_MODE)
     workspace_path = output_directory / "workspace.json"
     pose_path = output_directory / "pose.json"
+    trajectory_path = output_directory / "trajectory_25_305_25.json"
     write_json_document(
         workspace_path,
         workspace_document(
@@ -56,4 +59,11 @@ def generate_p0_artifacts(output_directory: Path) -> tuple[Path, Path]:
             source_label=SELECTED_SOURCE_LABEL,
         ),
     )
-    return workspace_path, pose_path
+    write_json_document(
+        trajectory_path,
+        trajectory_document(
+            generate_trajectory(),
+            source_label=SELECTED_SOURCE_LABEL,
+        ),
+    )
+    return workspace_path, pose_path, trajectory_path

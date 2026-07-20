@@ -6,6 +6,7 @@ import {
   mapModelToScene,
   partitionWorkspaceQualityPoints,
   validatePose,
+  validateTrajectory,
   validateWorkspace,
 } from './data-contract.js';
 
@@ -45,6 +46,10 @@ let camera;
 let controls;
 let robotGroup;
 let layerGroups;
+let trajectory;
+let playbackStartMs;
+let playbackTimeS = 0;
+let playbackRunning = true;
 
 function formatMillimetres(valueMetres, digits = 0) {
   return `${(valueMetres * 1000).toFixed(digits)} mm`;
@@ -80,16 +85,21 @@ function clamp(value, minimum, maximum) {
   return Math.min(maximum, Math.max(minimum, value));
 }
 
-function createCylinderBetween(start, end, radius, material, radialSegments = 14) {
+function setCylinderBetween(cylinder, start, end) {
   const direction = new THREE.Vector3().subVectors(end, start);
   const length = direction.length();
-  const geometry = new THREE.CylinderGeometry(radius, radius, length, radialSegments);
-  const cylinder = new THREE.Mesh(geometry, material);
   cylinder.position.copy(start).add(end).multiplyScalar(0.5);
   cylinder.quaternion.setFromUnitVectors(
     new THREE.Vector3(0, 1, 0),
     direction.normalize(),
   );
+  cylinder.scale.set(1, length, 1);
+}
+
+function createCylinderBetween(start, end, radius, material, radialSegments = 14) {
+  const geometry = new THREE.CylinderGeometry(radius, radius, 1, radialSegments);
+  const cylinder = new THREE.Mesh(geometry, material);
+  setCylinderBetween(cylinder, start, end);
   cylinder.castShadow = true;
   return cylinder;
 }
@@ -172,11 +182,13 @@ function createRobot(poseArtifact) {
 
   let upperArmCount = 0;
   let lowerRodCount = 0;
+  const armViews = [];
   for (const arm of poseArtifact.pose.arms) {
     const shoulder = mappedVector(arm.shoulder_m);
     const knee = mappedVector(arm.knee_m);
     const attachment = mappedVector(arm.platform_attachment_m);
-    group.add(createCylinderBetween(shoulder, knee, upperRadius, upperMaterial));
+    const upperArm = createCylinderBetween(shoulder, knee, upperRadius, upperMaterial);
+    group.add(upperArm);
     upperArmCount += 1;
 
     const radialLength = Math.hypot(arm.shoulder_m[0], arm.shoulder_m[1]);
@@ -185,6 +197,7 @@ function createRobot(poseArtifact) {
       arm.shoulder_m[0] / radialLength,
       0,
     ];
+    const lowerRods = [];
     for (const direction of [-1, 1]) {
       const offsetModel = tangentModel.map(
         (component) => component * direction * pairSpacing * 0.5,
@@ -197,15 +210,26 @@ function createRobot(poseArtifact) {
           (component, index) => component + offsetModel[index],
         ),
       );
-      group.add(
-        createCylinderBetween(rodKnee, rodAttachment, lowerRadius, lowerMaterial, 12),
+      const lowerRod = createCylinderBetween(
+        rodKnee,
+        rodAttachment,
+        lowerRadius,
+        lowerMaterial,
+        12,
       );
+      group.add(lowerRod);
+      lowerRods.push(lowerRod);
       lowerRodCount += 1;
     }
 
-    createNode(shoulder, nodeRadius, COLORS.shoulder, group);
-    createNode(knee, nodeRadius, COLORS.knee, group);
-    createNode(attachment, nodeRadius * 0.8, COLORS.attachment, group);
+    const shoulderNode = createNode(shoulder, nodeRadius, COLORS.shoulder, group);
+    const kneeNode = createNode(knee, nodeRadius, COLORS.knee, group);
+    const attachmentNode = createNode(
+      attachment,
+      nodeRadius * 0.8,
+      COLORS.attachment,
+      group,
+    );
 
     const motorBlock = new THREE.Mesh(
       new THREE.BoxGeometry(nodeRadius * 3.1, nodeRadius * 2.4, nodeRadius * 2.4),
@@ -219,11 +243,85 @@ function createRobot(poseArtifact) {
     motorBlock.position.y += nodeRadius * 1.45;
     motorBlock.castShadow = true;
     group.add(motorBlock);
+    armViews.push({
+      attachmentNode,
+      kneeNode,
+      lowerRods,
+      motorBlock,
+      shoulderNode,
+      upperArm,
+    });
   }
 
-  createNode(platformCenter, nodeRadius * 0.72, COLORS.center, group);
-  group.userData = { upperArmCount, lowerRodCount, pairSpacing };
+  const centerNode = createNode(platformCenter, nodeRadius * 0.72, COLORS.center, group);
+  group.userData = {
+    armViews,
+    centerNode,
+    lowerRodCount,
+    pairSpacing,
+    platformPlate,
+    upperArmCount,
+  };
   return group;
+}
+
+function interpolateVector(start, end, fraction) {
+  return start.map((value, index) => value + (end[index] - value) * fraction);
+}
+
+function updateRobotFromSamples(group, before, after, fraction) {
+  const platformCenterModel = interpolateVector(
+    before.platform_center_m,
+    after.platform_center_m,
+    fraction,
+  );
+  const platformCenter = mappedVector(platformCenterModel);
+  group.userData.platformPlate.position.copy(platformCenter);
+  group.userData.centerNode.position.copy(platformCenter);
+
+  before.arms.forEach((arm, index) => {
+    const nextArm = after.arms[index];
+    const view = group.userData.armViews[index];
+    const shoulderModel = interpolateVector(arm.shoulder_m, nextArm.shoulder_m, fraction);
+    const kneeModel = interpolateVector(arm.knee_m, nextArm.knee_m, fraction);
+    const attachmentModel = interpolateVector(
+      arm.platform_attachment_m,
+      nextArm.platform_attachment_m,
+      fraction,
+    );
+    const shoulder = mappedVector(shoulderModel);
+    const knee = mappedVector(kneeModel);
+    const attachment = mappedVector(attachmentModel);
+    setCylinderBetween(view.upperArm, shoulder, knee);
+    view.shoulderNode.position.copy(shoulder);
+    view.kneeNode.position.copy(knee);
+    view.attachmentNode.position.copy(attachment);
+
+    const radialLength = Math.hypot(shoulderModel[0], shoulderModel[1]);
+    const tangentModel = [-shoulderModel[1] / radialLength, shoulderModel[0] / radialLength, 0];
+    [-1, 1].forEach((direction, rodIndex) => {
+      const offset = tangentModel.map(
+        (component) => component * direction * group.userData.pairSpacing * 0.5,
+      );
+      setCylinderBetween(
+        view.lowerRods[rodIndex],
+        mappedVector(kneeModel.map((component, axis) => component + offset[axis])),
+        mappedVector(
+          attachmentModel.map((component, axis) => component + offset[axis]),
+        ),
+      );
+    });
+  });
+}
+
+function createTrajectoryPath(trajectoryArtifact) {
+  const points = trajectoryArtifact.samples.map((sample) => mappedVector(sample.platform_center_m));
+  const path = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(points),
+    new THREE.LineBasicMaterial({ color: 0x8bd7ff, transparent: true, opacity: 0.75 }),
+  );
+  path.name = 'authoritative-trajectory-path';
+  scene.add(path);
 }
 
 function minimumGridInterval(workspace) {
@@ -328,7 +426,7 @@ function createContext(workspace) {
   scene.add(group);
 }
 
-function configureScene(workspace, pose) {
+function configureScene(workspace, pose, trajectoryArtifact) {
   renderer = new THREE.WebGLRenderer({
     canvas: sceneCanvas,
     antialias: true,
@@ -365,6 +463,7 @@ function configureScene(workspace, pose) {
 
   createContext(workspace);
   layerGroups = createWorkspaceLayers(workspace);
+  createTrajectoryPath(trajectoryArtifact);
   robotGroup = createRobot(pose);
   scene.add(robotGroup);
   fitCamera();
@@ -438,13 +537,26 @@ function bindLayerControls() {
     });
   }
   $('reset-view').addEventListener('click', () => controls.reset());
+  $('toggle-playback').addEventListener('click', () => {
+    playbackRunning = !playbackRunning;
+    if (playbackRunning) {
+      playbackStartMs = performance.now() - playbackTimeS * 1000;
+    }
+    $('toggle-playback').textContent = playbackRunning ? 'Pauza' : 'Wznów';
+  });
+  $('restart-playback').addEventListener('click', () => {
+    playbackTimeS = 0;
+    playbackStartMs = performance.now();
+    updateTrajectoryDisplay(0);
+  });
 }
 
-function populateInterface(workspace, pose) {
+function populateInterface(workspace, pose, trajectoryArtifact) {
   const summary = workspace.summary;
   $('source-label').textContent = workspace.source;
   $('workspace-schema').textContent = workspace.schema;
   $('pose-schema').textContent = pose.schema;
+  $('trajectory-schema').textContent = trajectoryArtifact.schema;
   $('total-points').textContent = `${summary.total.toLocaleString('pl-PL')} punktów`;
   $('count-usable-short').textContent = summary.practically_usable.toLocaleString('pl-PL');
   $('count-weak-short').textContent = summary.weak_reachable.toLocaleString('pl-PL');
@@ -474,10 +586,55 @@ function populateInterface(workspace, pose) {
   );
   $('metric-upper-length').textContent = formatMillimetres(geometry.upper_arm_length_m, 1);
   $('metric-lower-length').textContent = formatMillimetres(geometry.lower_arm_length_m, 1);
+  $('metric-cycle-duration').textContent = `${trajectoryArtifact.cycle.duration_s.toFixed(3)} s`;
+  $('metric-cycle-samples').textContent = trajectoryArtifact.cycle.sample_count.toLocaleString('pl-PL');
+  $('metric-min-singularity').textContent = trajectoryArtifact.summary.minimum_singularity_margin.toFixed(3);
+  $('metric-max-joint-speed').textContent = `${Math.max(...trajectoryArtifact.summary.maximum_abs_joint_rates_rad_s).toFixed(2)} rad/s`;
+  $('metric-max-joint-acceleration').textContent = `${Math.max(...trajectoryArtifact.summary.maximum_abs_joint_accelerations_rad_s2).toFixed(2)} rad/s²`;
 }
 
-function animate() {
+function updateTrajectoryDisplay(timeS) {
+  const duration = trajectory.cycle.duration_s;
+  const wrappedTime = ((timeS % duration) + duration) % duration;
+  const floatingIndex = wrappedTime / trajectory.cycle.sample_period_s;
+  const beforeIndex = Math.min(Math.floor(floatingIndex), trajectory.samples.length - 1);
+  const afterIndex = Math.min(beforeIndex + 1, trajectory.samples.length - 1);
+  const fraction = floatingIndex - beforeIndex;
+  const before = trajectory.samples[beforeIndex];
+  const after = trajectory.samples[afterIndex];
+  updateRobotFromSamples(robotGroup, before, after, fraction);
+
+  const position = interpolateVector(before.platform_center_m, after.platform_center_m, fraction);
+  const angles = interpolateVector(before.joint_angles_rad, after.joint_angles_rad, fraction);
+  const rates = interpolateVector(before.joint_rates_rad_s, after.joint_rates_rad_s, fraction);
+  const accelerations = interpolateVector(
+    before.joint_accelerations_rad_s2,
+    after.joint_accelerations_rad_s2,
+    fraction,
+  );
+  $('metric-position').textContent = `${position
+    .map((value) => (value * 1000).toFixed(1))
+    .join(' / ')} mm`;
+  angles.forEach((angle, index) => {
+    $(`metric-angle-${index + 1}`).textContent = `${THREE.MathUtils.radToDeg(angle).toFixed(2)}°`;
+    $(`metric-rate-${index + 1}`).textContent = `${rates[index].toFixed(2)} rad/s`;
+    $(`metric-acceleration-${index + 1}`).textContent = `${accelerations[index].toFixed(1)} rad/s²`;
+  });
+  $('metric-trajectory-time').textContent = `${wrappedTime.toFixed(3)} s`;
+  $('metric-segment').textContent = before.segment;
+  if (window.__deltaVisualizer) {
+    window.__deltaVisualizer.currentSampleIndex = beforeIndex;
+    window.__deltaVisualizer.playbackRunning = playbackRunning;
+  }
+}
+
+function animate(timestampMs) {
   requestAnimationFrame(animate);
+  if (playbackStartMs === undefined) playbackStartMs = timestampMs;
+  if (playbackRunning) {
+    playbackTimeS = (timestampMs - playbackStartMs) / 1000;
+  }
+  updateTrajectoryDisplay(playbackTimeS);
   controls.update();
   renderer.render(scene, camera);
 }
@@ -493,16 +650,18 @@ function showFailure(error) {
 
 async function start() {
   try {
-    const [workspaceDocument, poseDocument] = await Promise.all([
+    const [workspaceDocument, poseDocument, trajectoryDocument] = await Promise.all([
       fetchArtifact('./workspace.json'),
       fetchArtifact('./pose.json'),
+      fetchArtifact('./trajectory_25_305_25.json'),
     ]);
     const workspace = validateWorkspace(workspaceDocument);
     const pose = validatePose(poseDocument);
-    assertMatchingArtifacts(workspace, pose);
-    configureScene(workspace, pose);
+    trajectory = validateTrajectory(trajectoryDocument);
+    assertMatchingArtifacts(workspace, pose, trajectory);
+    configureScene(workspace, pose, trajectory);
     bindLayerControls();
-    populateInterface(workspace, pose);
+    populateInterface(workspace, pose, trajectory);
     setStatus(
       'ready',
       'Dane zweryfikowane',
@@ -513,11 +672,14 @@ async function start() {
       ready: true,
       workspace,
       pose,
+      trajectory,
       robotStats: robotGroup.userData,
       scene,
+      currentSampleIndex: 0,
+      playbackRunning,
     };
     window.dispatchEvent(new CustomEvent('delta-visualizer-ready'));
-    animate();
+    requestAnimationFrame(animate);
   } catch (error) {
     showFailure(error);
   }
