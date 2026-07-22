@@ -21,6 +21,8 @@ planem zakupowym.
 - `docs/specs/p0-trajectory-25-305-25.md` — jednosekundowy profil ruchu.
 - `docs/specs/p1-dynamics-and-drive-sizing.md` — pierwszy model momentów.
 - `docs/specs/p1-design-profiles.md` — wspólny model oraz profile przemysłowy i budżetowy.
+- `docs/specs/p1-budget-transmission-and-envelope.md` — porównanie budżetowych
+  przełożeń i obwiednia udźwig/czas cyklu.
 - `docs/specs/p1-single-drive.md` — kandydat jednego napędu i test P1.
 - `docs/specs/p1-transmission-selection.md` — dokładny dobór przekładni 18/90.
 - `docs/specs/p1-single-axis-bench-lld.md` — stanowisko jednej osi w ForgeCAD.
@@ -55,6 +57,7 @@ uv run python scripts/generate_conveyor_coverage.py
 uv run python scripts/generate_p0_artifacts.py
 uv run python scripts/generate_dynamic_sizing.py
 uv run python scripts/generate_design_profiles.py
+uv run python scripts/generate_budget_performance_envelope.py
 uv run python scripts/select_p1_transmission.py
 uv run python scripts/run_p1_bench_simulation.py
 forgecad run cad/2026/07/20/p1-single-axis-bench/main.forge.js
@@ -71,10 +74,13 @@ czasu sprawdzenia dynamiki, kolizji i sprzętu.
 
 `artifacts/design_profiles.json` rozdziela dwa warianty bez kopiowania modelu.
 `industrial_reference` zachowuje obliczenia Leadshine/Gates dla 0,50 kg / 1 Hz.
-Aktywny `budget_demonstrator` rejestruje zestaw StepperOnline `3-CLYS30-V20`,
-ale jego przekładnia, udźwig i czas cyklu nie są jeszcze wybrane. Dostępna
-krzywa momentu dotyczy dokładnego silnika, lecz innego drivera i 36 V, więc ma
-status `proxy_only` i nie jest dowodem przejścia P1.
+Aktywny `budget_demonstrator` rejestruje zestaw StepperOnline `3-CLYS30-V20`.
+`artifacts/budget_performance_envelope.json` porównuje HTD 5M 3:1, 4:1 i 5:1
+i rekomenduje do dalszego domknięcia katalogowy wariant 20/60, 15 mm, 450 mm.
+Model nie odrzuca go dla 0,50 kg / 1,50 s ani 0,30 kg / 1,25 s, ale odrzuca
+0,50 kg / 1,00 s. Krzywa momentu dotyczy dokładnego silnika, lecz innego
+drivera i 36 V, więc ma status `proxy_only`: wynik nie jest dowodem przejścia
+P1 ani zgodą na zakup.
 
 ## Referencyjne stanowisko CAD P1
 

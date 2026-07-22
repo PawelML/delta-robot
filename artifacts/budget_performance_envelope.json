@@ -1,0 +1,2373 @@
+{
+  "blockers": [
+    "proxy curve uses CL57T-V41 at 36 V, not the exact CL57Y-V20 kit conditions",
+    "belt preload and the motor's 75 N radial-load limit are unresolved",
+    "budget pulley inertias are estimates pending representative CAD and weighing",
+    "temperature and following error require the physical P1 bench"
+  ],
+  "curve_evidence": {
+    "digitization_uncertainty_nm": 0.03,
+    "evidence_status": "proxy_only",
+    "points": [
+      {
+        "speed_rpm": 100.0,
+        "torque_nm": 2.3
+      },
+      {
+        "speed_rpm": 200.0,
+        "torque_nm": 2.25
+      },
+      {
+        "speed_rpm": 300.0,
+        "torque_nm": 2.0
+      },
+      {
+        "speed_rpm": 400.0,
+        "torque_nm": 1.7
+      },
+      {
+        "speed_rpm": 500.0,
+        "torque_nm": 1.6
+      },
+      {
+        "speed_rpm": 600.0,
+        "torque_nm": 1.35
+      },
+      {
+        "speed_rpm": 700.0,
+        "torque_nm": 1.12
+      },
+      {
+        "speed_rpm": 800.0,
+        "torque_nm": 1.03
+      },
+      {
+        "speed_rpm": 900.0,
+        "torque_nm": 0.95
+      },
+      {
+        "speed_rpm": 1000.0,
+        "torque_nm": 0.8
+      },
+      {
+        "speed_rpm": 1100.0,
+        "torque_nm": 0.78
+      },
+      {
+        "speed_rpm": 1200.0,
+        "torque_nm": 0.77
+      },
+      {
+        "speed_rpm": 1300.0,
+        "torque_nm": 0.7
+      },
+      {
+        "speed_rpm": 1400.0,
+        "torque_nm": 0.68
+      },
+      {
+        "speed_rpm": 1500.0,
+        "torque_nm": 0.62
+      }
+    ],
+    "source_url": "https://www.stepperonline.ca/image/catalog/torque-curves/23HS40-5004D-E1000_Torque_Curve.svg",
+    "test_conditions": "CL57T-V41, 36 VDC, 5.0 A RMS, 2000 microsteps/rev"
+  },
+  "fastest_not_rejected": [
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.1,
+      "transmission_id": "catalogue_20_60_450"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.15,
+      "transmission_id": "catalogue_20_60_450"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.2,
+      "transmission_id": "catalogue_20_60_450"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.25,
+      "transmission_id": "catalogue_20_60_450"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.3,
+      "transmission_id": "catalogue_20_60_450"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.5,
+      "payload_kg": 0.5,
+      "transmission_id": "catalogue_20_60_450"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.1,
+      "transmission_id": "printed_20_80_500"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.15,
+      "transmission_id": "printed_20_80_500"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.2,
+      "transmission_id": "printed_20_80_500"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.25,
+      "transmission_id": "printed_20_80_500"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.3,
+      "transmission_id": "printed_20_80_500"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.5,
+      "transmission_id": "printed_20_80_500"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.1,
+      "transmission_id": "printed_20_100_600"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.15,
+      "transmission_id": "printed_20_100_600"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.2,
+      "transmission_id": "printed_20_100_600"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.25,
+      "transmission_id": "printed_20_100_600"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.0,
+      "payload_kg": 0.3,
+      "transmission_id": "printed_20_100_600"
+    },
+    {
+      "fastest_not_rejected_cycle_s": 1.25,
+      "payload_kg": 0.5,
+      "transmission_id": "printed_20_100_600"
+    }
+  ],
+  "mass_baseline_kg": {
+    "lower_assemblies_total": 0.3,
+    "platform_tooling": 0.25,
+    "upper_arm_each": 0.2
+  },
+  "motor": {
+    "driver_model": "CL57Y-V20",
+    "kit_model": "StepperOnline 3-CLYS30-V20",
+    "motor_model": "23HS40-5004D-E1000",
+    "rotor_inertia_kg_m2": 6.6e-05
+  },
+  "provisional_recommendation": {
+    "cycle_duration_s": 1.5,
+    "payload_kg": 0.5,
+    "reason": "simplest locally catalogue-backed candidate at the largest swept payload",
+    "status": "not_rejected_by_proxy",
+    "transmission_id": "catalogue_20_60_450"
+  },
+  "results": [
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 278.7677637166014,
+      "maximum_motor_speed_rpm": 198.2850738043748,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 114.28011526072633,
+      "required_peak_torque_nm": 2.399562374637839,
+      "required_rms_torque_nm_by_axis": [
+        0.6455623294479383,
+        1.0307476081910836,
+        1.0307476081910836
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 1.0570759359638058,
+      "worst_time_s": 0.848
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 178.42362899504306,
+      "maximum_motor_speed_rpm": 158.6299558621002,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 78.35580586890062,
+      "required_peak_torque_nm": 1.6436127295552887,
+      "required_rms_torque_nm_by_axis": [
+        0.5783857873900462,
+        0.7649950977145902,
+        0.7649950977145902
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.7240584711697307,
+      "worst_time_s": 0.254
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 123.9036369347383,
+      "maximum_motor_speed_rpm": 132.1900492029166,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 58.88302852803012,
+      "required_peak_torque_nm": 1.2338157357842223,
+      "required_rms_torque_nm_by_axis": [
+        0.5492578482623225,
+        0.6462133265572219,
+        0.6462133265572217
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.5435311611384239,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 69.69676591841407,
+      "maximum_motor_speed_rpm": 99.14319185777252,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 45.4686236261783,
+      "required_peak_torque_nm": 0.945259348846652,
+      "required_rms_torque_nm_by_axis": [
+        0.526571165400172,
+        0.5611235818365442,
+        0.5611235818365442
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4164138100646044,
+      "worst_time_s": 1.1420000000000001
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 44.6059072487608,
+      "maximum_motor_speed_rpm": 79.31497793105015,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 41.297782322760504,
+      "required_peak_torque_nm": 0.8573422056008236,
+      "required_rms_torque_nm_by_axis": [
+        0.5184259421806959,
+        0.537489622004678,
+        0.537489622004678
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3776837910135787,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 30.976199287577764,
+      "maximum_motor_speed_rpm": 66.09592822472872,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 39.03262378100075,
+      "required_peak_torque_nm": 0.8095936819822714,
+      "required_rms_torque_nm_by_axis": [
+        0.5146654715323191,
+        0.5296378376613687,
+        0.5296378376613686
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3566491991111328,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 278.7677637166014,
+      "maximum_motor_speed_rpm": 198.2850738043748,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 122.8435594764538,
+      "required_peak_torque_nm": 2.5767412566250534,
+      "required_rms_torque_nm_by_axis": [
+        0.6890884431410164,
+        1.1055706568976116,
+        1.1055706568976116
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 1.1351283068832834,
+      "worst_time_s": 0.848
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 178.42362899504306,
+      "maximum_motor_speed_rpm": 158.6299558621002,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 84.11643268388057,
+      "required_peak_torque_nm": 1.7628009198338204,
+      "required_rms_torque_nm_by_axis": [
+        0.6169090003354,
+        0.8194354218913932,
+        0.8194354218913932
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.776564281865119,
+      "worst_time_s": 0.254
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 123.9036369347383,
+      "maximum_motor_speed_rpm": 132.1900492029166,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 63.124312948887855,
+      "required_peak_torque_nm": 1.3215685152671823,
+      "required_rms_torque_nm_by_axis": [
+        0.5855085206507509,
+        0.6913281554967954,
+        0.6913281554967953
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.5821887732454548,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 69.69676591841407,
+      "maximum_motor_speed_rpm": 99.14319185777252,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 48.727287082660084,
+      "required_peak_torque_nm": 1.0126815604530117,
+      "required_rms_torque_nm_by_axis": [
+        0.5609551763343252,
+        0.5993746375806164,
+        0.5993746375806164
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.44611522486916816,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 44.6059072487608,
+      "maximum_motor_speed_rpm": 79.31497793105015,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 44.24081055915479,
+      "required_peak_torque_nm": 0.9182338794933761,
+      "required_rms_torque_nm_by_axis": [
+        0.5520973920906702,
+        0.5737722955116292,
+        0.5737722955116292
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4045083169574344,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 30.976199287577764,
+      "maximum_motor_speed_rpm": 66.09592822472872,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 41.80433901495884,
+      "required_peak_torque_nm": 0.8669408654248516,
+      "required_rms_torque_nm_by_axis": [
+        0.5479933775601544,
+        0.5652462215955285,
+        0.5652462215955285
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.38191227551755574,
+      "worst_time_s": 1.713
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 278.7677637166014,
+      "maximum_motor_speed_rpm": 198.2850738043748,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 131.4070036921813,
+      "required_peak_torque_nm": 2.7539201386122683,
+      "required_rms_torque_nm_by_axis": [
+        0.7326689247605453,
+        1.1804081050416275,
+        1.1804081050416275
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 1.2131806778027614,
+      "worst_time_s": 0.848
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 178.42362899504306,
+      "maximum_motor_speed_rpm": 158.6299558621002,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 89.8770594988605,
+      "required_peak_torque_nm": 1.8819891101123514,
+      "required_rms_torque_nm_by_axis": [
+        0.6554576623249005,
+        0.8738868157452969,
+        0.8738868157452969
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.8290700925605072,
+      "worst_time_s": 0.254
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 123.9036369347383,
+      "maximum_motor_speed_rpm": 132.1900492029166,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 67.3655973697456,
+      "required_peak_torque_nm": 1.4093212947501428,
+      "required_rms_torque_nm_by_axis": [
+        0.6217725708772321,
+        0.7364529270376603,
+        0.7364529270376601
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.6208463853524858,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 69.69676591841407,
+      "maximum_motor_speed_rpm": 99.14319185777252,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 51.985950539141854,
+      "required_peak_torque_nm": 1.0801037720593711,
+      "required_rms_torque_nm_by_axis": [
+        0.595344022838764,
+        0.6376353547776187,
+        0.6376353547776187
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4758166396737318,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 44.6059072487608,
+      "maximum_motor_speed_rpm": 79.31497793105015,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 47.18383879554906,
+      "required_peak_torque_nm": 0.9791255533859284,
+      "required_rms_torque_nm_by_axis": [
+        0.5857711009014472,
+        0.6100653746589001,
+        0.6100653746589001
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.43133284290129004,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 30.976199287577764,
+      "maximum_motor_speed_rpm": 66.09592822472872,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 44.576054248916925,
+      "required_peak_torque_nm": 0.9242880488674315,
+      "required_rms_torque_nm_by_axis": [
+        0.5813225443807575,
+        0.600865852457787,
+        0.600865852457787
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.40717535192397863,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 278.7677637166014,
+      "maximum_motor_speed_rpm": 198.2850738043748,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 139.97044790790878,
+      "required_peak_torque_nm": 2.931099020599483,
+      "required_rms_torque_nm_by_axis": [
+        0.7762946178610542,
+        1.2552573771766846,
+        1.2552573771766846
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 1.2912330487222392,
+      "worst_time_s": 0.848
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 178.42362899504306,
+      "maximum_motor_speed_rpm": 158.6299558621002,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 95.63768631384045,
+      "required_peak_torque_nm": 2.0011773003908826,
+      "required_rms_torque_nm_by_axis": [
+        0.6940275327907433,
+        0.9283473314319068,
+        0.9283473314319068
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.8815759032558954,
+      "worst_time_s": 0.254
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 123.9036369347383,
+      "maximum_motor_speed_rpm": 132.1900492029166,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 71.60688179060334,
+      "required_peak_torque_nm": 1.4970740742331032,
+      "required_rms_torque_nm_by_axis": [
+        0.6580477872462699,
+        0.7815859190769486,
+        0.7815859190769485
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.6595039974595168,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 69.69676591841407,
+      "maximum_motor_speed_rpm": 99.14319185777252,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 55.24461399562364,
+      "required_peak_torque_nm": 1.1475259836657308,
+      "required_rms_torque_nm_by_axis": [
+        0.6297369127275309,
+        0.6759040927199114,
+        0.6759040927199114
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.5055180544782955,
+      "worst_time_s": 1.1420000000000001
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 44.6059072487608,
+      "maximum_motor_speed_rpm": 79.31497793105015,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 50.12686703194333,
+      "required_peak_torque_nm": 1.0400172272784807,
+      "required_rms_torque_nm_by_axis": [
+        0.6194467002251807,
+        0.6463671066397105,
+        0.6463671066397105
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4581573688451457,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 30.976199287577764,
+      "maximum_motor_speed_rpm": 66.09592822472872,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 47.34776948287501,
+      "required_peak_torque_nm": 0.9816352323100115,
+      "required_rms_torque_nm_by_axis": [
+        0.6146527668970341,
+        0.6364948420435278,
+        0.6364948420435277
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4324384283304015,
+      "worst_time_s": 1.713
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 278.7677637166014,
+      "maximum_motor_speed_rpm": 198.2850738043748,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 148.53389212363624,
+      "required_peak_torque_nm": 3.108277902586697,
+      "required_rms_torque_nm_by_axis": [
+        0.8199583060749549,
+        1.3301164771998675,
+        1.3301164771998675
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 1.3692854196417168,
+      "worst_time_s": 0.848
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 178.42362899504306,
+      "maximum_motor_speed_rpm": 158.6299558621002,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 101.39831312882039,
+      "required_peak_torque_nm": 2.120365490669414,
+      "required_rms_torque_nm_by_axis": [
+        0.7326152620635002,
+        0.9828154525546443,
+        0.9828154525546443
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.9340817139512837,
+      "worst_time_s": 0.254
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 123.9036369347383,
+      "maximum_motor_speed_rpm": 132.1900492029166,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 75.84816621146108,
+      "required_peak_torque_nm": 1.5848268537160632,
+      "required_rms_torque_nm_by_axis": [
+        0.6943324196434434,
+        0.8267257852841321,
+        0.826725785284132
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.6981616095665477,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 69.69676591841407,
+      "maximum_motor_speed_rpm": 99.14319185777252,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 58.50327745210543,
+      "required_peak_torque_nm": 1.2149481952720906,
+      "required_rms_torque_nm_by_axis": [
+        0.6641332178272301,
+        0.7141795620530844,
+        0.7141795620530844
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.5352194692828594,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 44.6059072487608,
+      "maximum_motor_speed_rpm": 79.31497793105015,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 53.0698952683376,
+      "required_peak_torque_nm": 1.1009089011710331,
+      "required_rms_torque_nm_by_axis": [
+        0.6531238976327793,
+        0.6826761110958439,
+        0.6826761110958439
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4849818947890014,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 30.976199287577764,
+      "maximum_motor_speed_rpm": 66.09592822472872,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 50.11948471683311,
+      "required_peak_torque_nm": 1.0389824157525918,
+      "required_rms_torque_nm_by_axis": [
+        0.6479838822041579,
+        0.6721317020663422,
+        0.6721317020663422
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4577015047368246,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 278.7677637166014,
+      "maximum_motor_speed_rpm": 198.2850738043748,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 182.78766898654612,
+      "required_peak_torque_nm": 3.8169934305355544,
+      "required_rms_torque_nm_by_axis": [
+        0.9948928984249569,
+        1.6296240662504662,
+        1.6296240662504662
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 1.6814949033196274,
+      "worst_time_s": 0.848
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 178.42362899504306,
+      "maximum_motor_speed_rpm": 158.6299558621002,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 124.44082038874018,
+      "required_peak_torque_nm": 2.5971182517835394,
+      "required_rms_torque_nm_by_axis": [
+        0.8870981420402426,
+        1.200743289548424,
+        1.200743289548424
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 1.1441049567328367,
+      "worst_time_s": 0.254
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 123.9036369347383,
+      "maximum_motor_speed_rpm": 132.1900492029166,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 92.81330389489206,
+      "required_peak_torque_nm": 1.9358379716479046,
+      "required_rms_torque_nm_by_axis": [
+        0.8395406876849509,
+        1.0073355074868264,
+        1.0073355074868264
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.8527920579946716,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 69.69676591841407,
+      "maximum_motor_speed_rpm": 99.14319185777252,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 71.53793127803254,
+      "required_peak_torque_nm": 1.4846370416975285,
+      "required_rms_torque_nm_by_axis": [
+        0.8017437985935718,
+        0.8673309276776617,
+        0.8673309276776617
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.6540251285011138,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 44.6059072487608,
+      "maximum_motor_speed_rpm": 79.31497793105015,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 64.84237919136581,
+      "required_peak_torque_nm": 1.3444814800045846,
+      "required_rms_torque_nm_by_axis": [
+        0.7878445692658408,
+        0.8279657157106399,
+        0.8279657157106399
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.5922825903103897,
+      "worst_time_s": 1.198
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 30.976199287577764,
+      "maximum_motor_speed_rpm": 66.09592822472872,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 61.20634565266544,
+      "required_peak_torque_nm": 1.2683711495229115,
+      "required_rms_torque_nm_by_axis": [
+        0.7813149860961602,
+        0.8147371880458357,
+        0.8147371880458355
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.558753810362516,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 371.6903516221352,
+      "maximum_motor_speed_rpm": 264.38009840583305,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 85.62578176378578,
+      "required_peak_torque_nm": 1.8185717574337443,
+      "required_rms_torque_nm_by_axis": [
+        0.48629681098107164,
+        0.7804137312309533,
+        0.7804137312309533
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.8064832318776389,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 237.89817199339075,
+      "maximum_motor_speed_rpm": 211.5066078161336,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 58.71299065996069,
+      "required_peak_torque_nm": 1.244785074040735,
+      "required_rms_torque_nm_by_axis": [
+        0.4347449632035489,
+        0.5775354124702168,
+        0.5775354124702168
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.5491912309360968,
+      "worst_time_s": 0.432
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 165.20484924631774,
+      "maximum_motor_speed_rpm": 176.25339893722213,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 44.12499075446146,
+      "required_peak_torque_nm": 0.9337196205624066,
+      "required_rms_torque_nm_by_axis": [
+        0.41241836516023406,
+        0.486633885620539,
+        0.48663388562053894
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4113302293226461,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 92.9290212245521,
+      "maximum_motor_speed_rpm": 132.19092247703003,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 34.090639580315425,
+      "required_peak_torque_nm": 0.7113720349219677,
+      "required_rms_torque_nm_by_axis": [
+        0.39507632855031705,
+        0.42138458940739015,
+        0.42138458940739015
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3133797510669461,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 59.47454299834774,
+      "maximum_motor_speed_rpm": 105.75330390806685,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 30.966405067377046,
+      "required_peak_torque_nm": 0.6445606424936372,
+      "required_rms_torque_nm_by_axis": [
+        0.3888762740711049,
+        0.40325094564690406,
+        0.40325094564690406
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.28394741960072123,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 41.30159905010368,
+      "maximum_motor_speed_rpm": 88.12790429963829,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 29.269655329386875,
+      "required_peak_torque_nm": 0.6082741607253608,
+      "required_rms_torque_nm_by_axis": [
+        0.38602388866562104,
+        0.39723514431630447,
+        0.3972351443163044
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.2679621853415686,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 371.6903516221352,
+      "maximum_motor_speed_rpm": 264.38009840583305,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 92.04836492558138,
+      "required_peak_torque_nm": 1.9514559189241552,
+      "required_rms_torque_nm_by_axis": [
+        0.5189141087840392,
+        0.8365241947447591,
+        0.8365241947447591
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.8654151194792923,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 237.89817199339075,
+      "maximum_motor_speed_rpm": 211.5066078161336,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 63.03346077119565,
+      "required_peak_torque_nm": 1.3341762167496336,
+      "required_rms_torque_nm_by_axis": [
+        0.4636255296398135,
+        0.6183643993395482,
+        0.6183643993395482
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.5886311982522199,
+      "worst_time_s": 0.432
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 165.20484924631774,
+      "maximum_motor_speed_rpm": 176.25339893722213,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 47.30595407010476,
+      "required_peak_torque_nm": 0.9995342051746268,
+      "required_rms_torque_nm_by_axis": [
+        0.43960059255489303,
+        0.5204698821308902,
+        0.5204698821308901
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.44032343840291926,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 92.9290212245521,
+      "maximum_motor_speed_rpm": 132.19092247703003,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 36.53463717267676,
+      "required_peak_torque_nm": 0.7619386936267374,
+      "required_rms_torque_nm_by_axis": [
+        0.42086251057580026,
+        0.4500718061224613,
+        0.4500718061224613
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3356558121703689,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 59.47454299834774,
+      "maximum_motor_speed_rpm": 105.75330390806685,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 33.17367624467276,
+      "required_peak_torque_nm": 0.6902293979130515,
+      "required_rms_torque_nm_by_axis": [
+        0.4141291107664514,
+        0.43046142857066116,
+        0.43046142857066116
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.304065814058613,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 41.30159905010368,
+      "maximum_motor_speed_rpm": 88.12790429963829,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 31.348441754855443,
+      "required_peak_torque_nm": 0.6512845483072958,
+      "required_rms_torque_nm_by_axis": [
+        0.41101945172162596,
+        0.4239399709370759,
+        0.4239399709370759
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.2869094926463858,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 371.6903516221352,
+      "maximum_motor_speed_rpm": 264.38009840583305,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 98.470948087377,
+      "required_peak_torque_nm": 2.084340080414566,
+      "required_rms_torque_nm_by_axis": [
+        0.5515752581049989,
+        0.8926462268645691,
+        0.8926462268645691
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.9243470070809457,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 237.89817199339075,
+      "maximum_motor_speed_rpm": 211.5066078161336,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 67.3539308824306,
+      "required_peak_torque_nm": 1.4235673594585319,
+      "required_rms_torque_nm_by_axis": [
+        0.49252653595251084,
+        0.6592017963977845,
+        0.6592017963977845
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.6280711655683427,
+      "worst_time_s": 0.432
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 165.20484924631774,
+      "maximum_motor_speed_rpm": 176.25339893722213,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 50.48691738574807,
+      "required_peak_torque_nm": 1.065348789786847,
+      "required_rms_torque_nm_by_axis": [
+        0.4667935162372768,
+        0.5543133243257051,
+        0.5543133243257051
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4693166474831925,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 92.9290212245521,
+      "maximum_motor_speed_rpm": 132.19092247703003,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 38.97863476503809,
+      "required_peak_torque_nm": 0.8125053523315068,
+      "required_rms_torque_nm_by_axis": [
+        0.44665252897262325,
+        0.47876638959759793,
+        0.478766389597598
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.35793187327379156,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 59.47454299834774,
+      "maximum_motor_speed_rpm": 105.75330390806685,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 35.38094742196846,
+      "required_peak_torque_nm": 0.7358981533324657,
+      "required_rms_torque_nm_by_axis": [
+        0.4393837277200982,
+        0.457679894501104,
+        0.457679894501104
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3241842085165047,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 41.30159905010368,
+      "maximum_motor_speed_rpm": 88.12790429963829,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 33.42722818032401,
+      "required_peak_torque_nm": 0.6942949358892309,
+      "required_rms_torque_nm_by_axis": [
+        0.436016002337142,
+        0.4506534058777677,
+        0.4506534058777677
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.305856799951203,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 371.6903516221352,
+      "maximum_motor_speed_rpm": 264.38009840583305,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 104.8935312491726,
+      "required_peak_torque_nm": 2.217224241904977,
+      "required_rms_torque_nm_by_axis": [
+        0.5842729050244821,
+        0.9487777746766471,
+        0.9487777746766474
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.9832788946825993,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 237.89817199339075,
+      "maximum_motor_speed_rpm": 211.5066078161336,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 71.67440099366556,
+      "required_peak_torque_nm": 1.5129585021674303,
+      "required_rms_torque_nm_by_axis": [
+        0.5214445835192866,
+        0.7000461318139412,
+        0.7000461318139412
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.6675111328844658,
+      "worst_time_s": 0.432
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 165.20484924631774,
+      "maximum_motor_speed_rpm": 176.25339893722213,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 53.66788070139138,
+      "required_peak_torque_nm": 1.1311633743990674,
+      "required_rms_torque_nm_by_axis": [
+        0.4939953698174542,
+        0.5881629269115481,
+        0.588162926911548
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4983098565634658,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 92.9290212245521,
+      "maximum_motor_speed_rpm": 132.19092247703003,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 41.42263235739943,
+      "required_peak_torque_nm": 0.8630720110362766,
+      "required_rms_torque_nm_by_axis": [
+        0.47244575547804585,
+        0.5074670901802288,
+        0.5074670901802288
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.38020793437721434,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 59.47454299834774,
+      "maximum_motor_speed_rpm": 105.75330390806685,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 37.58821859926417,
+      "required_peak_torque_nm": 0.7815669087518801,
+      "required_rms_torque_nm_by_axis": [
+        0.46463983464444575,
+        0.48490499914464097,
+        0.48490499914464097
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3443026029743965,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 41.30159905010368,
+      "maximum_motor_speed_rpm": 88.12790429963829,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 35.50601460579257,
+      "required_peak_torque_nm": 0.7373053234711657,
+      "required_rms_torque_nm_by_axis": [
+        0.46101337987316315,
+        0.4773740039982331,
+        0.47737400399823304
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.32480410725602016,
+      "worst_time_s": 1.713
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 371.6903516221352,
+      "maximum_motor_speed_rpm": 264.38009840583305,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 111.31611441096821,
+      "required_peak_torque_nm": 2.350108403395388,
+      "required_rms_torque_nm_by_axis": [
+        0.6170012470583734,
+        1.0049172436314469,
+        1.004917243631447
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 1.0422107822842526,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 237.89817199339075,
+      "maximum_motor_speed_rpm": 211.5066078161336,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 75.99487110490053,
+      "required_peak_torque_nm": 1.602349644876329,
+      "required_rms_torque_nm_by_axis": [
+        0.5503769861889798,
+        0.7408962580897187,
+        0.7408962580897187
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.7069511002005889,
+      "worst_time_s": 0.432
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 165.20484924631774,
+      "maximum_motor_speed_rpm": 176.25339893722213,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 56.848844017034686,
+      "required_peak_torque_nm": 1.1969779590112875,
+      "required_rms_torque_nm_by_axis": [
+        0.5212047551340843,
+        0.6220176841616135,
+        0.6220176841616134
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.527303065643739,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 92.9290212245521,
+      "maximum_motor_speed_rpm": 132.19092247703003,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 43.866629949760764,
+      "required_peak_torque_nm": 0.9136386697410463,
+      "required_rms_torque_nm_by_axis": [
+        0.49824169185537853,
+        0.5361729255467337,
+        0.5361729255467337
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4024839954806372,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 59.47454299834774,
+      "maximum_motor_speed_rpm": 105.75330390806685,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 39.79548977655988,
+      "required_peak_torque_nm": 0.8272356641712945,
+      "required_rms_torque_nm_by_axis": [
+        0.4898972010981868,
+        0.5121356837615029,
+        0.5121356837615029
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3644209974322883,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 41.30159905010368,
+      "maximum_motor_speed_rpm": 88.12790429963829,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 37.584801031261144,
+      "required_peak_torque_nm": 0.7803157110531009,
+      "required_rms_torque_nm_by_axis": [
+        0.48601145673491114,
+        0.5041006262149927,
+        0.5041006262149925
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3437514145608374,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 371.6903516221352,
+      "maximum_motor_speed_rpm": 264.38009840583305,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 137.00644705815063,
+      "required_peak_torque_nm": 2.881645049357031,
+      "required_rms_torque_nm_by_axis": [
+        0.7481409462874218,
+        1.2295326283934034,
+        1.2295326283934034
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 1.2779383326908662,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 237.89817199339075,
+      "maximum_motor_speed_rpm": 211.5066078161336,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 93.27675154984036,
+      "required_peak_torque_nm": 1.959914215711923,
+      "required_rms_torque_nm_by_axis": [
+        0.6662127300737444,
+        0.9043389754328753,
+        0.9043389754328753
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.8647109694650812,
+      "worst_time_s": 0.432
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 165.20484924631774,
+      "maximum_motor_speed_rpm": 176.25339893722213,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 69.57269727960791,
+      "required_peak_torque_nm": 1.4602362974601686,
+      "required_rms_torque_nm_by_axis": [
+        0.6300980955385582,
+        0.7574744353184311,
+        0.7574744353184311
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.643275901964832,
+      "worst_time_s": 1.268
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 92.9290212245521,
+      "maximum_motor_speed_rpm": 132.19092247703003,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 53.6426203192061,
+      "required_peak_torque_nm": 1.115905304560125,
+      "required_rms_torque_nm_by_axis": [
+        0.6014455620076797,
+        0.651034028787752,
+        0.651034028787752
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4915882398943282,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 59.47454299834774,
+      "maximum_motor_speed_rpm": 105.75330390806685,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 48.624857024851394,
+      "required_peak_torque_nm": 1.0099141329445713,
+      "required_rms_torque_nm_by_axis": [
+        0.5909360320606822,
+        0.6210995414120071,
+        0.6210995414120071
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4448960938081812,
+      "worst_time_s": 1.198
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 41.30159905010368,
+      "maximum_motor_speed_rpm": 88.12790429963829,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 45.899946733135394,
+      "required_peak_torque_nm": 0.9523572613808409,
+      "required_rms_torque_nm_by_axis": [
+        0.5860089674865268,
+        0.6110515443955735,
+        0.6110515443955734
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_80_500",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.4195406437801061,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 464.612939527669,
+      "maximum_motor_speed_rpm": 330.4751230072913,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 69.15487698850282,
+      "required_peak_torque_nm": 1.4899639141907484,
+      "required_rms_torque_nm_by_axis": [
+        0.39311071638912426,
+        0.6381248849664188,
+        0.638124884966419
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.6656737470480277,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 297.37271499173846,
+      "maximum_motor_speed_rpm": 264.38325977016694,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 47.388405350628936,
+      "required_peak_torque_nm": 1.0182582238817517,
+      "required_rms_torque_nm_by_axis": [
+        0.34963565661596,
+        0.46918311696176845,
+        0.46918311696176845
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4519420524171456,
+      "worst_time_s": 0.256
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 206.50606155789717,
+      "maximum_motor_speed_rpm": 220.31674867152765,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 35.589311275340584,
+      "required_peak_torque_nm": 0.7625002571622234,
+      "required_rms_torque_nm_by_axis": [
+        0.33085149773928285,
+        0.3930597188725384,
+        0.3930597188725383
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.33703779898984765,
+      "worst_time_s": 1.266
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 116.16127653069013,
+      "maximum_motor_speed_rpm": 165.23865309628752,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 27.356544093795936,
+      "required_peak_torque_nm": 0.5736067270090719,
+      "required_rms_torque_nm_by_axis": [
+        0.316347701321855,
+        0.3381527808171362,
+        0.3381527808171362
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.2526901881097233,
+      "worst_time_s": 1.1420000000000001
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 74.34317874793467,
+      "maximum_motor_speed_rpm": 132.1916298850836,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 24.826917734252802,
+      "required_peak_torque_nm": 0.5185350309674798,
+      "required_rms_torque_nm_by_axis": [
+        0.31121152160816273,
+        0.3228664684361574,
+        0.3228664684361574
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.22842952906056377,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 51.6269988126296,
+      "maximum_motor_speed_rpm": 110.15988037454788,
+      "payload_kg": 0.1,
+      "peak_belt_tension_difference_n": 23.453072009973322,
+      "required_peak_torque_nm": 0.4886233726120654,
+      "required_rms_torque_nm_by_axis": [
+        0.3088675687060151,
+        0.3178092312085573,
+        0.31780923120855725
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.21525258705377331,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 464.612939527669,
+      "maximum_motor_speed_rpm": 330.4751230072913,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 74.2929435179393,
+      "required_peak_torque_nm": 1.596271243383077,
+      "required_rms_torque_nm_by_axis": [
+        0.41914671920268565,
+        0.6829920263061662,
+        0.6829920263061662
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.7131729185717205,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 297.37271499173846,
+      "maximum_motor_speed_rpm": 264.38325977016694,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 50.8447814396169,
+      "required_peak_torque_nm": 1.0897711380488706,
+      "required_rms_torque_nm_by_axis": [
+        0.37271425760000737,
+        0.5018364316142034,
+        0.5018364316142034
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.4836854261541759,
+      "worst_time_s": 0.256
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 206.50606155789717,
+      "maximum_motor_speed_rpm": 220.31674867152765,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 38.13408192785522,
+      "required_peak_torque_nm": 0.8151519248519994,
+      "required_rms_torque_nm_by_axis": [
+        0.35258445827614004,
+        0.42012273716566745,
+        0.4201227371656674
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.3603134976255297,
+      "worst_time_s": 1.266
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 116.16127653069013,
+      "maximum_motor_speed_rpm": 165.23865309628752,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 29.311742167685008,
+      "required_peak_torque_nm": 0.6140600539728877,
+      "required_rms_torque_nm_by_axis": [
+        0.3369725356257009,
+        0.361098116593439,
+        0.361098116593439
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.27051103699246154,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 74.34317874793467,
+      "maximum_motor_speed_rpm": 132.1916298850836,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 26.59273467608937,
+      "required_peak_torque_nm": 0.5550700353030112,
+      "required_rms_torque_nm_by_axis": [
+        0.33141209449982845,
+        0.3446309368700255,
+        0.3446309368700255
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.2445242446268772,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 51.6269988126296,
+      "maximum_motor_speed_rpm": 110.15988037454788,
+      "payload_kg": 0.15,
+      "peak_belt_tension_difference_n": 25.116101150348175,
+      "required_peak_torque_nm": 0.5230316826776135,
+      "required_rms_torque_nm_by_axis": [
+        0.32886319144717857,
+        0.33916983987962734,
+        0.33916983987962734
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.23041043289762708,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 464.612939527669,
+      "maximum_motor_speed_rpm": 330.4751230072913,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 79.43101004737579,
+      "required_peak_torque_nm": 1.7025785725754057,
+      "required_rms_torque_nm_by_axis": [
+        0.4452242632004016,
+        0.72787086554243,
+        0.7278708655424301
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.7606720900954133,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 297.37271499173846,
+      "maximum_motor_speed_rpm": 264.38325977016694,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 54.30115752860487,
+      "required_peak_torque_nm": 1.1612840522159893,
+      "required_rms_torque_nm_by_axis": [
+        0.39581215304104206,
+        0.5344975913268935,
+        0.5344975913268935
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.5154287998912062,
+      "worst_time_s": 0.256
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 206.50606155789717,
+      "maximum_motor_speed_rpm": 220.31674867152765,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 40.67885258036987,
+      "required_peak_torque_nm": 0.8678035925417756,
+      "required_rms_torque_nm_by_axis": [
+        0.37432744469834345,
+        0.4471923617035612,
+        0.44719236170356114
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.3835891962612116,
+      "worst_time_s": 1.266
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 116.16127653069013,
+      "maximum_motor_speed_rpm": 165.23865309628752,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 31.266940241574066,
+      "required_peak_torque_nm": 0.6545133809367032,
+      "required_rms_torque_nm_by_axis": [
+        0.3576009109297057,
+        0.3840498601826772,
+        0.3840498601826772
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.28833188587519964,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 74.34317874793467,
+      "maximum_motor_speed_rpm": 132.1916298850836,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 28.358551617925933,
+      "required_peak_torque_nm": 0.5916050396385426,
+      "required_rms_torque_nm_by_axis": [
+        0.35161428609951756,
+        0.3664022527075004,
+        0.3664022527075004
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.2606189601931906,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 51.6269988126296,
+      "maximum_motor_speed_rpm": 110.15988037454788,
+      "payload_kg": 0.2,
+      "peak_belt_tension_difference_n": 26.779130290723025,
+      "required_peak_torque_nm": 0.5574399927431614,
+      "required_rms_torque_nm_by_axis": [
+        0.3488596990150641,
+        0.36053772037065757,
+        0.36053772037065746
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.24556827874148077,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 464.612939527669,
+      "maximum_motor_speed_rpm": 330.4751230072913,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 84.56907657681228,
+      "required_peak_torque_nm": 1.8088859017677343,
+      "required_rms_torque_nm_by_axis": [
+        0.4713364534086737,
+        0.7727593645737697,
+        0.7727593645737697
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.8081712616191061,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 297.37271499173846,
+      "maximum_motor_speed_rpm": 264.38325977016694,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 57.757533617592834,
+      "required_peak_torque_nm": 1.232796966383108,
+      "required_rms_torque_nm_by_axis": [
+        0.41892615149600715,
+        0.5671652407886806,
+        0.5671652407886806
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.5471721736282364,
+      "worst_time_s": 0.256
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 206.50606155789717,
+      "maximum_motor_speed_rpm": 220.31674867152765,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 43.22362323288451,
+      "required_peak_torque_nm": 0.9204552602315518,
+      "required_rms_torque_nm_by_axis": [
+        0.396078805878153,
+        0.47426746129949465,
+        0.47426746129949465
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.40686489489689354,
+      "worst_time_s": 1.266
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 116.16127653069013,
+      "maximum_motor_speed_rpm": 165.23865309628752,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 33.222138315463134,
+      "required_peak_torque_nm": 0.6949667079005191,
+      "required_rms_torque_nm_by_axis": [
+        0.3782322478674246,
+        0.40700692754715784,
+        0.40700692754715784
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.3061527347579379,
+      "worst_time_s": 1.1420000000000001
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 74.34317874793467,
+      "maximum_motor_speed_rpm": 132.1916298850836,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 30.124368559762498,
+      "required_peak_torque_nm": 0.6281400439740741,
+      "required_rms_torque_nm_by_axis": [
+        0.37181783255674894,
+        0.3881792638254839,
+        0.3881792638254839
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.276713675759504,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 51.6269988126296,
+      "maximum_motor_speed_rpm": 110.15988037454788,
+      "payload_kg": 0.25,
+      "peak_belt_tension_difference_n": 28.442159431097874,
+      "required_peak_torque_nm": 0.5918483028087094,
+      "required_rms_torque_nm_by_axis": [
+        0.3688569475047712,
+        0.3819116521129848,
+        0.3819116521129847
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.2607261245853345,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 464.612939527669,
+      "maximum_motor_speed_rpm": 330.4751230072913,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 89.70714310624876,
+      "required_peak_torque_nm": 1.9151932309600632,
+      "required_rms_torque_nm_by_axis": [
+        0.497477834206665,
+        0.8176559324622508,
+        0.8176559324622508
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.8556704331427988,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 297.37271499173846,
+      "maximum_motor_speed_rpm": 264.38325977016694,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 61.2139097065808,
+      "required_peak_torque_nm": 1.304309880550227,
+      "required_rms_torque_nm_by_axis": [
+        0.4420537270006161,
+        0.5998383196905398,
+        0.5998383196905398
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.578915547365267,
+      "worst_time_s": 0.256
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 206.50606155789717,
+      "maximum_motor_speed_rpm": 220.31674867152765,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 45.768393885399156,
+      "required_peak_torque_nm": 0.9731069279213279,
+      "required_rms_torque_nm_by_axis": [
+        0.41783723392284666,
+        0.5013471489177427,
+        0.5013471489177427
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.43014059353257544,
+      "worst_time_s": 1.266
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 116.16127653069013,
+      "maximum_motor_speed_rpm": 165.23865309628752,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 35.17733638935221,
+      "required_peak_torque_nm": 0.7354200348643349,
+      "required_rms_torque_nm_by_axis": [
+        0.3988660868678647,
+        0.42996846593960736,
+        0.42996846593960736
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3239735836406762,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 74.34317874793467,
+      "maximum_motor_speed_rpm": 132.1916298850836,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 31.890185501599063,
+      "required_peak_torque_nm": 0.6646750483096054,
+      "required_rms_torque_nm_by_axis": [
+        0.39202252439692636,
+        0.4099610626301019,
+        0.4099610626301019
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.2928083913258174,
+      "worst_time_s": 0.178
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 51.6269988126296,
+      "maximum_motor_speed_rpm": 110.15988037454788,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 30.105188571472738,
+      "required_peak_torque_nm": 0.6262566128742576,
+      "required_rms_torque_nm_by_axis": [
+        0.38885482260837756,
+        0.40329067298013366,
+        0.40329067298013355
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.2758839704291884,
+      "worst_time_s": 2.9370000000000003
+    },
+    {
+      "cycle_duration_s": 1.0,
+      "maximum_motor_acceleration_rad_s2": 464.612939527669,
+      "maximum_motor_speed_rpm": 330.4751230072913,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 110.2594092239947,
+      "required_peak_torque_nm": 2.3404225477293776,
+      "required_rms_torque_nm_by_axis": [
+        0.6022591824479827,
+        0.9973010952268136,
+        0.9973010952268136
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 1.0456671192375697,
+      "worst_time_s": 0.34600000000000003
+    },
+    {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 297.37271499173846,
+      "maximum_motor_speed_rpm": 264.38325977016694,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 75.03941406253267,
+      "required_peak_torque_nm": 1.590361537218702,
+      "required_rms_torque_nm_by_axis": [
+        0.5346645476396854,
+        0.7305703588751028,
+        0.7305703588751028
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.705889042313388,
+      "worst_time_s": 0.256
+    },
+    {
+      "cycle_duration_s": 1.5,
+      "maximum_motor_acceleration_rad_s2": 206.50606155789717,
+      "maximum_motor_speed_rpm": 220.31674867152765,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 55.94747649545774,
+      "required_peak_torque_nm": 1.1837135986804328,
+      "required_rms_torque_nm_by_axis": [
+        0.5049233388818769,
+        0.6096995516154677,
+        0.6096995516154676
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.5232433880753031,
+      "worst_time_s": 1.266
+    },
+    {
+      "cycle_duration_s": 2.0,
+      "maximum_motor_acceleration_rad_s2": 116.16127653069013,
+      "maximum_motor_speed_rpm": 165.23865309628752,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 42.99812868490848,
+      "required_peak_torque_nm": 0.8972333427195979,
+      "required_rms_torque_nm_by_axis": [
+        0.4814200285951135,
+        0.5218475245578643,
+        0.5218475245578643
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.395256979171629,
+      "worst_time_s": 0.14200000000000002
+    },
+    {
+      "cycle_duration_s": 2.5,
+      "maximum_motor_acceleration_rad_s2": 74.34317874793467,
+      "maximum_motor_speed_rpm": 132.1916298850836,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 38.95364588310098,
+      "required_peak_torque_nm": 0.8108160301972117,
+      "required_rms_torque_nm_by_axis": [
+        0.4728498089648012,
+        0.49712354625895055,
+        0.49712354625895055
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.3571876785009743,
+      "worst_time_s": 1.198
+    },
+    {
+      "cycle_duration_s": 3.0,
+      "maximum_motor_acceleration_rad_s2": 51.6269988126296,
+      "maximum_motor_speed_rpm": 110.15988037454788,
+      "payload_kg": 0.5,
+      "peak_belt_tension_difference_n": 36.757305132972135,
+      "required_peak_torque_nm": 0.7638898531364495,
+      "required_rms_torque_nm_by_axis": [
+        0.4688509855111779,
+        0.48884429148776376,
+        0.48884429148776365
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "printed_20_100_600",
+      "worst_axis": 3,
+      "worst_curve_utilization": 0.3365153538046033,
+      "worst_time_s": 2.9370000000000003
+    }
+  ],
+  "schema": "delta-robot-budget-performance-envelope/v1",
+  "screening_policy": {
+    "design_factor": 1.3,
+    "low_speed": "0..100 rpm uses 100 rpm running torque minus uncertainty",
+    "maximum_evidence_speed_rpm": 1500.0,
+    "status_not_rejected_is_not_a_physical_pass": true
+  },
+  "status": "proxy_only",
+  "transmission_candidates": [
+    {
+      "belt": {
+        "belt_pitch_length_m": 0.45,
+        "belt_width_m": 0.015,
+        "candidate_id": "catalogue_20_60_450",
+        "large_pulley_catalogue": "HTD 60-5M-15, finish-machined hub",
+        "large_teeth": 60,
+        "published_rating_available": false,
+        "published_stock_pair": true,
+        "small_pulley_catalogue": "HTD 20-5M-15-2F, provisional 8 mm bore",
+        "small_teeth": 20
+      },
+      "candidate_id": "catalogue_20_60_450",
+      "complexity_rank": 0,
+      "evidence_state": "locally_catalogue_backed",
+      "geometry": {
+        "centre_distance_m": 0.12080646689509073,
+        "large_pitch_diameter_m": 0.0954929658551372,
+        "reconstructed_pitch_length_m": 0.44999999999999996,
+        "small_pitch_diameter_m": 0.03183098861837907,
+        "small_teeth_in_mesh": 8.302544829232858,
+        "small_wrap_angle_deg": 149.44580692619144,
+        "small_wrap_angle_rad": 2.608321384161787
+      },
+      "large_pulley_construction": "catalogue_aluminium",
+      "radial_load_status": "unverified_radial_load",
+      "transmission": {
+        "efficiency": 0.85,
+        "inertia": {
+          "belt_at_input_kg_m2": 3.2581093114989238e-06,
+          "bushing_kg_m2": 0.0,
+          "coupling_kg_m2": 0.0,
+          "input_shaft_kg_m2": 0.0,
+          "large_pulley_kg_m2": 0.00044618476468564664,
+          "output_shaft_kg_m2": 2.397098026542084e-06,
+          "small_pulley_kg_m2": 2.763996252110995e-05
+        },
+        "ratio": 3.0,
+        "small_pulley_pitch_radius_m": 0.015915494309189534
+      }
+    },
+    {
+      "belt": {
+        "belt_pitch_length_m": 0.5,
+        "belt_width_m": 0.015,
+        "candidate_id": "printed_20_80_500",
+        "large_pulley_catalogue": null,
+        "large_teeth": 80,
+        "published_rating_available": false,
+        "published_stock_pair": false,
+        "small_pulley_catalogue": "HTD 20-5M-15-2F, provisional 8 mm bore",
+        "small_teeth": 20
+      },
+      "candidate_id": "printed_20_80_500",
+      "complexity_rank": 1,
+      "evidence_state": "geometric_estimate_only",
+      "geometry": {
+        "centre_distance_m": 0.11509645124933526,
+        "large_pitch_diameter_m": 0.12732395447351627,
+        "reconstructed_pitch_length_m": 0.5,
+        "small_pitch_diameter_m": 0.03183098861837907,
+        "small_teeth_in_mesh": 7.276758844404166,
+        "small_wrap_angle_deg": 130.981659199275,
+        "small_wrap_angle_rad": 2.286061212752468
+      },
+      "large_pulley_construction": "printed_polymer_hubbed",
+      "radial_load_status": "unverified_radial_load",
+      "transmission": {
+        "efficiency": 0.85,
+        "inertia": {
+          "belt_at_input_kg_m2": 3.6201214572210266e-06,
+          "bushing_kg_m2": 0.0,
+          "coupling_kg_m2": 0.0,
+          "input_shaft_kg_m2": 0.0,
+          "large_pulley_kg_m2": 0.00039705541558992527,
+          "output_shaft_kg_m2": 2.397098026542084e-06,
+          "small_pulley_kg_m2": 2.763996252110995e-05
+        },
+        "ratio": 4.0,
+        "small_pulley_pitch_radius_m": 0.015915494309189534
+      }
+    },
+    {
+      "belt": {
+        "belt_pitch_length_m": 0.6,
+        "belt_width_m": 0.015,
+        "candidate_id": "printed_20_100_600",
+        "large_pulley_catalogue": null,
+        "large_teeth": 100,
+        "published_rating_available": false,
+        "published_stock_pair": false,
+        "small_pulley_catalogue": "HTD 20-5M-15-2F, provisional 8 mm bore",
+        "small_teeth": 20
+      },
+      "candidate_id": "printed_20_100_600",
+      "complexity_rank": 1,
+      "evidence_state": "geometric_estimate_only",
+      "geometry": {
+        "centre_distance_m": 0.13498813488643602,
+        "large_pitch_diameter_m": 0.15915494309189535,
+        "reconstructed_pitch_length_m": 0.6,
+        "small_pitch_diameter_m": 0.03183098861837907,
+        "small_teeth_in_mesh": 6.873448524862805,
+        "small_wrap_angle_deg": 123.7220734475305,
+        "small_wrap_angle_rad": 2.159357539053659
+      },
+      "large_pulley_construction": "printed_polymer_hubbed",
+      "radial_load_status": "unverified_radial_load",
+      "transmission": {
+        "efficiency": 0.85,
+        "inertia": {
+          "belt_at_input_kg_m2": 4.344145748665232e-06,
+          "bushing_kg_m2": 0.0,
+          "coupling_kg_m2": 0.0,
+          "input_shaft_kg_m2": 0.0,
+          "large_pulley_kg_m2": 0.0008736445188804002,
+          "output_shaft_kg_m2": 2.397098026542084e-06,
+          "small_pulley_kg_m2": 2.763996252110995e-05
+        },
+        "ratio": 5.0,
+        "small_pulley_pitch_radius_m": 0.015915494309189534
+      }
+    }
+  ]
+}

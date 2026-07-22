@@ -104,8 +104,11 @@ class Trajectory:
         return sum(segment.duration_s for segment in self.segments)
 
 
-def trajectory_segments() -> tuple[TrajectorySegment, ...]:
-    """Return the accepted one-second 25-305-25 round-trip schedule."""
+def trajectory_segments(cycle_time_scale: float = 1.0) -> tuple[TrajectorySegment, ...]:
+    """Return the 25-305-25 schedule with uniformly scaled segment times."""
+
+    if not math.isfinite(cycle_time_scale) or cycle_time_scale <= 0.0:
+        raise TrajectoryValidationError("cycle time scale must be finite and positive")
 
     low_z_m = SELECTED_USEFUL_CYLINDER.center_z_m - 0.050
     transfer_z_m = low_z_m + 0.025
@@ -114,39 +117,54 @@ def trajectory_segments() -> tuple[TrajectorySegment, ...]:
     destination_low = CartesianPosition(0.1525, 0.0, low_z_m)
     destination_transfer = CartesianPosition(0.1525, 0.0, transfer_z_m)
     return (
-        TrajectorySegment(SegmentKind.SOURCE_DWELL, 0.050, source_low, source_low),
-        TrajectorySegment(SegmentKind.OUTBOUND_LIFT, 0.100, source_low, source_transfer),
+        TrajectorySegment(
+            SegmentKind.SOURCE_DWELL,
+            0.050 * cycle_time_scale,
+            source_low,
+            source_low,
+        ),
+        TrajectorySegment(
+            SegmentKind.OUTBOUND_LIFT,
+            0.100 * cycle_time_scale,
+            source_low,
+            source_transfer,
+        ),
         TrajectorySegment(
             SegmentKind.OUTBOUND_TRANSFER,
-            0.250,
+            0.250 * cycle_time_scale,
             source_transfer,
             destination_transfer,
         ),
         TrajectorySegment(
             SegmentKind.OUTBOUND_LOWER,
-            0.100,
+            0.100 * cycle_time_scale,
             destination_transfer,
             destination_low,
         ),
         TrajectorySegment(
             SegmentKind.DESTINATION_DWELL,
-            0.050,
+            0.050 * cycle_time_scale,
             destination_low,
             destination_low,
         ),
         TrajectorySegment(
             SegmentKind.RETURN_LIFT,
-            0.100,
+            0.100 * cycle_time_scale,
             destination_low,
             destination_transfer,
         ),
         TrajectorySegment(
             SegmentKind.RETURN_TRANSFER,
-            0.250,
+            0.250 * cycle_time_scale,
             destination_transfer,
             source_transfer,
         ),
-        TrajectorySegment(SegmentKind.RETURN_LOWER, 0.100, source_transfer, source_low),
+        TrajectorySegment(
+            SegmentKind.RETURN_LOWER,
+            0.100 * cycle_time_scale,
+            source_transfer,
+            source_low,
+        ),
     )
 
 
@@ -303,12 +321,13 @@ def _summary(samples: tuple[TrajectorySample, ...]) -> TrajectorySummary:
 def generate_trajectory(
     geometry: DeltaGeometry = SELECTED_GEOMETRY,
     sample_period_s: float = TRAJECTORY_SAMPLE_PERIOD_S,
+    cycle_time_scale: float = 1.0,
 ) -> Trajectory:
-    """Generate and validate the accepted one-second trajectory."""
+    """Generate the accepted path with an optional uniform time scale."""
 
     if not math.isfinite(sample_period_s) or sample_period_s <= 0.0:
         raise TrajectoryValidationError("sample period must be finite and positive")
-    segments = trajectory_segments()
+    segments = trajectory_segments(cycle_time_scale)
     duration_s = sum(segment.duration_s for segment in segments)
     interval_count = round(duration_s / sample_period_s)
     if not math.isclose(interval_count * sample_period_s, duration_s, abs_tol=1e-15):

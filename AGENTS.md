@@ -10,9 +10,9 @@
 
 ## Current scope
 
-- Digital P0 is complete. The current gate is P1: select a budget transmission and feasible payload/cycle envelope, then build and physically validate one representative budget axis.
+- Digital P0 is complete. The current gate is P1: mechanically and financially close the recommended budget transmission, then build and physically validate one representative budget axis.
 - The project has two explicit profiles from `docs/specs/p1-design-profiles.md`: active `budget_demonstrator` and retained `industrial_reference`. They share one Python model; do not duplicate formulas between profiles.
-- Industrial P1 calculations, the ForgeCAD bench, simulated drive and automated report pipeline are implemented, but they are reference evidence and have not passed a physical gate. The budget transmission, performance envelope, bench CAD and BOM are not selected yet.
+- Industrial P1 calculations, the ForgeCAD bench, simulated drive and automated report pipeline are implemented, but they are reference evidence and have not passed a physical gate. The budget performance sweep provisionally recommends HTD 5M 20/60; its radial-load closure, bench CAD, BOM and physical proof are still missing.
 - The Python model is authoritative for kinematics, differential kinematics, trajectories, dynamics and transmission calculations. Three.js and ForgeCAD visualize or package exported/modelled results and must not become independent mathematical sources of truth.
 - `BOM_delta.md` currently preserves the inactive industrial-reference purchase specification. It is not the active budget shopping list. No budget hardware is purchased until a focused budget BOM fits the complete 5,000--6,000 PLN gross delivered-project envelope.
 - Do not purchase or specify three production axes, start P2 construction, or introduce ROS2, a motion controller, cloud services, agent frameworks or production safety architecture unless an accepted specification explicitly advances the project beyond P1.
@@ -23,7 +23,7 @@
 - The accepted useful workspace remains a sampled cylinder `diameter 400 mm x Z height 150 mm`, centred at `Z = -347 mm`. Diameter is an XY dimension; do not confuse conveyor width with vertical Z travel.
 - A centred `305 mm x 200 mm` horizontal conveyor footprint fits inside the 400 mm useful diameter: its corner radius is about 182.4 mm. The stated 200 mm conveyor width therefore does not change the accepted 150 mm Z height.
 - In `industrial_reference`, the selected transmission is Gates 5MGT, 18/90 teeth, 15 mm width and a 600 mm belt, using the separately supported input jackshaft from `docs/adr/0002-supported-input-jackshaft.md`. The calculated drive is Leadshine iSV2-RS6040V48G, 48 V / 400 W. Preserve these values and artifacts as a comparison point; do not present them as the active purchase plan or validated hardware.
-- In `budget_demonstrator`, the first exact drive candidate is StepperOnline `3-CLYS30-V20` with `23HS40-5004D-E1000` motors and `CL57Y-V20` drivers. Its transmission, payload and cycle time remain unselected. The published motor curve uses CL57T-V41 at 36 V and is `proxy_only`; it may reject an operating point but cannot prove the kit passes.
+- In `budget_demonstrator`, the first exact drive candidate is StepperOnline `3-CLYS30-V20` with `23HS40-5004D-E1000` motors and `CL57Y-V20` drivers. The proxy-only sweep recommends a catalogue HTD 5M 20/60, 15 mm, 450 mm transmission for mechanical/cost closure and does not reject 0.50 kg / 1.50 s or 0.30 kg / 1.25 s. The published motor curve uses CL57T-V41 at 36 V; these points are not validated capability or purchase authorization.
 - The total purchased demonstrator target is 5,000--6,000 PLN gross delivered to Poland under the inclusions and exclusions in `poc_plan.md`.
 - Exploratory parameter checks may be run without changing accepted requirements. Do not promote them into defaults, artifacts, the BOM or claims of capability until the relevant spec and evidence are updated.
 

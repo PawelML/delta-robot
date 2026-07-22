@@ -52,6 +52,26 @@ def test_quintic_segment_has_zero_velocity_and_acceleration_at_both_ends() -> No
     assert end.acceleration.x_m_s2 == pytest.approx(0.0, abs=1e-12)
 
 
+def test_uniform_time_scaling_preserves_path_and_scales_derivatives() -> None:
+    baseline = trajectory_segments()[2]
+    slowed = trajectory_segments(cycle_time_scale=2.0)[2]
+    baseline_state = segment_state(baseline, 0.4 * baseline.duration_s)
+    slowed_state = segment_state(slowed, 0.4 * slowed.duration_s)
+
+    assert slowed_state.position == baseline_state.position
+    assert slowed_state.velocity.x_m_s == pytest.approx(
+        0.5 * baseline_state.velocity.x_m_s, abs=1e-12
+    )
+    assert slowed_state.acceleration.x_m_s2 == pytest.approx(
+        0.25 * baseline_state.acceleration.x_m_s2, abs=1e-12
+    )
+
+
+def test_invalid_cycle_time_scale_is_rejected() -> None:
+    with pytest.raises(ValueError, match="cycle time scale"):
+        trajectory_segments(0.0)
+
+
 def test_complete_cycle_returns_to_identical_model_state() -> None:
     trajectory = generate_trajectory()
     start = trajectory.samples[0]

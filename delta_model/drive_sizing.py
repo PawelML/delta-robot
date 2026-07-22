@@ -285,12 +285,25 @@ class RefinedDriveAssessment:
     passes: bool
 
 
+@dataclass(frozen=True, slots=True)
+class RefinedDriveLoadTrace:
+    """Motor-side load trace independent of a motor's rating vocabulary."""
+
+    motor_torques_nm: tuple[tuple[float, float, float], ...]
+    belt_torques_nm: tuple[tuple[float, float, float], ...]
+    motor_speeds_rad_s: tuple[tuple[float, float, float], ...]
+    motor_accelerations_rad_s2: tuple[tuple[float, float, float], ...]
+    maximum_motor_speed_rpm: float
+    maximum_motor_acceleration_rad_s2: float
+    maximum_belt_power_w: float
+
+
 STEEL_DENSITY_KG_M3 = 7850.0
 ALUMINIUM_DENSITY_KG_M3 = 2700.0
 BELT_ESTIMATED_MASS_KG = 0.01715
 
 
-def _solid_cylinder_axial_inertia(
+def solid_cylinder_axial_inertia(
     *, diameter_m: float, length_m: float, density_kg_m3: float
 ) -> float:
     radius = diameter_m / 2.0
@@ -298,7 +311,7 @@ def _solid_cylinder_axial_inertia(
     return 0.5 * mass * radius**2
 
 
-def _annular_cylinder_axial_inertia(
+def annular_cylinder_axial_inertia(
     *, outer_diameter_m: float, inner_diameter_m: float, length_m: float, density_kg_m3: float
 ) -> float:
     outer_radius = outer_diameter_m / 2.0
@@ -309,10 +322,10 @@ def _annular_cylinder_axial_inertia(
 
 P1_TRANSMISSION_INERTIA = TransmissionInertiaModel(
     small_pulley_kg_m2=inertia_from_wr2_lb_ft2(0.000097),
-    input_shaft_kg_m2=_solid_cylinder_axial_inertia(
+    input_shaft_kg_m2=solid_cylinder_axial_inertia(
         diameter_m=0.009525, length_m=0.1325, density_kg_m3=STEEL_DENSITY_KG_M3
     ),
-    coupling_kg_m2=_annular_cylinder_axial_inertia(
+    coupling_kg_m2=annular_cylinder_axial_inertia(
         outer_diameter_m=0.035,
         inner_diameter_m=0.009525,
         length_m=0.045,
@@ -320,13 +333,13 @@ P1_TRANSMISSION_INERTIA = TransmissionInertiaModel(
     ),
     belt_at_input_kg_m2=BELT_ESTIMATED_MASS_KG * (pitch_diameter_m(18) / 2.0) ** 2,
     large_pulley_kg_m2=inertia_from_wr2_lb_ft2(0.1358),
-    bushing_kg_m2=_annular_cylinder_axial_inertia(
+    bushing_kg_m2=annular_cylinder_axial_inertia(
         outer_diameter_m=0.057,
         inner_diameter_m=0.020,
         length_m=0.0254,
         density_kg_m3=STEEL_DENSITY_KG_M3,
     ),
-    output_shaft_kg_m2=_solid_cylinder_axial_inertia(
+    output_shaft_kg_m2=solid_cylinder_axial_inertia(
         diameter_m=0.020, length_m=0.180, density_kg_m3=STEEL_DENSITY_KG_M3
     ),
 )
@@ -435,14 +448,67 @@ def assess_refined_drive(
 ) -> RefinedDriveAssessment:
     """Add input/output transmission and rotor inertia at every trajectory sample."""
 
-    if len(trajectory.samples) != len(dynamic_result.torques_nm):
-        raise ValueError("trajectory and dynamic result sample counts must match")
     if design_factor < 1.0:
         raise ValueError("design factor must be at least one")
+    trace = calculate_refined_drive_load(
+        trajectory,
+        dynamic_result,
+        rotor_inertia_kg_m2=candidate.rotor_inertia_kg_m2,
+        transmission=transmission,
+    )
+    ratio = transmission.ratio
+    radius = transmission.small_pulley_pitch_radius_m
+    axes: list[RefinedAxisAssessment] = []
+    for axis_index in range(3):
+        torques = tuple(row[axis_index] for row in trace.motor_torques_nm)
+        belt_torques = tuple(row[axis_index] for row in trace.belt_torques_nm)
+        required_peak = design_factor * max(abs(value) for value in torques)
+        required_rms = design_factor * _rms(dynamic_result.times_s, torques)
+        axes.append(
+            RefinedAxisAssessment(
+                required_peak_torque_nm=required_peak,
+                required_rms_torque_nm=required_rms,
+                peak_torque_utilization=required_peak / candidate.peak_torque_nm,
+                continuous_torque_utilization=required_rms / candidate.rated_torque_nm,
+                peak_belt_tension_difference_n=max(abs(value) for value in belt_torques)
+                / radius,
+            )
+        )
+    passes = (
+        max(axis.required_peak_torque_nm for axis in axes) <= candidate.peak_torque_nm
+        and max(axis.required_rms_torque_nm for axis in axes) <= candidate.rated_torque_nm
+        and trace.maximum_motor_speed_rpm <= candidate.rated_speed_rpm
+    )
+    return RefinedDriveAssessment(
+        ratio=ratio,
+        efficiency=transmission.efficiency,
+        design_factor=design_factor,
+        axes=(axes[0], axes[1], axes[2]),
+        motor_torques_nm=trace.motor_torques_nm,
+        belt_torques_nm=trace.belt_torques_nm,
+        maximum_motor_speed_rpm=trace.maximum_motor_speed_rpm,
+        maximum_motor_acceleration_rad_s2=trace.maximum_motor_acceleration_rad_s2,
+        maximum_belt_power_w=trace.maximum_belt_power_w,
+        passes=passes,
+    )
+
+
+def calculate_refined_drive_load(
+    trajectory: Trajectory,
+    dynamic_result: DynamicCaseResult,
+    *,
+    rotor_inertia_kg_m2: float,
+    transmission: DriveTransmission,
+) -> RefinedDriveLoadTrace:
+    """Calculate the common time-domain load before applying motor ratings."""
+
+    if len(trajectory.samples) != len(dynamic_result.torques_nm):
+        raise ValueError("trajectory and dynamic result sample counts must match")
+    if not math.isfinite(rotor_inertia_kg_m2) or rotor_inertia_kg_m2 < 0.0:
+        raise ValueError("rotor inertia must be finite and non-negative")
     ratio = transmission.ratio
     efficiency = transmission.efficiency
     inertia = transmission.inertia
-    radius = transmission.small_pulley_pitch_radius_m
     motor_rows: list[tuple[float, float, float]] = []
     belt_rows: list[tuple[float, float, float]] = []
     speed_rows: list[tuple[float, float, float]] = []
@@ -469,7 +535,7 @@ def assess_refined_drive(
         )
         motor_torques = tuple(
             belt_torque
-            + (inertia.input_total_kg_m2 + candidate.rotor_inertia_kg_m2)
+            + (inertia.input_total_kg_m2 + rotor_inertia_kg_m2)
             * ratio
             * acceleration
             for belt_torque, acceleration in zip(
@@ -488,22 +554,6 @@ def assess_refined_drive(
                 ratio * joint_accelerations[2],
             )
         )
-    axes: list[RefinedAxisAssessment] = []
-    for axis_index in range(3):
-        torques = tuple(row[axis_index] for row in motor_rows)
-        belt_torques = tuple(row[axis_index] for row in belt_rows)
-        required_peak = design_factor * max(abs(value) for value in torques)
-        required_rms = design_factor * _rms(dynamic_result.times_s, torques)
-        axes.append(
-            RefinedAxisAssessment(
-                required_peak_torque_nm=required_peak,
-                required_rms_torque_nm=required_rms,
-                peak_torque_utilization=required_peak / candidate.peak_torque_nm,
-                continuous_torque_utilization=required_rms / candidate.rated_torque_nm,
-                peak_belt_tension_difference_n=max(abs(value) for value in belt_torques)
-                / radius,
-            )
-        )
     maximum_speed_rad_s = max(abs(value) for row in speed_rows for value in row)
     maximum_acceleration = max(
         abs(value) for row in acceleration_rows for value in row
@@ -513,21 +563,12 @@ def assess_refined_drive(
         for torque_row, speed_row in zip(belt_rows, speed_rows, strict=True)
         for torque, speed in zip(torque_row, speed_row, strict=True)
     )
-    maximum_speed_rpm = maximum_speed_rad_s * 60.0 / (2.0 * math.pi)
-    passes = (
-        max(axis.required_peak_torque_nm for axis in axes) <= candidate.peak_torque_nm
-        and max(axis.required_rms_torque_nm for axis in axes) <= candidate.rated_torque_nm
-        and maximum_speed_rpm <= candidate.rated_speed_rpm
-    )
-    return RefinedDriveAssessment(
-        ratio=ratio,
-        efficiency=efficiency,
-        design_factor=design_factor,
-        axes=(axes[0], axes[1], axes[2]),
+    return RefinedDriveLoadTrace(
         motor_torques_nm=tuple(motor_rows),
         belt_torques_nm=tuple(belt_rows),
-        maximum_motor_speed_rpm=maximum_speed_rpm,
+        motor_speeds_rad_s=tuple(speed_rows),
+        motor_accelerations_rad_s2=tuple(acceleration_rows),
+        maximum_motor_speed_rpm=maximum_speed_rad_s * 60.0 / (2.0 * math.pi),
         maximum_motor_acceleration_rad_s2=maximum_acceleration,
         maximum_belt_power_w=maximum_power,
-        passes=passes,
     )

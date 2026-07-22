@@ -1,6 +1,6 @@
 # Robot delta DIY — wstępny HLD i plan POC
 
-**Status:** active HLD v0.3 — cyfrowe P0 zakończone, budżetowe P1 w przygotowaniu
+**Status:** active HLD v0.4 — cyfrowe P0 zakończone, budżetowe P1 w przygotowaniu
 **Charakter projektu:** warsztatowy demonstrator R&D, nie maszyna produkcyjna
 **Źródło wymagań zakupowych:** `BOM_delta.md` jest kontrolowaną listą kandydatów P1, nie zamrożonym BOM-em trzech osi
 
@@ -294,8 +294,8 @@ Projekt utrzymuje dwa profile opisane w
 - `industrial_reference` zachowuje Leadshine `iSV2-RS6040V48G`, Gates 5MGT
   18/90 i dotychczasowe wyniki 0,50 kg / 1 Hz jako policzony punkt odniesienia;
 - `budget_demonstrator` zaczyna od zestawu StepperOnline `3-CLYS30-V20` z
-  silnikami `23HS40-5004D-E1000`, ale nie ma jeszcze wybranego przełożenia,
-  udźwigu ani czasu cyklu.
+  silnikami `23HS40-5004D-E1000`; przeszukanie proxy rekomenduje do dalszego
+  domknięcia katalogową przekładnię HTD 5M 20/60 (3:1), 15 mm, pas 450 mm.
 
 Profile współdzielą jeden model. Nie wolno kopiować wzorów ani utrzymywać
 osobnych implementacji dynamiki. Budżetowa krzywa moment--prędkość jest obecnie
@@ -320,10 +320,15 @@ Przemysłowa specyfikacja została obliczona i zapisana w
 - sposób wykrycia błędu pozycji,
 - kryteria temperaturowe testu stołowego.
 
-Wynik obliczeniowy nie zastępuje testu. Dla aktywnego wariantu budżetowego
-najpierw trzeba znaleźć przełożenie i obwiednię osiągów, przygotować BOM całego
-robota <=6 000 PLN, a następnie sprawdzić jedną oś. Zakup trzech kompletów
-nastąpi dopiero po zaliczeniu właściwego P1.
+Wynik obliczeniowy nie zastępuje testu. Raport
+`artifacts/budget_performance_envelope.json` nie odrzuca katalogowego wariantu
+20/60 dla 0,50 kg / 1,50 s (wykorzystanie proxy 0,853 z zapasem 1,30), ale
+odrzuca 0,50 kg / 1,25 s i 1,00 s. Dla nominalnych 0,30 kg najszybszym
+nieodrzuconym punktem siatki jest 1,25 s. To rekomendacja do domknięcia
+mechaniki i kosztu, nie zatwierdzenie napędu: trzeba jeszcze rozstrzygnąć
+obciążenie promieniowe wału, przygotować BOM całego robota <=6 000 PLN, a
+następnie sprawdzić jedną oś. Zakup trzech kompletów nastąpi dopiero po
+zaliczeniu właściwego P1.
 
 ## 10. Alternatywy sterowania
 
@@ -345,10 +350,11 @@ wprowadzają ROS2 ani Klippera.
    pokazuje wyniki w Three.js.
 2. **Zakończone cyfrowo:** model dynamiczny, dobór 5:1, kandydat serwa,
    symulator stanowiska oraz kandydacki CAD P1.
-3. **Teraz:** zachowanie profilu przemysłowego i wyznaczenie budżetowej
-   obwiedni udźwig/czas cyklu/przełożenie z krzywej moment--prędkość.
-4. Przygotowanie budżetowego BOM-u całego demonstratora z sumą <=6 000 PLN i
-   rezerwą; dotychczasowa checklista przemysłowa pozostaje referencyjna.
+3. **Zakończone cyfrowo:** profile przemysłowy/budżetowy i budżetowa obwiednia
+   udźwig/czas cyklu/przełożenie z krzywej proxy.
+4. **Teraz:** domknięcie mechaniczne wariantu 20/60 oraz przygotowanie
+   budżetowego BOM-u całego demonstratora z sumą <=6 000 PLN i rezerwą;
+   dotychczasowa checklista przemysłowa pozostaje referencyjna.
 5. Zakup wyłącznie elementów jednej budżetowej osi potrzebnych do P1 i zwymiarowania.
 6. Pomiar dostarczonych części, zamknięcie pasowań/retencji i dopiero wtedy
    wydanie rysunków do obróbki.
@@ -401,15 +407,18 @@ Cyfrowe P0 rozstrzygnęło próbkowane pokrycie Ø400×150 mm, obszar taśmy
 
 Kolejne decyzje będą dopisywane po fizycznym teście P1.
 
-## 14. Aktualna bramka: wybór wykonalnego budżetowego P1
+## 14. Aktualna bramka: mechaniczne i kosztowe domknięcie budżetowego P1
 
 P0 i przemysłowa programistyczna część P1 są gotowe i zachowane jako punkt
-odniesienia. Przed zakupem i obróbką wariantu budżetowego trzeba:
+odniesienia. Przeszukanie przełożenia/udźwigu/cyklu jest zapisane w
+`docs/specs/p1-budget-transmission-and-envelope.md`; rekomenduje HTD 5M 20/60
+do dalszego domknięcia. Przed zakupem i obróbką wariantu budżetowego trzeba:
 
-1. wybrać budżetową przekładnię i policzyć jej bezwładność;
-2. przeszukać udźwig, czas cyklu i przełożenie z ograniczeniem krzywej momentu;
-3. uzyskać zgodną krzywą CL57Y-V20/48 V albo zaplanować pomiar jednej osi;
-4. przygotować pełny BOM z rezerwą i sumą <=6 000 PLN;
+1. rozstrzygnąć wymagany naciąg pasa i limit 75 N na wale silnika, ewentualnie
+   przywrócić podparty wał wejściowy;
+2. sprawdzić wykonalność koła 60T, piasty, wału i zakresu ruchu w budżetowym CAD;
+3. przygotować pełny BOM z rezerwą i sumą <=6 000 PLN;
+4. uzyskać zgodną krzywą CL57Y-V20/48 V albo zaplanować pomiar jednej osi;
 5. kupić najwyżej zestaw jednej osi i jej przekładnię;
 6. zmierzyć dostarczone części i zaktualizować CAD przed obróbką.
 

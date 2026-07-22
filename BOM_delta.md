@@ -9,9 +9,11 @@
 This is the preserved `industrial_reference` list, not the active shopping list
 for the 5--6 kPLN `budget_demonstrator`. It remains useful for comparison and a
 future upgrade, but none of its purchasing blockers authorizes an order while
-the budget transmission and complete budget BOM are still unselected. The
+the proxy-recommended budget 20/60 transmission is not mechanically closed and
+the complete budget BOM is still missing. The
 authoritative requirements are in `poc_plan.md`, numerical evidence in
-`artifacts/geometry_comparison.json` and `artifacts/dynamic_sizing.json`, and
+`artifacts/geometry_comparison.json`, `artifacts/dynamic_sizing.json` and
+`artifacts/budget_performance_envelope.json`, and
 the representative drive contract in `docs/specs/p1-single-drive.md`.
 Operacyjna kolejność ofert, zakupów, pomiarów i zwolnienia rysunków znajduje się
 w `docs/p1-procurement-checklist.md`.
