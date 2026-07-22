@@ -1,0 +1,149 @@
+{
+  "profiles": [
+    {
+      "evidence_status": "calculated_physical_p1_pending",
+      "motor": {
+        "continuous_current_a_rms": 10.0,
+        "encoder_bits": 17,
+        "maximum_speed_rpm": 4000.0,
+        "model": "Leadshine iSV2-RS6040V48G",
+        "peak_current_a": 28.0,
+        "peak_torque_nm": 3.81,
+        "rated_speed_rpm": 3000.0,
+        "rated_torque_nm": 1.27,
+        "rated_voltage_vdc": 48.0,
+        "rotor_inertia_kg_m2": 5.8e-05,
+        "source_url": "https://www.leadshine.com/product-detail/iSV2-RS6040V48G.html"
+      },
+      "profile_id": "industrial_reference",
+      "role": "reference_not_active_purchase",
+      "transmission": {
+        "efficiency": 0.9,
+        "inertia": {
+          "belt_at_input_kg_m2": 3.5187580564188374e-06,
+          "bushing_kg_m2": 0.00020350242104492995,
+          "coupling_kg_m2": 1.7801624099078306e-05,
+          "input_shaft_kg_m2": 8.405148034286433e-07,
+          "large_pulley_kg_m2": 0.00572262695158,
+          "output_shaft_kg_m2": 2.2195352097611887e-05,
+          "small_pulley_kg_m2": 4.0875906797e-06
+        },
+        "ratio": 5.0,
+        "small_pulley_pitch_radius_m": 0.01432394487827058
+      }
+    },
+    {
+      "delivery_country": "Poland",
+      "evidence_status": "candidate_curve_proxy_transmission_pending",
+      "motor": {
+        "driver_model": "CL57Y-V20",
+        "driver_peak_current_a": 7.0,
+        "driver_voltage_max_vdc": 50.0,
+        "driver_voltage_min_vdc": 24.0,
+        "encoder_cpr": 4000,
+        "encoder_ppr": 1000,
+        "holding_torque_nm": 3.0,
+        "kit_model": "StepperOnline 3-CLYS30-V20",
+        "kit_source_url": "https://www.stepperonline.com.tr/ys-serisi-3-eksenli-kapali-dongu-adimlayici-cnc-kiti-v2-0-3-00-nm-424-83-oz-in-nema-23-motor-2-0-m-kablolar-ve-guc-kaynagi-ile-3-clys30-v20",
+        "motor_mass_kg": 1.65,
+        "motor_model": "23HS40-5004D-E1000",
+        "motor_source_url": "https://www.stepperonline.ca/s-series-nema-23-closed-loop-stepper-motor-3-00nm-424-83oz-in-encoder-1000ppr-4000cpr-23hs40-5004d-e1000.html",
+        "phase_inductance_mh": 2.3,
+        "phase_resistance_ohm": 0.6,
+        "rated_phase_current_a": 5.0,
+        "rotor_inertia_kg_m2": 6.6e-05,
+        "shaft_diameter_m": 0.008,
+        "step_angle_deg": 1.8,
+        "supply_current_a": 10.5,
+        "supply_model": "S-500-48",
+        "supply_power_w": 500.0,
+        "supply_voltage_vdc": 48.0,
+        "torque_speed_curve": {
+          "digitization_uncertainty_nm": 0.03,
+          "evidence_status": "proxy_only",
+          "points": [
+            {
+              "speed_rpm": 100.0,
+              "torque_nm": 2.3
+            },
+            {
+              "speed_rpm": 200.0,
+              "torque_nm": 2.25
+            },
+            {
+              "speed_rpm": 300.0,
+              "torque_nm": 2.0
+            },
+            {
+              "speed_rpm": 400.0,
+              "torque_nm": 1.7
+            },
+            {
+              "speed_rpm": 500.0,
+              "torque_nm": 1.6
+            },
+            {
+              "speed_rpm": 600.0,
+              "torque_nm": 1.35
+            },
+            {
+              "speed_rpm": 700.0,
+              "torque_nm": 1.12
+            },
+            {
+              "speed_rpm": 800.0,
+              "torque_nm": 1.03
+            },
+            {
+              "speed_rpm": 900.0,
+              "torque_nm": 0.95
+            },
+            {
+              "speed_rpm": 1000.0,
+              "torque_nm": 0.8
+            },
+            {
+              "speed_rpm": 1100.0,
+              "torque_nm": 0.78
+            },
+            {
+              "speed_rpm": 1200.0,
+              "torque_nm": 0.77
+            },
+            {
+              "speed_rpm": 1300.0,
+              "torque_nm": 0.7
+            },
+            {
+              "speed_rpm": 1400.0,
+              "torque_nm": 0.68
+            },
+            {
+              "speed_rpm": 1500.0,
+              "torque_nm": 0.62
+            }
+          ],
+          "source_url": "https://www.stepperonline.ca/image/catalog/torque-curves/23HS40-5004D-E1000_Torque_Curve.svg",
+          "test_conditions": "CL57T-V41, 36 VDC, 5.0 A RMS, 2000 microsteps/rev"
+        }
+      },
+      "profile_id": "budget_demonstrator",
+      "role": "active_development",
+      "total_budget_max_pln_gross": 6000,
+      "total_budget_min_pln_gross": 5000,
+      "transmission": null
+    }
+  ],
+  "schema": "delta-robot-design-profiles/v1",
+  "shared_model": {
+    "geometry": "selected_180_65_280_450_mm",
+    "mathematical_source": "delta_model Python package",
+    "workspace": "diameter_400_mm_x_z_150_mm"
+  },
+  "warnings": [
+    "industrial_reference is retained but is not the active purchase plan",
+    "budget transmission, payload and cycle time are not selected",
+    "budget torque-speed curve uses the exact motor but a different driver and 36 V",
+    "holding torque is not available running torque"
+  ]
+}

@@ -11,8 +11,9 @@ from delta_model.differential_kinematics import (
     differential_kinematics,
 )
 from delta_model.drive_sizing import (
+    INDUSTRIAL_REFERENCE_TRANSMISSION,
     LEADSHINE_ISV2_RS6040V48G,
-    P1_TRANSMISSION_INERTIA,
+    DriveTransmission,
     TransmissionInertiaModel,
     assess_motor_candidate,
     assess_refined_drive,
@@ -145,6 +146,8 @@ def test_leadshine_candidate_passes_conservative_case_with_rotor_inertia() -> No
         trajectory,
         conservative_result,
         LEADSHINE_ISV2_RS6040V48G,
+        ratio=INDUSTRIAL_REFERENCE_TRANSMISSION.ratio,
+        efficiency=INDUSTRIAL_REFERENCE_TRANSMISSION.efficiency,
     )
 
     assert assessment.passes
@@ -160,8 +163,22 @@ def test_leadshine_candidate_passes_conservative_case_with_rotor_inertia() -> No
 def test_zero_transmission_inertia_reproduces_legacy_candidate_assessment() -> None:
     trajectory = generate_trajectory()
     result = evaluate_dynamic_case(trajectory, CONSERVATIVE_MASS_CASE)
-    legacy = assess_motor_candidate(trajectory, result, LEADSHINE_ISV2_RS6040V48G)
-    zero = TransmissionInertiaModel(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    legacy = assess_motor_candidate(
+        trajectory,
+        result,
+        LEADSHINE_ISV2_RS6040V48G,
+        ratio=INDUSTRIAL_REFERENCE_TRANSMISSION.ratio,
+        efficiency=INDUSTRIAL_REFERENCE_TRANSMISSION.efficiency,
+    )
+    zero_inertia = TransmissionInertiaModel(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    zero = DriveTransmission(
+        ratio=INDUSTRIAL_REFERENCE_TRANSMISSION.ratio,
+        efficiency=INDUSTRIAL_REFERENCE_TRANSMISSION.efficiency,
+        small_pulley_pitch_radius_m=(
+            INDUSTRIAL_REFERENCE_TRANSMISSION.small_pulley_pitch_radius_m
+        ),
+        inertia=zero_inertia,
+    )
 
     refined = assess_refined_drive(
         trajectory,
@@ -182,12 +199,23 @@ def test_zero_transmission_inertia_reproduces_legacy_candidate_assessment() -> N
 def test_positive_added_inertia_adds_torque_in_acceleration_direction() -> None:
     trajectory = generate_trajectory()
     result = evaluate_dynamic_case(trajectory, CONSERVATIVE_MASS_CASE)
-    zero = TransmissionInertiaModel(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    zero_inertia = TransmissionInertiaModel(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    zero = DriveTransmission(
+        ratio=INDUSTRIAL_REFERENCE_TRANSMISSION.ratio,
+        efficiency=INDUSTRIAL_REFERENCE_TRANSMISSION.efficiency,
+        small_pulley_pitch_radius_m=(
+            INDUSTRIAL_REFERENCE_TRANSMISSION.small_pulley_pitch_radius_m
+        ),
+        inertia=zero_inertia,
+    )
     baseline = assess_refined_drive(
         trajectory, result, LEADSHINE_ISV2_RS6040V48G, zero
     )
     refined = assess_refined_drive(
-        trajectory, result, LEADSHINE_ISV2_RS6040V48G, P1_TRANSMISSION_INERTIA
+        trajectory,
+        result,
+        LEADSHINE_ISV2_RS6040V48G,
+        INDUSTRIAL_REFERENCE_TRANSMISSION,
     )
     sample_index = 200
     acceleration = trajectory.samples[sample_index].joint_accelerations.theta_1_rad_s2

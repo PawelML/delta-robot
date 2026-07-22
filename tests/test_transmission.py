@@ -7,7 +7,8 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from delta_model.drive_sizing import LEADSHINE_ISV2_RS6040V48G, assess_refined_drive
+from delta_model.design_profiles import INDUSTRIAL_REFERENCE_PROFILE
+from delta_model.drive_sizing import assess_refined_drive
 from delta_model.dynamics import CONSERVATIVE_MASS_CASE, evaluate_dynamic_case
 from delta_model.trajectory import generate_trajectory
 from delta_model.transmission import (
@@ -27,7 +28,12 @@ from delta_model.transmission import (
 def _document() -> dict[str, object]:
     trajectory = generate_trajectory()
     dynamic = evaluate_dynamic_case(trajectory, CONSERVATIVE_MASS_CASE)
-    assessment = assess_refined_drive(trajectory, dynamic, LEADSHINE_ISV2_RS6040V48G)
+    assessment = assess_refined_drive(
+        trajectory,
+        dynamic,
+        INDUSTRIAL_REFERENCE_PROFILE.motor,
+        INDUSTRIAL_REFERENCE_PROFILE.transmission,
+    )
     peak_design_belt_torque = (
         max(axis.peak_belt_tension_difference_n for axis in assessment.axes)
         * (18 * 0.005 / (2.0 * math.pi))

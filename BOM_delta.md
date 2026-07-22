@@ -1,12 +1,15 @@
 # BOM — robot delta DIY
 
-**Status:** provisional v0.4 — purchase parameters for one P1 bench axis
+**Status:** retained industrial reference v0.4 — inactive purchase plan
 
 **Date:** 2026-07-20
 
-**Purchase rule:** do not buy three drives before the P1 single-axis bench gate
+**Purchase rule:** do not order from this document while the budget profile is active
 
-This is a controlled list of candidates, not a frozen three-axis shopping list. The
+This is the preserved `industrial_reference` list, not the active shopping list
+for the 5--6 kPLN `budget_demonstrator`. It remains useful for comparison and a
+future upgrade, but none of its purchasing blockers authorizes an order while
+the budget transmission and complete budget BOM are still unselected. The
 authoritative requirements are in `poc_plan.md`, numerical evidence in
 `artifacts/geometry_comparison.json` and `artifacts/dynamic_sizing.json`, and
 the representative drive contract in `docs/specs/p1-single-drive.md`.
@@ -37,9 +40,10 @@ w `docs/p1-procurement-checklist.md`.
   holding torque is already below the required dynamic peak before pulley
   inertia, friction and torque-speed droop.
 
-## 2. P1 single-drive bench BOM
+## 2. Industrial-reference P1 single-drive bench BOM
 
-Only this section is in near-term scope. Catalogue codes are purchasing
+This section is retained reference scope, not near-term purchasing scope.
+Catalogue codes are purchasing
 parameters, not a claim of local stock. Confirm every bore, revision, included
 flange/bushing and landed price with the selected distributor before payment.
 

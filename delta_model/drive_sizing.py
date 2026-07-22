@@ -1,7 +1,8 @@
-"""Candidate-aware motor sizing including published rotor inertia."""
+"""Candidate-aware motor sizing including speed-dependent motor evidence."""
 
 import math
 from dataclasses import dataclass
+from typing import Literal
 
 from delta_model.dynamics import (
     DESIGN_FACTOR,
@@ -27,6 +28,129 @@ class MotorCandidate:
     peak_current_a: float
     encoder_bits: int
     source_url: str
+
+
+@dataclass(frozen=True, slots=True)
+class TorqueSpeedPoint:
+    """One manufacturer-curve marker in SI-compatible engineering units."""
+
+    speed_rpm: float
+    torque_nm: float
+
+    def __post_init__(self) -> None:
+        if not math.isfinite(self.speed_rpm) or self.speed_rpm < 0.0:
+            raise ValueError("torque-curve speed must be finite and non-negative")
+        if not math.isfinite(self.torque_nm) or self.torque_nm <= 0.0:
+            raise ValueError("torque-curve torque must be finite and positive")
+
+
+@dataclass(frozen=True, slots=True)
+class TorqueSpeedCurve:
+    """Bounded piecewise-linear running-torque evidence."""
+
+    points: tuple[TorqueSpeedPoint, ...]
+    evidence_status: Literal["matched", "proxy_only"]
+    test_conditions: str
+    source_url: str
+    digitization_uncertainty_nm: float
+
+    def __post_init__(self) -> None:
+        if len(self.points) < 2:
+            raise ValueError("torque-speed curve needs at least two points")
+        if any(
+            right.speed_rpm <= left.speed_rpm
+            for left, right in zip(self.points, self.points[1:], strict=False)
+        ):
+            raise ValueError("torque-curve speeds must be strictly increasing")
+        if not self.test_conditions.strip() or not self.source_url.strip():
+            raise ValueError("torque-curve source and test conditions are required")
+        if (
+            not math.isfinite(self.digitization_uncertainty_nm)
+            or self.digitization_uncertainty_nm < 0.0
+        ):
+            raise ValueError("digitization uncertainty must be finite and non-negative")
+
+    def available_torque_nm(self, speed_rpm: float) -> float:
+        """Interpolate inside the published running-speed interval only."""
+
+        if not math.isfinite(speed_rpm):
+            raise ValueError("speed must be finite")
+        minimum = self.points[0].speed_rpm
+        maximum = self.points[-1].speed_rpm
+        if not minimum <= speed_rpm <= maximum:
+            raise ValueError(
+                f"speed {speed_rpm} rpm is outside published curve {minimum}..{maximum} rpm"
+            )
+        for left, right in zip(self.points, self.points[1:], strict=False):
+            if speed_rpm <= right.speed_rpm:
+                fraction = (speed_rpm - left.speed_rpm) / (
+                    right.speed_rpm - left.speed_rpm
+                )
+                return left.torque_nm + fraction * (right.torque_nm - left.torque_nm)
+        raise AssertionError("validated speed was not bracketed by torque-curve points")
+
+
+@dataclass(frozen=True, slots=True)
+class ClosedLoopStepperCandidate:
+    """Exact kit and motor values without inventing servo-style ratings."""
+
+    kit_model: str
+    motor_model: str
+    driver_model: str
+    supply_model: str
+    holding_torque_nm: float
+    rotor_inertia_kg_m2: float
+    motor_mass_kg: float
+    rated_phase_current_a: float
+    phase_resistance_ohm: float
+    phase_inductance_mh: float
+    step_angle_deg: float
+    encoder_ppr: int
+    encoder_cpr: int
+    shaft_diameter_m: float
+    supply_voltage_vdc: float
+    supply_power_w: float
+    supply_current_a: float
+    driver_voltage_min_vdc: float
+    driver_voltage_max_vdc: float
+    driver_peak_current_a: float
+    torque_speed_curve: TorqueSpeedCurve
+    kit_source_url: str
+    motor_source_url: str
+
+    def __post_init__(self) -> None:
+        strings = (
+            self.kit_model,
+            self.motor_model,
+            self.driver_model,
+            self.supply_model,
+            self.kit_source_url,
+            self.motor_source_url,
+        )
+        if any(not value.strip() for value in strings):
+            raise ValueError("stepper identifiers and sources must not be empty")
+        positive_values = (
+            self.holding_torque_nm,
+            self.rotor_inertia_kg_m2,
+            self.motor_mass_kg,
+            self.rated_phase_current_a,
+            self.phase_resistance_ohm,
+            self.phase_inductance_mh,
+            self.step_angle_deg,
+            self.shaft_diameter_m,
+            self.supply_voltage_vdc,
+            self.supply_power_w,
+            self.supply_current_a,
+            self.driver_voltage_min_vdc,
+            self.driver_voltage_max_vdc,
+            self.driver_peak_current_a,
+        )
+        if any(not math.isfinite(value) or value <= 0.0 for value in positive_values):
+            raise ValueError("stepper numeric values must be finite and positive")
+        if self.driver_voltage_max_vdc <= self.driver_voltage_min_vdc:
+            raise ValueError("driver maximum voltage must exceed its minimum")
+        if self.encoder_ppr <= 0 or self.encoder_cpr <= 0:
+            raise ValueError("encoder resolutions must be positive")
 
 
 LEADSHINE_ISV2_RS6040V48G = MotorCandidate(
@@ -114,6 +238,27 @@ class TransmissionInertiaModel:
 
 
 @dataclass(frozen=True, slots=True)
+class DriveTransmission:
+    """All transmission values needed by the common drive-load calculation."""
+
+    ratio: float
+    efficiency: float
+    small_pulley_pitch_radius_m: float
+    inertia: TransmissionInertiaModel
+
+    def __post_init__(self) -> None:
+        if not math.isfinite(self.ratio) or self.ratio <= 0.0:
+            raise ValueError("transmission ratio must be finite and positive")
+        if not math.isfinite(self.efficiency) or not 0.0 < self.efficiency <= 1.0:
+            raise ValueError("transmission efficiency must be in (0, 1]")
+        if (
+            not math.isfinite(self.small_pulley_pitch_radius_m)
+            or self.small_pulley_pitch_radius_m <= 0.0
+        ):
+            raise ValueError("small-pulley pitch radius must be finite and positive")
+
+
+@dataclass(frozen=True, slots=True)
 class RefinedAxisAssessment:
     """One-axis result including real transmission component inertia."""
 
@@ -187,6 +332,14 @@ P1_TRANSMISSION_INERTIA = TransmissionInertiaModel(
 )
 
 
+INDUSTRIAL_REFERENCE_TRANSMISSION = DriveTransmission(
+    ratio=5.0,
+    efficiency=TRANSMISSION_EFFICIENCY,
+    small_pulley_pitch_radius_m=pitch_diameter_m(18) / 2.0,
+    inertia=P1_TRANSMISSION_INERTIA,
+)
+
+
 def _rms(times: tuple[float, ...], values: tuple[float, ...]) -> float:
     integral = sum(
         0.5 * (values[index] ** 2 + values[index + 1] ** 2)
@@ -201,8 +354,8 @@ def assess_motor_candidate(
     dynamic_result: DynamicCaseResult,
     candidate: MotorCandidate,
     *,
-    ratio: float = 5.0,
-    efficiency: float = TRANSMISSION_EFFICIENCY,
+    ratio: float,
+    efficiency: float,
     design_factor: float = DESIGN_FACTOR,
 ) -> MotorCandidateAssessment:
     """Add motor rotor inertia sample by sample and compare ratings."""
@@ -276,19 +429,20 @@ def assess_refined_drive(
     trajectory: Trajectory,
     dynamic_result: DynamicCaseResult,
     candidate: MotorCandidate,
-    transmission: TransmissionInertiaModel = P1_TRANSMISSION_INERTIA,
+    transmission: DriveTransmission,
     *,
-    ratio: float = 5.0,
-    efficiency: float = TRANSMISSION_EFFICIENCY,
     design_factor: float = DESIGN_FACTOR,
 ) -> RefinedDriveAssessment:
     """Add input/output transmission and rotor inertia at every trajectory sample."""
 
     if len(trajectory.samples) != len(dynamic_result.torques_nm):
         raise ValueError("trajectory and dynamic result sample counts must match")
-    if ratio <= 0.0 or not 0.0 < efficiency <= 1.0 or design_factor < 1.0:
-        raise ValueError("ratio, efficiency or design factor is invalid")
-    radius = pitch_diameter_m(18) / 2.0
+    if design_factor < 1.0:
+        raise ValueError("design factor must be at least one")
+    ratio = transmission.ratio
+    efficiency = transmission.efficiency
+    inertia = transmission.inertia
+    radius = transmission.small_pulley_pitch_radius_m
     motor_rows: list[tuple[float, float, float]] = []
     belt_rows: list[tuple[float, float, float]] = []
     speed_rows: list[tuple[float, float, float]] = []
@@ -307,7 +461,7 @@ def assess_refined_drive(
             sample.joint_rates.theta_3_rad_s,
         )
         belt_torques = tuple(
-            (output_torque + transmission.output_total_kg_m2 * acceleration)
+            (output_torque + inertia.output_total_kg_m2 * acceleration)
             / (ratio * efficiency)
             for output_torque, acceleration in zip(
                 output_torques, joint_accelerations, strict=True
@@ -315,7 +469,7 @@ def assess_refined_drive(
         )
         motor_torques = tuple(
             belt_torque
-            + (transmission.input_total_kg_m2 + candidate.rotor_inertia_kg_m2)
+            + (inertia.input_total_kg_m2 + candidate.rotor_inertia_kg_m2)
             * ratio
             * acceleration
             for belt_torque, acceleration in zip(

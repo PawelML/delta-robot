@@ -2,12 +2,11 @@
 
 import csv
 import io
-from dataclasses import asdict
+from dataclasses import asdict, replace
 
 from delta_model.design_geometry import SELECTED_SOURCE_LABEL
+from delta_model.design_profiles import INDUSTRIAL_REFERENCE_PROFILE
 from delta_model.drive_sizing import (
-    LEADSHINE_ISV2_RS6040V48G,
-    P1_TRANSMISSION_INERTIA,
     RefinedDriveAssessment,
     assess_motor_candidate,
     assess_refined_drive,
@@ -68,7 +67,8 @@ def refined_drive_trace_csv() -> str:
     assessment = assess_refined_drive(
         trajectory,
         dynamic,
-        LEADSHINE_ISV2_RS6040V48G,
+        INDUSTRIAL_REFERENCE_PROFILE.motor,
+        INDUSTRIAL_REFERENCE_PROFILE.transmission,
     )
     output = io.StringIO(newline="")
     writer = csv.writer(output, lineterminator="\n")
@@ -112,12 +112,15 @@ def dynamic_sizing_document() -> dict[str, object]:
     legacy_candidate_assessment = assess_motor_candidate(
         trajectory,
         conservative,
-        LEADSHINE_ISV2_RS6040V48G,
+        INDUSTRIAL_REFERENCE_PROFILE.motor,
+        ratio=INDUSTRIAL_REFERENCE_PROFILE.transmission.ratio,
+        efficiency=INDUSTRIAL_REFERENCE_PROFILE.transmission.efficiency,
     )
     candidate_assessment = assess_refined_drive(
         trajectory,
         conservative,
-        LEADSHINE_ISV2_RS6040V48G,
+        INDUSTRIAL_REFERENCE_PROFILE.motor,
+        INDUSTRIAL_REFERENCE_PROFILE.transmission,
     )
     arm_mass_variants = []
     for upper_arm_mass_kg in (0.15, 0.20, 0.25, 0.30):
@@ -132,7 +135,8 @@ def dynamic_sizing_document() -> dict[str, object]:
         variant_drive = assess_refined_drive(
             trajectory,
             variant_dynamic,
-            LEADSHINE_ISV2_RS6040V48G,
+            INDUSTRIAL_REFERENCE_PROFILE.motor,
+            INDUSTRIAL_REFERENCE_PROFILE.transmission,
         )
         arm_mass_variants.append(
             {
@@ -147,8 +151,8 @@ def dynamic_sizing_document() -> dict[str, object]:
         assessment = assess_refined_drive(
             trajectory,
             conservative,
-            LEADSHINE_ISV2_RS6040V48G,
-            efficiency=efficiency,
+            INDUSTRIAL_REFERENCE_PROFILE.motor,
+            replace(INDUSTRIAL_REFERENCE_PROFILE.transmission, efficiency=efficiency),
         )
         efficiency_sensitivity.append(
             {
@@ -180,7 +184,7 @@ def dynamic_sizing_document() -> dict[str, object]:
         "cases": [_case_document(nominal), _case_document(conservative)],
         "candidate_assessment": {
             **_refined_document(candidate_assessment),
-            "candidate": asdict(LEADSHINE_ISV2_RS6040V48G),
+            "candidate": asdict(INDUSTRIAL_REFERENCE_PROFILE.motor),
         },
         "convergence": {
             "fine_sample_period_s": fine_trajectory.sample_period_s,
@@ -234,7 +238,7 @@ def dynamic_sizing_document() -> dict[str, object]:
         },
         "transmissions": [asdict(requirement) for requirement in requirements],
         "transmission_inertia": {
-            **asdict(P1_TRANSMISSION_INERTIA),
+            **asdict(INDUSTRIAL_REFERENCE_PROFILE.transmission.inertia),
             "belt_mass_kg": 0.01715,
             "component_assumptions": {
                 "bushing": "steel annulus OD 57 mm, ID 20 mm, length 25.4 mm",

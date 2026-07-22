@@ -1,10 +1,13 @@
 # P1 5:1 synchronous-belt transmission — specification
 
-**Status:** accepted for implementation
+**Status:** implemented `industrial_reference`; inactive purchase selection
 **Version:** 0.1
 **Date:** 2026-07-20
 
 ## 1. Problem and boundary
+
+This Gates selection remains the calculated industrial reference. It is not a
+silent default for the active budget profile, whose transmission is unselected.
 
 Select and calculate one representative 5:1 belt reduction for the P1 bench.
 The result shall be detailed enough to build a parametric CAD envelope and a

@@ -1,5 +1,8 @@
 # P1 — rozeznanie dostawców z dostawą do Polski
 
+> **Status 2026-07-22:** historyczna migawka profilu `industrial_reference`.
+> Nie jest aktywnym koszykiem dla budżetowego demonstratora 5--6 kPLN.
+
 **Status:** migawka rynku; nie jest zgodą na zakup
 
 **Data sprawdzenia:** 2026-07-20

@@ -4,8 +4,10 @@ Warsztatowy demonstrator robota delta do pick-and-place nad taśmą. Projekt jes
 rozwijany od zweryfikowanego modelu cyfrowego, przez test pojedynczego napędu,
 do fizycznego robota i trackingu ruchomej taśmy.
 
-Aktualny etap: **cyfrowe P0 zakończone; P1 przygotowane do budowy jednej osi,
-ale jeszcze bez fizycznego zaliczenia**.
+Aktualny etap: **cyfrowe P0 zakończone; trwa dobór budżetowego P1 dla całego
+demonstratora za 5--6 tys. PLN, bez fizycznego zaliczenia**. Dotychczasowy
+Leadshine/Gates pozostaje uruchamialnym profilem referencyjnym, a nie aktywnym
+planem zakupowym.
 
 ## Dokumentacja
 
@@ -18,6 +20,7 @@ ale jeszcze bez fizycznego zaliczenia**.
 - `docs/specs/p0-conveyor-footprint.md` — pokrycie obszaru taśmy 305×200 mm.
 - `docs/specs/p0-trajectory-25-305-25.md` — jednosekundowy profil ruchu.
 - `docs/specs/p1-dynamics-and-drive-sizing.md` — pierwszy model momentów.
+- `docs/specs/p1-design-profiles.md` — wspólny model oraz profile przemysłowy i budżetowy.
 - `docs/specs/p1-single-drive.md` — kandydat jednego napędu i test P1.
 - `docs/specs/p1-transmission-selection.md` — dokładny dobór przekładni 18/90.
 - `docs/specs/p1-single-axis-bench-lld.md` — stanowisko jednej osi w ForgeCAD.
@@ -51,6 +54,7 @@ uv run python scripts/compare_diy_geometries.py
 uv run python scripts/generate_conveyor_coverage.py
 uv run python scripts/generate_p0_artifacts.py
 uv run python scripts/generate_dynamic_sizing.py
+uv run python scripts/generate_design_profiles.py
 uv run python scripts/select_p1_transmission.py
 uv run python scripts/run_p1_bench_simulation.py
 forgecad run cad/2026/07/20/p1-single-axis-bench/main.forge.js
@@ -65,14 +69,18 @@ promień bazy 180 mm, promień platformy 65 mm, ramię górne 280 mm i dolne
 10 416-punktową kontrolę na pełnej wysokości 150 mm. Wynik pozostaje cyfrowy do
 czasu sprawdzenia dynamiki, kolizji i sprzętu.
 
-Pierwszy raport P1 odrzuca wcześniejszy dobór steppera 2,0–2,2 Nm i sprawdza
-jedno zintegrowane serwo 400 W z redukcją 5:1. Jest to kandydat wyłącznie do
-testu stołowego; szczegóły i blokery zakupowe są zapisane w
-`docs/specs/p1-single-drive.md` oraz `BOM_delta.md`.
+`artifacts/design_profiles.json` rozdziela dwa warianty bez kopiowania modelu.
+`industrial_reference` zachowuje obliczenia Leadshine/Gates dla 0,50 kg / 1 Hz.
+Aktywny `budget_demonstrator` rejestruje zestaw StepperOnline `3-CLYS30-V20`,
+ale jego przekładnia, udźwig i czas cyklu nie są jeszcze wybrane. Dostępna
+krzywa momentu dotyczy dokładnego silnika, lecz innego drivera i 36 V, więc ma
+status `proxy_only` i nie jest dowodem przejścia P1.
 
-## Stanowisko CAD P1
+## Referencyjne stanowisko CAD P1
 
-Model jednej osi ma parametry kąta `-45…+80°` i regulacji pasa `-21…+4 mm`.
+Ten model dotyczy profilu przemysłowego Leadshine/Gates. Nie jest modelem
+wykonawczym aktywnej osi budżetowej. Ma parametry kąta `-45…+80°` i regulacji
+pasa `-21…+4 mm`.
 Najprościej obejrzeć gotowe wyjścia w
 `artifacts/cad/p1-single-axis-bench-report.pdf` oraz
 `artifacts/cad/p1-single-axis-bench.step`. Źródło można też renderować lokalnie:

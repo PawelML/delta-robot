@@ -4,6 +4,11 @@
 **Version:** 0.3
 **Date:** 2026-07-20
 
+The implemented 0.50 kg / 1 Hz result is retained as
+`industrial_reference`. The common dynamic equations remain authoritative for
+the active budget profile, but no budget payload or cycle target is selected by
+this document.
+
 ## 1. Problem
 
 P0 gives the actual 1 Hz joint motion but the provisional BOM still proposes a

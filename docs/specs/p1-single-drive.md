@@ -1,10 +1,14 @@
 # P1 representative single drive — specification
 
-**Status:** provisional candidate for bench validation
+**Status:** retained `industrial_reference`; inactive purchase candidate
 **Version:** 0.2
 **Date:** 2026-07-20
 
 ## 1. Decision
+
+This document preserves the higher-cost reference axis. The active project
+direction is `budget_demonstrator` from `docs/specs/p1-design-profiles.md`;
+therefore this specification does not currently authorize procurement.
 
 Build and test at most one representative 5:1 servo axis before purchasing the
 other two. The provisional motor/drive candidate is the integrated Leadshine

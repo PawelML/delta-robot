@@ -1,5 +1,8 @@
 # P1 single-axis bench — prototype fabrication package
 
+> **Status 2026-07-22:** zachowany pakiet CAD profilu `industrial_reference`;
+> nie wykonywać według niego osi budżetowej bez nowej specyfikacji i adaptacji.
+
 **Release:** candidate 0.2  
 **Date:** 2026-07-20  
 **Purpose:** one workshop P1 axis, not three robot axes

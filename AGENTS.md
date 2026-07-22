@@ -10,10 +10,11 @@
 
 ## Current scope
 
-- Digital P0 is complete. The current gate is P1: build and physically validate one representative servo axis with the selected transmission.
-- P1 design calculations, the ForgeCAD bench, the simulated drive and the automated report pipeline are implemented, but P1 has **not** passed until measurements from real hardware satisfy `docs/specs/p1-single-drive.md`.
+- Digital P0 is complete. The current gate is P1: select a budget transmission and feasible payload/cycle envelope, then build and physically validate one representative budget axis.
+- The project has two explicit profiles from `docs/specs/p1-design-profiles.md`: active `budget_demonstrator` and retained `industrial_reference`. They share one Python model; do not duplicate formulas between profiles.
+- Industrial P1 calculations, the ForgeCAD bench, simulated drive and automated report pipeline are implemented, but they are reference evidence and have not passed a physical gate. The budget transmission, performance envelope, bench CAD and BOM are not selected yet.
 - The Python model is authoritative for kinematics, differential kinematics, trajectories, dynamics and transmission calculations. Three.js and ForgeCAD visualize or package exported/modelled results and must not become independent mathematical sources of truth.
-- `BOM_delta.md` is a purchase-level specification for at most one P1 bench axis, but it remains provisional until supplier compatibility checks and the physical P1 gate justify freezing it.
+- `BOM_delta.md` currently preserves the inactive industrial-reference purchase specification. It is not the active budget shopping list. No budget hardware is purchased until a focused budget BOM fits the complete 5,000--6,000 PLN gross delivered-project envelope.
 - Do not purchase or specify three production axes, start P2 construction, or introduce ROS2, a motion controller, cloud services, agent frameworks or production safety architecture unless an accepted specification explicitly advances the project beyond P1.
 
 ## Accepted engineering baseline
@@ -21,8 +22,9 @@
 - The selected provisional delta geometry is: 180 mm base-joint radius, 65 mm platform-joint radius, 280 mm upper arms, 450 mm lower rods and shoulder limits from -45 deg to +80 deg.
 - The accepted useful workspace remains a sampled cylinder `diameter 400 mm x Z height 150 mm`, centred at `Z = -347 mm`. Diameter is an XY dimension; do not confuse conveyor width with vertical Z travel.
 - A centred `305 mm x 200 mm` horizontal conveyor footprint fits inside the 400 mm useful diameter: its corner radius is about 182.4 mm. The stated 200 mm conveyor width therefore does not change the accepted 150 mm Z height.
-- The selected P1 transmission is Gates 5MGT, 18/90 teeth, 15 mm width and a 600 mm belt, using the separately supported input jackshaft from `docs/adr/0002-supported-input-jackshaft.md`.
-- The current drive is a calculated P1 candidate only: Leadshine iSV2-RS6040V48G, 48 V / 400 W, with the selected 5:1 reduction. Do not describe it as validated hardware before the bench test.
+- In `industrial_reference`, the selected transmission is Gates 5MGT, 18/90 teeth, 15 mm width and a 600 mm belt, using the separately supported input jackshaft from `docs/adr/0002-supported-input-jackshaft.md`. The calculated drive is Leadshine iSV2-RS6040V48G, 48 V / 400 W. Preserve these values and artifacts as a comparison point; do not present them as the active purchase plan or validated hardware.
+- In `budget_demonstrator`, the first exact drive candidate is StepperOnline `3-CLYS30-V20` with `23HS40-5004D-E1000` motors and `CL57Y-V20` drivers. Its transmission, payload and cycle time remain unselected. The published motor curve uses CL57T-V41 at 36 V and is `proxy_only`; it may reject an operating point but cannot prove the kit passes.
+- The total purchased demonstrator target is 5,000--6,000 PLN gross delivered to Poland under the inclusions and exclusions in `poc_plan.md`.
 - Exploratory parameter checks may be run without changing accepted requirements. Do not promote them into defaults, artifacts, the BOM or claims of capability until the relevant spec and evidence are updated.
 
 ## Specification-driven workflow
