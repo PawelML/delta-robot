@@ -1,0 +1,270 @@
+{
+  "base_total_pln_gross": 5171.97,
+  "budget_bounds_pln_gross": {
+    "maximum": 6000,
+    "minimum": 5000
+  },
+  "category_subtotals_pln_gross": {
+    "control": 200.0,
+    "conveyor_feedback": 150.0,
+    "drives_and_power": 740.84,
+    "electrical": 300.0,
+    "frame": 650.0,
+    "integration": 250.0,
+    "logistics": 200.0,
+    "robot_mechanics": 600.0,
+    "transmissions": 1581.13,
+    "vacuum": 250.0,
+    "vision": 250.0
+  },
+  "contingency_pln_gross": 650.0,
+  "cost_risks": [
+    "allowances for frame, joints and machining require quotations and may consume contingency",
+    "catalogue stock and Polish/German-warehouse shipping can change after the snapshot",
+    "a failed physical P1 may require a different ratio, driver supply or drive kit"
+  ],
+  "currency": "PLN_gross",
+  "delivery_country": "Poland",
+  "excluded": [
+    "industrial Leadshine/Gates reference hardware",
+    "ownership of TC-08, US Digital E6, Mark-10 gauge or Mesa 7I96S",
+    "production safety certification, production guarding and CE conformity work",
+    "labour, workshop rent and replacement of an existing conveyor/PC"
+  ],
+  "lines": [
+    {
+      "acceptance_or_measurement": "Confirm German-warehouse landed price, exact motor/driver/supply revisions and return terms before payment.",
+      "category": "drives_and_power",
+      "description": "StepperOnline 3-CLYS30-V20: 3 motors, 3 drivers, 48 V / 500 W supply and cables",
+      "evidence_state": "dated_catalogue_price",
+      "gate": "P1_buy_once",
+      "item_id": "drive_kit_3axis",
+      "quantity": 1,
+      "source_url": "https://www.stepperonline.pl/zestaw-cnc-z-silnikiem-krokowym-z-zamknieta-petla-ys-series-3-osie-v2-0-3-00nm-424-83oz-in-silnik-nema-23-z-przewodami-2-0m-i-zasilaczem-3-clys30-v20",
+      "subtotal_pln_gross": 740.84,
+      "unit_price_pln_gross": 740.84
+    },
+    {
+      "acceptance_or_measurement": "Buy/machine one first; verify bore, runout and retention on the delivered 8 mm jackshaft.",
+      "category": "transmissions",
+      "description": "HTD 20-5M-15 small pulley, finished 8 mm bore and secure retention",
+      "evidence_state": "capped_allowance",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "pulley_20t_finished",
+      "quantity": 3,
+      "source_url": "https://www.ebmia.pl/kola-do-pasow-htd-5m/832-kolo-zebate-htd-20-5m-15-do-pasa-szerokosci-15mm.html",
+      "subtotal_pln_gross": 120.0,
+      "unit_price_pln_gross": 40.0
+    },
+    {
+      "acceptance_or_measurement": "Buy one first and measure hub, pilot bore, runout and tooth face.",
+      "category": "transmissions",
+      "description": "HTD 60-5M-15 aluminium large pulley",
+      "evidence_state": "dated_catalogue_price",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "pulley_60t",
+      "quantity": 3,
+      "source_url": "https://www.ebmia.pl/kola-do-pasow-htd-5m/655-kolo-zebate-htd-60-5m-15-do-pasa-szerokosci-15mm.html",
+      "subtotal_pln_gross": 172.47,
+      "unit_price_pln_gross": 57.49
+    },
+    {
+      "acceptance_or_measurement": "Obtain local machining quote after measuring one delivered pulley and chosen shaft/hub.",
+      "category": "transmissions",
+      "description": "Finish bore, keyway/retention and runout check for each 60T pulley",
+      "evidence_state": "capped_allowance",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "pulley_60t_machining",
+      "quantity": 3,
+      "source_url": null,
+      "subtotal_pln_gross": 150.0,
+      "unit_price_pln_gross": 50.0
+    },
+    {
+      "acceptance_or_measurement": "Check exact pitch/width marking; use one belt for P1 wear and tension evidence.",
+      "category": "transmissions",
+      "description": "Optibelt 450-5M-15, 90-tooth belt; three installed plus one spare",
+      "evidence_state": "dated_catalogue_price",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "belt_450_5m_15",
+      "quantity": 4,
+      "source_url": "https://www.ebmia.pl/pasy-zebate-htd-5m/1350-pas-zebaty-450-5m-15-z90.html",
+      "subtotal_pln_gross": 197.8,
+      "unit_price_pln_gross": 49.45
+    },
+    {
+      "acceptance_or_measurement": "Verify both 8 mm clamp bores, 3 Nm rating and delivered clamp-screw instructions.",
+      "category": "transmissions",
+      "description": "R+W BKL/3/8/8 zero-backlash bellows coupling",
+      "evidence_state": "dated_catalogue_price",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "coupling_bkl3_8_8",
+      "quantity": 3,
+      "source_url": "https://www.ebmia.pl/sprzegla-mieszkowe-bkl/91682-sprzeglo-bezluzowe-bkl-3-8-8.html",
+      "subtotal_pln_gross": 391.14,
+      "unit_price_pln_gross": 130.38
+    },
+    {
+      "acceptance_or_measurement": "Use one matched bearing series and close housing/shaft fits from its current SKF data.",
+      "category": "transmissions",
+      "description": "SKF 608-2RS/2RSH-envelope sealed input bearings",
+      "evidence_state": "dated_catalogue_price",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "bearing_608_2rs",
+      "quantity": 6,
+      "source_url": "https://www.hurtowniatechpol.pl/product/Lozysko-608-2RS-SKF-IND-8x22x7-s20832",
+      "subtotal_pln_gross": 39.72,
+      "unit_price_pln_gross": 6.62
+    },
+    {
+      "acceptance_or_measurement": "Fabricate one after delivered-part measurement; weigh, check runout and inspect adjustment rigidity.",
+      "category": "transmissions",
+      "description": "Three C45 8 mm jackshafts, input carriers, bearing retainers and fasteners",
+      "evidence_state": "capped_allowance",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "input_support_fabrication",
+      "quantity": 3,
+      "source_url": null,
+      "subtotal_pln_gross": 180.0,
+      "unit_price_pln_gross": 60.0
+    },
+    {
+      "acceptance_or_measurement": "Freeze actual bearing series, fits, keyways and arm-hub retention only after P1 component measurement.",
+      "category": "transmissions",
+      "description": "Three provisional 12 mm output shafts, two bearings/axis, hubs and retention",
+      "evidence_state": "capped_allowance",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "output_supports",
+      "quantity": 3,
+      "source_url": null,
+      "subtotal_pln_gross": 330.0,
+      "unit_price_pln_gross": 110.0
+    },
+    {
+      "acceptance_or_measurement": "Select parts within the accepted mass model; weigh every completed assembly and rerun dynamics if exceeded.",
+      "category": "robot_mechanics",
+      "description": "Upper arms, six 450 mm lower rods, twelve joints, spacers and moving platform",
+      "evidence_state": "capped_allowance",
+      "gate": "P2",
+      "item_id": "delta_links_platform",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 600.0,
+      "unit_price_pln_gross": 600.0
+    },
+    {
+      "acceptance_or_measurement": "Freeze only after full three-axis collision/stiffness CAD; guarding is workshop containment, not a safety claim.",
+      "category": "frame",
+      "description": "Aluminium profiles/plates, brackets, fasteners and simple workshop guarding",
+      "evidence_state": "capped_allowance",
+      "gate": "P2",
+      "item_id": "frame_and_guards",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 650.0,
+      "unit_price_pln_gross": 650.0
+    },
+    {
+      "acceptance_or_measurement": "Choose after the exact CL57Y-V20 command/feedback interface is verified on P1; reuse existing PC for supervision.",
+      "category": "control",
+      "description": "Local MCU motion control, differential/isolated interfaces and homing I/O",
+      "evidence_state": "capped_allowance",
+      "gate": "P2",
+      "item_id": "motion_control",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 200.0,
+      "unit_price_pln_gross": 200.0
+    },
+    {
+      "acceptance_or_measurement": "Confirm ratings against the delivered 48 V supply and driver manual; measure bus voltage during deceleration.",
+      "category": "electrical",
+      "description": "Enclosure, DC/AC-rated cutoff, emergency-stop loop, fusing, DIN hardware, PE and wiring",
+      "evidence_state": "capped_allowance",
+      "gate": "P1_buy_once",
+      "item_id": "electrical_panel",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 300.0,
+      "unit_price_pln_gross": 300.0
+    },
+    {
+      "acceptance_or_measurement": "Size from the real test part and demonstrate retention/release before conveyor operation.",
+      "category": "vacuum",
+      "description": "Budget vacuum source/ejector, valve, cup, tubing and vacuum confirmation",
+      "evidence_state": "capped_allowance",
+      "gate": "P3",
+      "item_id": "vacuum_system",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 250.0,
+      "unit_price_pln_gross": 250.0
+    },
+    {
+      "acceptance_or_measurement": "Select from field of view, exposure and calibration tests; the allowance is not a frozen model.",
+      "category": "vision",
+      "description": "USB/global-shutter candidate camera, lens, mount and controlled lighting",
+      "evidence_state": "capped_allowance",
+      "gate": "P4",
+      "item_id": "camera_lighting",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 250.0,
+      "unit_price_pln_gross": 250.0
+    },
+    {
+      "acceptance_or_measurement": "Derive resolution and update rate from the later tracking-error budget.",
+      "category": "conveyor_feedback",
+      "description": "Conveyor encoder/sensor, wheel/coupling and interface",
+      "evidence_state": "capped_allowance",
+      "gate": "P4",
+      "item_id": "conveyor_feedback",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 150.0,
+      "unit_price_pln_gross": 150.0
+    },
+    {
+      "acceptance_or_measurement": "Track actual spend; do not consume contingency invisibly.",
+      "category": "integration",
+      "description": "Connectors, extra cable, drag management, printed prototypes and workshop consumables",
+      "evidence_state": "capped_allowance",
+      "gate": "P2",
+      "item_id": "integration_consumables",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 250.0,
+      "unit_price_pln_gross": 250.0
+    },
+    {
+      "acceptance_or_measurement": "Recheck baskets and consolidate orders; VAT is already included in catalogue prices.",
+      "category": "logistics",
+      "description": "Combined delivery allowance to Poland",
+      "evidence_state": "capped_allowance",
+      "gate": "P1_buy_once",
+      "item_id": "poland_shipping",
+      "quantity": 1,
+      "source_url": null,
+      "subtotal_pln_gross": 200.0,
+      "unit_price_pln_gross": 200.0
+    }
+  ],
+  "price_snapshot_date": "2026-07-22",
+  "purchase_sequence": [
+    "buy the three-axis kit once only after exact revision and landed-price confirmation",
+    "buy/fabricate only one axis of transmission hardware for physical P1",
+    "measure delivered parts and freeze fits, retention and masses",
+    "run P1 before buying/fabricating the balance of the other two axes",
+    "release P2/P3/P4 allowances only at their accepted gates"
+  ],
+  "reused_or_borrowed_not_costed": [
+    "existing PC for supervision, development and logging",
+    "existing workshop tools and 3D printer",
+    "borrowed/rented calibrated tachometry, temperature and belt-force measurement for P1",
+    "existing conveyor if available; this BOM covers feedback integration, not a new conveyor"
+  ],
+  "schema": "delta-robot-budget-bom/v1",
+  "status": "provisional_cost_envelope_not_purchase_authorization",
+  "total_with_contingency_pln_gross": 5821.97,
+  "within_budget_cap": true
+}

@@ -1,8 +1,8 @@
 # Robot delta DIY — wstępny HLD i plan POC
 
-**Status:** active HLD v0.4 — cyfrowe P0 zakończone, budżetowe P1 w przygotowaniu
+**Status:** active HLD v0.5 — cyfrowe P0 i budżetowe domknięcie P1 zakończone; przed fizycznym P1
 **Charakter projektu:** warsztatowy demonstrator R&D, nie maszyna produkcyjna
-**Źródło wymagań zakupowych:** `BOM_delta.md` jest kontrolowaną listą kandydatów P1, nie zamrożonym BOM-em trzech osi
+**Źródło wymagań zakupowych:** `BOM_budget_delta.md` jest aktywną prowizoryczną obwiednią kosztową; `BOM_delta.md` zachowuje nieaktywny profil przemysłowy
 
 Zasady realizacji projektu są opisane w `docs/development-process.md`, a instrukcje obowiązujące narzędzia kodujące w `AGENTS.md`.
 
@@ -28,7 +28,8 @@ zasilanie i sterowanie, warsztatowe odcięcie napędów, efektor podciśnieniowy
 oraz budżetową kamerę i enkoder taśmy. Nie obejmuje posiadanego komputera,
 taśmy, drukarki 3D, podstawowych narzędzi ani aparatury pożyczonej lub
 wynajętej. W 6 000 PLN musi pozostać rezerwa na wysyłkę, drobne elementy i
-nieprzewidziane poprawki; szczegółowy limit kategorii zamknie budżetowy BOM.
+nieprzewidziane poprawki. `BOM_budget_delta.md` zamyka bieżącą obwiednię na
+5 821,97 PLN z rezerwą 650 PLN, nadal przed potwierdzeniem ofert i fizycznym P1.
 
 ## 2. Zakres i założenia początkowe
 
@@ -324,11 +325,14 @@ Wynik obliczeniowy nie zastępuje testu. Raport
 `artifacts/budget_performance_envelope.json` nie odrzuca katalogowego wariantu
 20/60 dla 0,50 kg / 1,50 s (wykorzystanie proxy 0,853 z zapasem 1,30), ale
 odrzuca 0,50 kg / 1,25 s i 1,00 s. Dla nominalnych 0,30 kg najszybszym
-nieodrzuconym punktem siatki jest 1,25 s. To rekomendacja do domknięcia
-mechaniki i kosztu, nie zatwierdzenie napędu: trzeba jeszcze rozstrzygnąć
-obciążenie promieniowe wału, przygotować BOM całego robota <=6 000 PLN, a
-następnie sprawdzić jedną oś. Zakup trzech kompletów nastąpi dopiero po
-zaliczeniu właściwego P1.
+nieodrzuconym punktem siatki jest 1,25 s. Mechaniczne domknięcie odrzuca koło
+20T bezpośrednio na wale silnika: sama różnica naciągów 92,8 N przekracza limit
+75 N przed napięciem montażowym. Osobno podparty wał Ø8 mm z dwoma 608 daje w
+ekranie obliczeniowym zapas plastyczności 2,98, a sprzęgło BKL3 zapas momentu
+1,55. Pełny prowizoryczny BOM wynosi 5 821,97 PLN. Nadal nie jest to
+zatwierdzenie napędu: zgodność krzywej, temperatura, błąd nadążania, napięcie
+szyny i rzeczywiste masy wymagają jednej fizycznej osi. Pozostała mechanika
+dwóch osi zostaje za właściwym P1.
 
 ## 10. Alternatywy sterowania
 
@@ -352,10 +356,10 @@ wprowadzają ROS2 ani Klippera.
    symulator stanowiska oraz kandydacki CAD P1.
 3. **Zakończone cyfrowo:** profile przemysłowy/budżetowy i budżetowa obwiednia
    udźwig/czas cyklu/przełożenie z krzywej proxy.
-4. **Teraz:** domknięcie mechaniczne wariantu 20/60 oraz przygotowanie
-   budżetowego BOM-u całego demonstratora z sumą <=6 000 PLN i rezerwą;
-   dotychczasowa checklista przemysłowa pozostaje referencyjna.
-5. Zakup wyłącznie elementów jednej budżetowej osi potrzebnych do P1 i zwymiarowania.
+4. **Zakończone cyfrowo:** domknięcie mechaniczne wariantu 20/60, osobno
+   podparty wał wejściowy, budżetowy CAD i BOM 5 821,97 PLN z rezerwą.
+5. **Teraz:** potwierdzenie rewizji/cen i zakup wyłącznie elementów jednej
+   budżetowej osi potrzebnych do P1 i zwymiarowania.
 6. Pomiar dostarczonych części, zamknięcie pasowań/retencji i dopiero wtedy
    wydanie rysunków do obróbki.
 7. Budowa i pomiar stanowiska; wyniki P1 aktualizują model i zamrażają BOM v1.
@@ -404,23 +408,29 @@ Cyfrowe P0 rozstrzygnęło próbkowane pokrycie Ø400×150 mm, obszar taśmy
 | 9 | Finalne rysunki stanowiska powstają po wyborze i pomiarze części katalogowych | Zapobiega obróbce według nominalnych wymiarów, które nie zamykają pasowań i interfejsów dostarczonej wersji |
 | 10 | Projekt utrzymuje `industrial_reference` i `budget_demonstrator` na jednym modelu | Zachowuje droższe obliczenia jako benchmark bez duplikowania matematyki |
 | 11 | Aktywny demonstrator ma kosztować 5--6 kPLN brutto z dostawą do Polski | Przywraca wykonalny zakres DIY; osiągi zostaną wyznaczone, a nie założone |
+| 12 | Budżetowe 20T pracuje na osobno podpartym wale Ø8 mm, nie bezpośrednio na silniku | 92,8 N efektywnej różnicy naciągów przekracza limit wału silnika 75 N jeszcze przed napięciem montażowym; zachowuje decyzję ADR 0002 |
 
 Kolejne decyzje będą dopisywane po fizycznym teście P1.
 
-## 14. Aktualna bramka: mechaniczne i kosztowe domknięcie budżetowego P1
+## 14. Aktualna bramka: przygotowanie i fizyczna walidacja budżetowego P1
 
 P0 i przemysłowa programistyczna część P1 są gotowe i zachowane jako punkt
-odniesienia. Przeszukanie przełożenia/udźwigu/cyklu jest zapisane w
-`docs/specs/p1-budget-transmission-and-envelope.md`; rekomenduje HTD 5M 20/60
-do dalszego domknięcia. Przed zakupem i obróbką wariantu budżetowego trzeba:
+odniesienia. Obwiednia, mechanika, koszt i CAD budżetowego 20/60 są zapisane w
+`docs/specs/p1-budget-transmission-and-envelope.md`,
+`docs/specs/p1-budget-mechanical-and-cost-closure.md`,
+`BOM_budget_delta.md` oraz `docs/p1-budget-bench-fabrication-package.md`.
+Przed obróbką i testem wariantu budżetowego trzeba:
 
-1. rozstrzygnąć wymagany naciąg pasa i limit 75 N na wale silnika, ewentualnie
-   przywrócić podparty wał wejściowy;
-2. sprawdzić wykonalność koła 60T, piasty, wału i zakresu ruchu w budżetowym CAD;
-3. przygotować pełny BOM z rezerwą i sumą <=6 000 PLN;
-4. uzyskać zgodną krzywą CL57Y-V20/48 V albo zaplanować pomiar jednej osi;
-5. kupić najwyżej zestaw jednej osi i jej przekładnię;
-6. zmierzyć dostarczone części i zaktualizować CAD przed obróbką.
+1. potwierdzić dokładne rewizje, ceny z dostawą do Polski, gwarancję i zwrot
+   zestawu StepperOnline oraz katalogowych elementów jednej osi;
+2. wybrać dokładną serię łożysk wyjściowych i uzyskać ofertę obróbki jednej osi;
+3. kupić najwyżej elementy jednej przekładni P1; zestaw trzyosiowy jest jednym
+   SKU, ale mechanika pozostałych dwóch osi pozostaje zablokowana;
+4. zmierzyć dostarczone części, zamknąć pasowania, retencję i wymiary otworów,
+   następnie zaktualizować CAD przed obróbką;
+5. ustawić i zmierzyć napięcie pasa oraz przeprowadzić fizyczny P1 z logowaniem
+   temperatury, błędu nadążania i napięcia szyny;
+6. zamrozić lub odrzucić 20/60 i BOM dopiero na podstawie wyniku testu.
 
 Dotychczasowy BOM, STEP stanowiska Leadshine i checklista zakupowa pozostają
 referencją profilu przemysłowego. Bez wykonania powyższych kroków nie wolno ich

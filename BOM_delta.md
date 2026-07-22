@@ -8,9 +8,9 @@
 
 This is the preserved `industrial_reference` list, not the active shopping list
 for the 5--6 kPLN `budget_demonstrator`. It remains useful for comparison and a
-future upgrade, but none of its purchasing blockers authorizes an order while
-the proxy-recommended budget 20/60 transmission is not mechanically closed and
-the complete budget BOM is still missing. The
+future upgrade. The active provisional list is now `BOM_budget_delta.md`; its
+20/60 transmission is digitally screened and costed but still requires a
+physical single-axis P1 before the other two mechanical axes are released. The
 authoritative requirements are in `poc_plan.md`, numerical evidence in
 `artifacts/geometry_comparison.json`, `artifacts/dynamic_sizing.json` and
 `artifacts/budget_performance_envelope.json`, and

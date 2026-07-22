@@ -1,0 +1,83 @@
+{
+  "direct_motor_shaft": {
+    "motor_dynamic_radial_limit_n": 75.0,
+    "peak_effective_tension_difference_n": 92.81330389489206,
+    "reason": "effective tension alone exceeds motor limit before installation tension",
+    "status": "rejected"
+  },
+  "geometry": {
+    "centre_distance_m": 0.12080646689509073,
+    "large_pitch_diameter_m": 0.0954929658551372,
+    "reconstructed_pitch_length_m": 0.44999999999999996,
+    "small_pitch_diameter_m": 0.03183098861837907,
+    "small_teeth_in_mesh": 8.302544829232858,
+    "small_wrap_angle_deg": 149.44580692619144,
+    "small_wrap_angle_rad": 2.608321384161787
+  },
+  "performance_point": {
+    "cycle_duration_s": 1.5,
+    "maximum_motor_acceleration_rad_s2": 123.9036369347383,
+    "maximum_motor_speed_rpm": 132.1900492029166,
+    "payload_kg": 0.5,
+    "peak_belt_tension_difference_n": 92.81330389489206,
+    "required_peak_torque_nm": 1.9362263234535493,
+    "required_rms_torque_nm_by_axis": [
+      0.8395610865413228,
+      1.0074267680696798,
+      1.0074267680696796
+    ],
+    "speed_evidence_exceeded": false,
+    "status": "not_rejected_by_proxy",
+    "transmission_id": "catalogue_20_60_450",
+    "worst_axis": 2,
+    "worst_curve_utilization": 0.852963138085264,
+    "worst_time_s": 1.268
+  },
+  "remaining_blockers": [
+    "measure delivered pulley, shaft, bearing and coupling dimensions before fabrication release",
+    "freeze fits, keyway and axial retention after delivered-part measurement",
+    "set and measure belt installation tension on the physical bench",
+    "run physical P1 temperature, following-error and bus-voltage tests"
+  ],
+  "schema": "delta-robot-budget-mechanical-closure/v1",
+  "sources": {
+    "bearing": "SKF 608-2RSH envelope, C=3.32 kN",
+    "belt_installation_tension": "Gates PowerGrip GT3 Design Manual, 5M HTD, 15 mm, Min Tst 13.5 lbf",
+    "coupling": "R+W BKL size 3, rated torque 3 Nm"
+  },
+  "status": "digital_screen_passed_physical_p1_pending",
+  "supported_input": {
+    "arrangement": "20T pulley centred between two 608 bearings; motor connected by BKL/3/8/8",
+    "belt_load": {
+      "effective_tension_difference_n": 120.65729506335968,
+      "installation_tension_per_span_n": 60.05099180601675,
+      "resultant_radial_load_n": 234.41732472531334,
+      "slack_span_tension_n": 60.05099180601675,
+      "span_included_angle_rad": 0.5332712694280062,
+      "tight_span_tension_n": 180.70828686937642
+    },
+    "coupling_inertia_upper_bound_kg_m2": 2.1093750000000005e-06,
+    "coupling_mass_kg": 0.027,
+    "coupling_outer_diameter_m": 0.025,
+    "input_shaft_inertia_kg_m2": 3.156672298327024e-07,
+    "input_shaft_model_length_m": 0.1,
+    "shaft_screen": {
+      "bearing_dynamic_rating_n": 3320.0,
+      "bearing_rating_utilization": 0.03530381396465562,
+      "bearing_span_m": 0.05,
+      "coupling_rated_torque_nm": 3.0,
+      "coupling_torque_factor": 1.549405647294915,
+      "design_torque_nm": 1.9362263234535493,
+      "factored_von_mises_stress_pa": 100747387.6259022,
+      "maximum_bending_moment_nm": 2.930216559066417,
+      "nominal_bending_stress_pa": 58294806.21314312,
+      "nominal_torsional_shear_pa": 19259999.395142462,
+      "provisional_yield_strength_pa": 300000000.0,
+      "radial_load_n": 234.41732472531334,
+      "reaction_per_bearing_n": 117.20866236265667,
+      "shaft_diameter_m": 0.008,
+      "yield_safety_factor": 2.9777447045472556
+    }
+  },
+  "transmission_id": "catalogue_20_60_450"
+}

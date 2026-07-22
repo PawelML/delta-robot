@@ -1,7 +1,7 @@
 # P1 budget transmission and performance-envelope search
 
-**Status:** implemented; proxy-only recommendation pending mechanical closure
-**Version:** 1.0
+**Status:** implemented; proxy-only recommendation mechanically screened
+**Version:** 1.1
 **Date:** 2026-07-22
 
 ## 1. Problem
@@ -73,12 +73,13 @@ simple cylinders/annuli:
 - output shaft: steel, 12 mm diameter and 150 mm long;
 - belt mass: scaled linearly from the existing 0.01715 kg estimate for 600 mm.
 
-The 20T pulley is provisionally placed directly on the stepper shaft to expose
-the cheapest layout. The motor drawing limits dynamic radial load to 75 N at a
-20 mm lever arm. This slice does not invent an installation preload, so direct
-shaft feasibility remains `unverified_radial_load`; it must be resolved before
-CAD or purchase. A supported input shaft remains an alternative if the measured
-or manufacturer-required belt load exceeds the limit.
+Version 1.0 provisionally placed the 20T pulley directly on the stepper shaft
+to expose the cheapest layout. The follow-on mechanical closure rejected that
+layout because the modelled 92.8 N effective tension difference alone exceeds
+the motor drawing's 75 N dynamic radial-load limit before installation tension.
+The current inertia model therefore includes the separately supported 8 mm
+input shaft and R+W BKL/3/8/8 coupling specified in
+`p1-budget-mechanical-and-cost-closure.md`.
 
 ## 5. Torque-speed screening
 
@@ -155,8 +156,8 @@ report presents an achievable-envelope candidate for user review.
 ## 9. Outside this slice
 
 - final pulley material, tooth strength, fatigue and printed-layer validation;
-- exact belt preload and motor radial-load approval;
-- final shaft/bearing/hub design and budget bench CAD;
+- physical belt-tension setting and delivered-part fit approval;
+- final shaft/bearing/hub fabrication details;
 - price freeze or purchase authorization;
 - changing P3/P4 gates;
 - physical proof of torque, temperature or following error.
@@ -168,12 +169,14 @@ The deterministic sweep recommends `catalogue_20_60_450` (HTD 5M, 20/60,
 and cost-closure slice. With the stated mass assumptions it is:
 
 - `not_rejected_by_proxy` for 0.50 kg at a 1.50 s cycle, with worst curve
-  utilization 0.853 after the 1.30 design factor;
+  utilization 0.853 after the 1.30 design factor, including the supported
+  input-shaft and coupling inertia;
 - `rejected_by_proxy` for 0.50 kg at 1.25 s (utilization 1.144) and 1.00 s
   (utilization 1.681);
 - `not_rejected_by_proxy` for 0.30 kg at 1.25 s, but rejected at 1.00 s.
 
 The printed 4:1 and 5:1 candidates reach faster proxy-only points, but are not
 recommended because this slice has no tooth-strength, hub-retention or fatigue
-evidence for them. The 3:1 result is not frozen hardware: direct motor-shaft
-radial load, actual masses, price and exact-kit torque behaviour remain open.
+evidence for them. The 3:1 result is not validated hardware: actual masses,
+delivered-part fits, price and exact-kit torque behaviour remain open. Detailed
+radial-load evidence is in `artifacts/budget_mechanical_closure.json`.

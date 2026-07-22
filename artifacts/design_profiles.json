@@ -34,7 +34,7 @@
     },
     {
       "delivery_country": "Poland",
-      "evidence_status": "candidate_curve_proxy_transmission_pending",
+      "evidence_status": "proxy_mechanical_screened_physical_p1_pending",
       "motor": {
         "driver_model": "CL57Y-V20",
         "driver_peak_current_a": 7.0,
@@ -128,6 +128,9 @@
         }
       },
       "profile_id": "budget_demonstrator",
+      "provisional_cycle_duration_s": 1.5,
+      "provisional_payload_kg": 0.5,
+      "provisional_transmission_id": "catalogue_20_60_450",
       "role": "active_development",
       "total_budget_max_pln_gross": 6000,
       "total_budget_min_pln_gross": 5000,
@@ -142,7 +145,8 @@
   },
   "warnings": [
     "industrial_reference is retained but is not the active purchase plan",
-    "budget transmission, payload and cycle time are not selected",
+    "budget 20/60 transmission and 0.50 kg / 1.50 s point passed digital screens only",
+    "the base profile keeps transmission unset until physical P1 freezes measured hardware",
     "budget torque-speed curve uses the exact motor but a different driver and 36 V",
     "holding torque is not available running torque"
   ]

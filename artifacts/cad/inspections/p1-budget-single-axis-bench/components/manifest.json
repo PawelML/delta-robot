@@ -1,0 +1,1309 @@
+{
+  "schemaVersion": 1,
+  "generator": {
+    "command": "forgecad inspect physical components",
+    "forgecadVersion": "0.10.3"
+  },
+  "source": {
+    "entryFile": "cad/2026/07/22/p1-budget-single-axis-bench/main.forge.js",
+    "projectRoot": "cad/2026/07/22/p1-budget-single-axis-bench"
+  },
+  "bundle": {
+    "evidenceRequested": [
+      "connectivity"
+    ],
+    "evidenceEmitted": [
+      "connectivity"
+    ],
+    "filters": {
+      "focus": null,
+      "hide": []
+    },
+    "sizePx": 1024,
+    "quality": "default",
+    "renderStyle": "inspection",
+    "edges": "off",
+    "deterministic": true
+  },
+  "views": {
+    "iso": {
+      "kind": "preset",
+      "framing": {
+        "method": "bbox-frustum-v1",
+        "objectCount": 18,
+        "inFrame": [
+          "Base plate",
+          "Adjustable input carrier",
+          "Input bearing housing",
+          "Input front 608 bearing",
+          "Input rear 608 bearing",
+          "Input jackshaft",
+          "HTD 20T pulley",
+          "R+W BKL3 coupling",
+          "Motor bracket",
+          "23HS40 closed-loop stepper",
+          "Output bearing housing",
+          "Output front bearing",
+          "Output rear bearing",
+          "Output shaft",
+          "HTD 60T pulley",
+          "Representative upper arm",
+          "Representative test mass",
+          "450-5M-15 belt envelope"
+        ],
+        "partiallyOutOfFrame": [],
+        "fullyOutOfFrame": []
+      }
+    }
+  },
+  "scene": {
+    "bbox": {
+      "min": [
+        -240,
+        -176,
+        0
+      ],
+      "max": [
+        550,
+        140,
+        182.9963606968522
+      ]
+    },
+    "volume": 2915932.982814076,
+    "params": [
+      {
+        "name": "Output angle",
+        "value": 0,
+        "defaultValue": 0,
+        "min": -45,
+        "max": 80,
+        "step": 1,
+        "unit": "deg",
+        "integer": false
+      },
+      {
+        "name": "Input carrier adjustment",
+        "value": 0,
+        "defaultValue": 0,
+        "min": -15,
+        "max": 3,
+        "step": 0.5,
+        "unit": "mm",
+        "integer": false
+      },
+      {
+        "name": "Representative arm length",
+        "value": 280,
+        "defaultValue": 280,
+        "min": 260,
+        "max": 300,
+        "step": 5,
+        "unit": "mm",
+        "integer": false
+      },
+      {
+        "name": "Representative test mass",
+        "value": 0.5,
+        "defaultValue": 0.5,
+        "min": 0.1,
+        "max": 1,
+        "step": 0.05,
+        "unit": "kg",
+        "integer": false
+      }
+    ],
+    "cutPlanes": [],
+    "animations": [
+      {
+        "name": "Accepted shoulder sweep",
+        "duration": 4,
+        "loop": true
+      }
+    ],
+    "defaultAnimation": null,
+    "verifications": [
+      {
+        "id": "verify-1",
+        "label": "Input 608 envelope is seated without positive housing interference",
+        "kind": "interface",
+        "status": "pass",
+        "message": "exact gap 0.02 mm in [-0.01, 0.05] mm",
+        "expected": "[-0.01, 0.05] mm",
+        "actual": "0.02 mm"
+      },
+      {
+        "id": "verify-2",
+        "label": "Output bearing envelope is seated without positive housing interference",
+        "kind": "interface",
+        "status": "pass",
+        "message": "exact gap 0.02 mm in [-0.01, 0.05] mm",
+        "expected": "[-0.01, 0.05] mm",
+        "actual": "0.02 mm"
+      },
+      {
+        "id": "verify-3",
+        "label": "Exact budget transmission ratio",
+        "status": "pass",
+        "message": "3 ≈ 3",
+        "expected": "3",
+        "actual": "3"
+      },
+      {
+        "id": "verify-4",
+        "label": "Calculated nominal centre distance",
+        "status": "pass",
+        "message": "120.8065 ≈ 120.8065",
+        "expected": "120.8065",
+        "actual": "120.8065"
+      },
+      {
+        "id": "verify-5",
+        "label": "Output angle stays inside accepted shoulder range",
+        "status": "pass",
+        "message": "0 in [-45, 80]",
+        "expected": "[-45, 80]",
+        "actual": "0"
+      },
+      {
+        "id": "verify-6",
+        "label": "Input carrier stays inside slots",
+        "status": "pass",
+        "message": "0 in [-15, 3]",
+        "expected": "[-15, 3]",
+        "actual": "0"
+      }
+    ],
+    "objects": [
+      {
+        "id": "obj-1",
+        "name": "Base plate",
+        "treePath": [
+          "Base plate"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-2",
+        "name": "Adjustable input carrier",
+        "treePath": [
+          "Adjustable input carrier"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-3",
+        "name": "Input bearing housing",
+        "treePath": [
+          "Input bearing housing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-4",
+        "name": "Input front 608 bearing",
+        "treePath": [
+          "Input front 608 bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-5",
+        "name": "Input rear 608 bearing",
+        "treePath": [
+          "Input rear 608 bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-6",
+        "name": "Input jackshaft",
+        "treePath": [
+          "Input jackshaft"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-7",
+        "name": "HTD 20T pulley",
+        "treePath": [
+          "HTD 20T pulley"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-8",
+        "name": "R+W BKL3 coupling",
+        "treePath": [
+          "R+W BKL3 coupling"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-9",
+        "name": "Motor bracket",
+        "treePath": [
+          "Motor bracket"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-10",
+        "name": "23HS40 closed-loop stepper",
+        "treePath": [
+          "23HS40 closed-loop stepper"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-11",
+        "name": "Output bearing housing",
+        "treePath": [
+          "Output bearing housing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-12",
+        "name": "Output front bearing",
+        "treePath": [
+          "Output front bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-13",
+        "name": "Output rear bearing",
+        "treePath": [
+          "Output rear bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-14",
+        "name": "Output shaft",
+        "treePath": [
+          "Output shaft"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-15",
+        "name": "HTD 60T pulley",
+        "treePath": [
+          "HTD 60T pulley"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-16",
+        "name": "Representative upper arm",
+        "treePath": [
+          "Representative upper arm"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-17",
+        "name": "Representative test mass",
+        "treePath": [
+          "Representative test mass"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-18",
+        "name": "450-5M-15 belt envelope",
+        "treePath": [
+          "450-5M-15 belt envelope"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      }
+    ]
+  },
+  "evidence": {
+    "connectivity": {
+      "format": "png",
+      "encoding": "rgb8-physical-component-palette",
+      "backgroundIndex": 0,
+      "backgroundColor": [
+        0,
+        0,
+        0
+      ],
+      "decode": "lookup exact RGB color in components[].color; antialiased edge pixels may be blended",
+      "method": "mesh-contact-plus-boolean-overlap",
+      "options": {
+        "contactTolerance": 0.05,
+        "minOverlapVolume": 0.1,
+        "exactGeometry": true,
+        "mergeOverlappingBBoxes": false,
+        "mergeTouchingBBoxes": false
+      },
+      "objectCount": 18,
+      "componentCount": 6,
+      "components": [
+        {
+          "index": 1,
+          "objectIndexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "objectIds": [
+            "obj-1",
+            "obj-2",
+            "obj-3",
+            "obj-4",
+            "obj-5",
+            "obj-6",
+            "obj-9",
+            "obj-10",
+            "obj-11",
+            "obj-12",
+            "obj-13",
+            "obj-14"
+          ],
+          "objectNames": [
+            "Base plate",
+            "Adjustable input carrier",
+            "Input bearing housing",
+            "Input front 608 bearing",
+            "Input rear 608 bearing",
+            "Input jackshaft",
+            "Motor bracket",
+            "23HS40 closed-loop stepper",
+            "Output bearing housing",
+            "Output front bearing",
+            "Output rear bearing",
+            "Output shaft"
+          ],
+          "objectCount": 12,
+          "bodyCount": 12,
+          "bbox": {
+            "min": [
+              -240,
+              -155,
+              0
+            ],
+            "max": [
+              244,
+              140,
+              170
+            ]
+          },
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 2,
+          "objectIndexes": [
+            6
+          ],
+          "objectIds": [
+            "obj-7"
+          ],
+          "objectNames": [
+            "HTD 20T pulley"
+          ],
+          "objectCount": 1,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              83.19353309342264,
+              -96.75,
+              117
+            ],
+            "max": [
+              119.19353309342264,
+              -68.25,
+              153
+            ]
+          },
+          "color": [
+            60,
+            180,
+            75
+          ],
+          "hex": "#3cb44b"
+        },
+        {
+          "index": 3,
+          "objectIndexes": [
+            7
+          ],
+          "objectIds": [
+            "obj-8"
+          ],
+          "objectNames": [
+            "R+W BKL3 coupling"
+          ],
+          "objectCount": 1,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              88.69353309342264,
+              -38,
+              122.5
+            ],
+            "max": [
+              113.69353309342264,
+              -6,
+              147.5
+            ]
+          },
+          "color": [
+            255,
+            225,
+            25
+          ],
+          "hex": "#ffe119"
+        },
+        {
+          "index": 4,
+          "objectIndexes": [
+            14
+          ],
+          "objectIds": [
+            "obj-15"
+          ],
+          "objectNames": [
+            "HTD 60T pulley"
+          ],
+          "objectCount": 1,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              174.825,
+              -95.25,
+              87.825
+            ],
+            "max": [
+              269.175,
+              -65.15,
+              182.175
+            ]
+          },
+          "color": [
+            0,
+            130,
+            200
+          ],
+          "hex": "#0082c8"
+        },
+        {
+          "index": 5,
+          "objectIndexes": [
+            15,
+            16
+          ],
+          "objectIds": [
+            "obj-16",
+            "obj-17"
+          ],
+          "objectNames": [
+            "Representative upper arm",
+            "Representative test mass"
+          ],
+          "objectCount": 2,
+          "bodyCount": 2,
+          "bbox": {
+            "min": [
+              200,
+              -176,
+              111
+            ],
+            "max": [
+              550,
+              -134,
+              159
+            ]
+          },
+          "color": [
+            245,
+            130,
+            48
+          ],
+          "hex": "#f58230"
+        },
+        {
+          "index": 6,
+          "objectIndexes": [
+            17
+          ],
+          "objectIds": [
+            "obj-18"
+          ],
+          "objectNames": [
+            "450-5M-15 belt envelope"
+          ],
+          "objectCount": 1,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              85.07558438926935,
+              -92.5,
+              87.00363930314779
+            ],
+            "max": [
+              269.9482924118638,
+              -77.5,
+              182.9963606968522
+            ]
+          },
+          "color": [
+            145,
+            30,
+            180
+          ],
+          "hex": "#911eb4"
+        }
+      ],
+      "objects": [
+        {
+          "index": 0,
+          "id": "obj-1",
+          "name": "Base plate",
+          "treePath": [
+            "Base plate"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              -240,
+              -140,
+              0
+            ],
+            "max": [
+              240,
+              140,
+              10
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 1,
+          "id": "obj-2",
+          "name": "Adjustable input carrier",
+          "treePath": [
+            "Adjustable input carrier"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              49.193533093422644,
+              -135,
+              10
+            ],
+            "max": [
+              153.19353309342264,
+              85,
+              22
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 2,
+          "id": "obj-3",
+          "name": "Input bearing housing",
+          "treePath": [
+            "Input bearing housing"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              74.19353309342264,
+              -115,
+              22
+            ],
+            "max": [
+              128.19353309342264,
+              -55,
+              153
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 3,
+          "id": "obj-4",
+          "name": "Input front 608 bearing",
+          "treePath": [
+            "Input front 608 bearing"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              90.19353309342264,
+              -113.5,
+              124
+            ],
+            "max": [
+              112.19353309342264,
+              -106.5,
+              146
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 4,
+          "id": "obj-5",
+          "name": "Input rear 608 bearing",
+          "treePath": [
+            "Input rear 608 bearing"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              90.19353309342264,
+              -63.5,
+              124
+            ],
+            "max": [
+              112.19353309342264,
+              -56.5,
+              146
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 5,
+          "id": "obj-6",
+          "name": "Input jackshaft",
+          "treePath": [
+            "Input jackshaft"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              97.19353309342264,
+              -120,
+              131
+            ],
+            "max": [
+              105.19353309342264,
+              -20,
+              139
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 6,
+          "id": "obj-7",
+          "name": "HTD 20T pulley",
+          "treePath": [
+            "HTD 20T pulley"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              83.19353309342264,
+              -96.75,
+              117
+            ],
+            "max": [
+              119.19353309342264,
+              -68.25,
+              153
+            ]
+          },
+          "componentIndex": 2,
+          "color": [
+            60,
+            180,
+            75
+          ],
+          "hex": "#3cb44b"
+        },
+        {
+          "index": 7,
+          "id": "obj-8",
+          "name": "R+W BKL3 coupling",
+          "treePath": [
+            "R+W BKL3 coupling"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              88.69353309342264,
+              -38,
+              122.5
+            ],
+            "max": [
+              113.69353309342264,
+              -6,
+              147.5
+            ]
+          },
+          "componentIndex": 3,
+          "color": [
+            255,
+            225,
+            25
+          ],
+          "hex": "#ffe119"
+        },
+        {
+          "index": 8,
+          "id": "obj-9",
+          "name": "Motor bracket",
+          "treePath": [
+            "Motor bracket"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              49.193533093422644,
+              -6,
+              22
+            ],
+            "max": [
+              153.19353309342264,
+              70,
+              170
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 9,
+          "id": "obj-10",
+          "name": "23HS40 closed-loop stepper",
+          "treePath": [
+            "23HS40 closed-loop stepper"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              72.69353309342264,
+              -20,
+              106.5
+            ],
+            "max": [
+              129.69353309342264,
+              122,
+              163.5
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 10,
+          "id": "obj-11",
+          "name": "Output bearing housing",
+          "treePath": [
+            "Output bearing housing"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              200,
+              -121,
+              10
+            ],
+            "max": [
+              244,
+              -49,
+              158
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 11,
+          "id": "obj-12",
+          "name": "Output front bearing",
+          "treePath": [
+            "Output front bearing"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              208,
+              -119,
+              121
+            ],
+            "max": [
+              236,
+              -111,
+              149
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 12,
+          "id": "obj-13",
+          "name": "Output rear bearing",
+          "treePath": [
+            "Output rear bearing"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              208,
+              -59,
+              121
+            ],
+            "max": [
+              236,
+              -51,
+              149
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 13,
+          "id": "obj-14",
+          "name": "Output shaft",
+          "treePath": [
+            "Output shaft"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              216,
+              -155,
+              129
+            ],
+            "max": [
+              228,
+              -25,
+              141
+            ]
+          },
+          "componentIndex": 1,
+          "color": [
+            230,
+            25,
+            75
+          ],
+          "hex": "#e6194b"
+        },
+        {
+          "index": 14,
+          "id": "obj-15",
+          "name": "HTD 60T pulley",
+          "treePath": [
+            "HTD 60T pulley"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              174.825,
+              -95.25,
+              87.825
+            ],
+            "max": [
+              269.175,
+              -65.15,
+              182.175
+            ]
+          },
+          "componentIndex": 4,
+          "color": [
+            0,
+            130,
+            200
+          ],
+          "hex": "#0082c8"
+        },
+        {
+          "index": 15,
+          "id": "obj-16",
+          "name": "Representative upper arm",
+          "treePath": [
+            "Representative upper arm"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              200,
+              -161,
+              113
+            ],
+            "max": [
+              502,
+              -149,
+              157
+            ]
+          },
+          "componentIndex": 5,
+          "color": [
+            245,
+            130,
+            48
+          ],
+          "hex": "#f58230"
+        },
+        {
+          "index": 16,
+          "id": "obj-17",
+          "name": "Representative test mass",
+          "treePath": [
+            "Representative test mass"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              502,
+              -176,
+              111
+            ],
+            "max": [
+              550,
+              -134,
+              159
+            ]
+          },
+          "componentIndex": 5,
+          "color": [
+            245,
+            130,
+            48
+          ],
+          "hex": "#f58230"
+        },
+        {
+          "index": 17,
+          "id": "obj-18",
+          "name": "450-5M-15 belt envelope",
+          "treePath": [
+            "450-5M-15 belt envelope"
+          ],
+          "mock": false,
+          "bodyCount": 1,
+          "bbox": {
+            "min": [
+              85.07558438926935,
+              -92.5,
+              87.00363930314779
+            ],
+            "max": [
+              269.9482924118638,
+              -77.5,
+              182.9963606968522
+            ]
+          },
+          "componentIndex": 6,
+          "color": [
+            145,
+            30,
+            180
+          ],
+          "hex": "#911eb4"
+        }
+      ],
+      "edges": [
+        {
+          "sourceIndex": 0,
+          "targetIndex": 1,
+          "sourceId": "obj-1",
+          "targetId": "obj-2",
+          "sourceName": "Base plate",
+          "targetName": "Adjustable input carrier",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0
+        },
+        {
+          "sourceIndex": 0,
+          "targetIndex": 10,
+          "sourceId": "obj-1",
+          "targetId": "obj-11",
+          "sourceName": "Base plate",
+          "targetName": "Output bearing housing",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0
+        },
+        {
+          "sourceIndex": 1,
+          "targetIndex": 2,
+          "sourceId": "obj-2",
+          "targetId": "obj-3",
+          "sourceName": "Adjustable input carrier",
+          "targetName": "Input bearing housing",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0
+        },
+        {
+          "sourceIndex": 1,
+          "targetIndex": 8,
+          "sourceId": "obj-2",
+          "targetId": "obj-9",
+          "sourceName": "Adjustable input carrier",
+          "targetName": "Motor bracket",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0
+        },
+        {
+          "sourceIndex": 2,
+          "targetIndex": 3,
+          "sourceId": "obj-3",
+          "targetId": "obj-4",
+          "sourceName": "Input bearing housing",
+          "targetName": "Input front 608 bearing",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.019963638279255715
+        },
+        {
+          "sourceIndex": 2,
+          "targetIndex": 4,
+          "sourceId": "obj-3",
+          "targetId": "obj-5",
+          "sourceName": "Input bearing housing",
+          "targetName": "Input rear 608 bearing",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.019963638279255715
+        },
+        {
+          "sourceIndex": 3,
+          "targetIndex": 5,
+          "sourceId": "obj-4",
+          "targetId": "obj-6",
+          "sourceName": "Input front 608 bearing",
+          "targetName": "Input jackshaft",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.0499295492335309
+        },
+        {
+          "sourceIndex": 4,
+          "targetIndex": 5,
+          "sourceId": "obj-5",
+          "targetId": "obj-6",
+          "sourceName": "Input rear 608 bearing",
+          "targetName": "Input jackshaft",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.0499295492335309
+        },
+        {
+          "sourceIndex": 5,
+          "targetIndex": 9,
+          "sourceId": "obj-6",
+          "targetId": "obj-10",
+          "sourceName": "Input jackshaft",
+          "targetName": "23HS40 closed-loop stepper",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0
+        },
+        {
+          "sourceIndex": 8,
+          "targetIndex": 9,
+          "sourceId": "obj-9",
+          "targetId": "obj-10",
+          "sourceName": "Motor bracket",
+          "targetName": "23HS40 closed-loop stepper",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0
+        },
+        {
+          "sourceIndex": 10,
+          "targetIndex": 11,
+          "sourceId": "obj-11",
+          "targetId": "obj-12",
+          "sourceName": "Output bearing housing",
+          "targetName": "Output front bearing",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.019970084559962
+        },
+        {
+          "sourceIndex": 10,
+          "targetIndex": 12,
+          "sourceId": "obj-11",
+          "targetId": "obj-13",
+          "sourceName": "Output bearing housing",
+          "targetName": "Output rear bearing",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.019970084559962
+        },
+        {
+          "sourceIndex": 11,
+          "targetIndex": 13,
+          "sourceId": "obj-12",
+          "targetId": "obj-14",
+          "sourceName": "Output front bearing",
+          "targetName": "Output shaft",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.04992304786600752
+        },
+        {
+          "sourceIndex": 12,
+          "targetIndex": 13,
+          "sourceId": "obj-13",
+          "targetId": "obj-14",
+          "sourceName": "Output rear bearing",
+          "targetName": "Output shaft",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0.04992304786600752
+        },
+        {
+          "sourceIndex": 15,
+          "targetIndex": 16,
+          "sourceId": "obj-16",
+          "targetId": "obj-17",
+          "sourceName": "Representative upper arm",
+          "targetName": "Representative test mass",
+          "kind": "touching",
+          "method": "mesh-surface-distance",
+          "gap": 0
+        }
+      ],
+      "warnings": [],
+      "views": {
+        "iso": {
+          "path": "evidence/connectivity/iso.png"
+        }
+      }
+    }
+  }
+}

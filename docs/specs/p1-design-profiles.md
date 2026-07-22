@@ -1,7 +1,7 @@
 # P1 industrial reference and budget demonstrator profiles
 
 **Status:** accepted for implementation
-**Version:** 0.1
+**Version:** 0.2
 **Date:** 2026-07-22
 
 ## 1. Problem
@@ -19,8 +19,12 @@ One mathematical implementation shall therefore support two named profiles:
   but does not claim a payload, cycle time or transmission until those values
   pass a torque-speed-aware parameter search.
 
-This slice separates configuration from calculation. It does not select the
-budget transmission, publish a budget BOM or authorize a purchase.
+This slice originally separated configuration from calculation without a
+budget transmission. Follow-on evidence now records the provisional
+`catalogue_20_60_450` selection and 0.50 kg / 1.50 s screen, while the base
+profile deliberately keeps `transmission=None` until physical P1 freezes
+measured hardware. The generated budget-sizing report is the authoritative
+complete transmission object in the meantime. No document authorizes purchase.
 
 ## 2. Shared and profile-specific inputs
 
@@ -37,9 +41,9 @@ Profile-specific data are:
 | Motor | integrated servo | `23HS40-5004D-E1000` |
 | Driver | integrated | `CL57Y-V20` |
 | Supply | provisional external 48 V bench supply | kit `S-500-48`, 48 V / 500 W |
-| Transmission | Gates 5MGT 18/90, 5:1, fully modelled | deliberately unselected |
-| Dynamic target | current 0.50 kg / 1 Hz conservative reference | to be found under the budget constraint |
-| Evidence state | calculated reference, physical P1 pending | candidate data only, torque curve is proxy-only |
+| Transmission | Gates 5MGT 18/90, 5:1, fully modelled | provisional HTD 5M 20/60, 15 mm, 450 mm, supported input shaft |
+| Dynamic target | current 0.50 kg / 1 Hz conservative reference | provisional 0.50 kg / 1.50 s; 0.30 kg / 1.25 s also not rejected |
+| Evidence state | calculated reference, physical P1 pending | proxy curve plus digital mechanics; physical P1 pending |
 
 No code path may silently substitute the budget candidate for the industrial
 profile or vice versa. An unknown profile identifier and an attempt to run a
@@ -126,8 +130,10 @@ The implementation provides:
 
 Invalid numeric inputs, duplicate or non-increasing curve speeds, non-positive
 torques, unknown profile identifiers and curve extrapolation raise
-`ValueError`. The budget profile exposes no complete transmission until a later
-selection slice supplies it.
+`ValueError`. The base budget profile exposes no frozen complete transmission.
+The sizing and mechanical-closure modules supply the provisional transmission
+explicitly, preventing code that assumes physically validated hardware from
+proceeding.
 
 ## 7. Acceptance tests
 
@@ -145,9 +151,8 @@ selection slice supplies it.
 
 ## 8. Outside this slice
 
-- selecting pulleys, belt width, ratio or shaft arrangement for the budget axis;
-- deciding the feasible payload and cycle rate;
-- producing the 5--6 kPLN purchase BOM;
-- adapting the current ForgeCAD bench to the NEMA 23 motor;
+- physically validating the selected pulley, belt, shaft and bearing arrangement;
+- proving the proxy-screened payload and cycle rate on the exact kit;
+- freezing the provisional 5--6 kPLN cost envelope after quotations;
+- releasing delivered-part fits and machining drawings;
 - claiming that the StepperOnline kit passes P1.
-

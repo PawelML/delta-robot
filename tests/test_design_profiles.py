@@ -24,6 +24,9 @@ def test_named_profiles_are_explicit_and_distinct() -> None:
     assert industrial.role == "reference_not_active_purchase"
     assert budget.role == "active_development"
     assert budget.transmission is None
+    assert budget.provisional_transmission_id == "catalogue_20_60_450"
+    assert budget.provisional_payload_kg == pytest.approx(0.50)
+    assert budget.provisional_cycle_duration_s == pytest.approx(1.50)
     assert budget.total_budget_max_pln_gross == 6000
 
 

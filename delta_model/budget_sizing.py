@@ -21,6 +21,10 @@ from delta_model.transmission import BeltCandidate, pitch_diameter_m, solve_open
 
 BUDGET_TRANSMISSION_EFFICIENCY = 0.85
 POLYMER_DENSITY_KG_M3 = 1270.0
+SUPPORTED_INPUT_SHAFT_DIAMETER_M = 0.008
+SUPPORTED_INPUT_SHAFT_LENGTH_M = 0.100
+BKL3_COUPLING_MASS_KG = 0.027
+BKL3_COUPLING_OUTER_DIAMETER_M = 0.025
 PAYLOADS_KG = (0.10, 0.15, 0.20, 0.25, 0.30, 0.50)
 CYCLE_DURATIONS_S = (1.00, 1.25, 1.50, 2.00, 2.50, 3.00)
 
@@ -33,7 +37,7 @@ class BudgetTransmissionCandidate:
     belt: BeltCandidate
     large_pulley_construction: Literal["catalogue_aluminium", "printed_polymer_hubbed"]
     evidence_state: Literal["locally_catalogue_backed", "geometric_estimate_only"]
-    radial_load_status: Literal["unverified_radial_load"]
+    radial_load_status: Literal["separately_supported_input_shaft"]
 
     @property
     def complexity_rank(self) -> int:
@@ -95,21 +99,21 @@ BUDGET_TRANSMISSION_CANDIDATES = (
         _belt_candidate("catalogue_20_60_450", 60, 0.450),
         "catalogue_aluminium",
         "locally_catalogue_backed",
-        "unverified_radial_load",
+        "separately_supported_input_shaft",
     ),
     BudgetTransmissionCandidate(
         "printed_20_80_500",
         _belt_candidate("printed_20_80_500", 80, 0.500),
         "printed_polymer_hubbed",
         "geometric_estimate_only",
-        "unverified_radial_load",
+        "separately_supported_input_shaft",
     ),
     BudgetTransmissionCandidate(
         "printed_20_100_600",
         _belt_candidate("printed_20_100_600", 100, 0.600),
         "printed_polymer_hubbed",
         "geometric_estimate_only",
-        "unverified_radial_load",
+        "separately_supported_input_shaft",
     ),
 )
 
@@ -179,8 +183,16 @@ def budget_transmission(candidate: BudgetTransmissionCandidate) -> DriveTransmis
         small_pulley_pitch_radius_m=small_radius,
         inertia=TransmissionInertiaModel(
             small_pulley_kg_m2=_small_pulley_inertia(),
-            input_shaft_kg_m2=0.0,
-            coupling_kg_m2=0.0,
+            input_shaft_kg_m2=solid_cylinder_axial_inertia(
+                diameter_m=SUPPORTED_INPUT_SHAFT_DIAMETER_M,
+                length_m=SUPPORTED_INPUT_SHAFT_LENGTH_M,
+                density_kg_m3=STEEL_DENSITY_KG_M3,
+            ),
+            coupling_kg_m2=(
+                0.5
+                * BKL3_COUPLING_MASS_KG
+                * (BKL3_COUPLING_OUTER_DIAMETER_M / 2.0) ** 2
+            ),
             belt_at_input_kg_m2=belt_mass * small_radius**2,
             large_pulley_kg_m2=large_inertia,
             bushing_kg_m2=0.0,
@@ -392,7 +404,8 @@ def budget_performance_envelope_document() -> dict[str, object]:
         },
         "blockers": [
             "proxy curve uses CL57T-V41 at 36 V, not the exact CL57Y-V20 kit conditions",
-            "belt preload and the motor's 75 N radial-load limit are unresolved",
+            "supported-jackshaft calculation is digital evidence pending "
+            "delivered-part fits and physical P1",
             "budget pulley inertias are estimates pending representative CAD and weighing",
             "temperature and following error require the physical P1 bench",
         ],

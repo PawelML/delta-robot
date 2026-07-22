@@ -4,8 +4,10 @@ Warsztatowy demonstrator robota delta do pick-and-place nad taśmą. Projekt jes
 rozwijany od zweryfikowanego modelu cyfrowego, przez test pojedynczego napędu,
 do fizycznego robota i trackingu ruchomej taśmy.
 
-Aktualny etap: **cyfrowe P0 zakończone; trwa dobór budżetowego P1 dla całego
-demonstratora za 5--6 tys. PLN, bez fizycznego zaliczenia**. Dotychczasowy
+Aktualny etap: **cyfrowe P0 oraz mechaniczne/kosztowe domknięcie budżetowego P1
+zakończone; następny jest zakup i fizyczny test jednej osi**. Obwiednia całego
+demonstratora wynosi 5 821,97 PLN brutto z rezerwą, nadal bez fizycznego
+zaliczenia. Dotychczasowy
 Leadshine/Gates pozostaje uruchamialnym profilem referencyjnym, a nie aktywnym
 planem zakupowym.
 
@@ -23,6 +25,9 @@ planem zakupowym.
 - `docs/specs/p1-design-profiles.md` — wspólny model oraz profile przemysłowy i budżetowy.
 - `docs/specs/p1-budget-transmission-and-envelope.md` — porównanie budżetowych
   przełożeń i obwiednia udźwig/czas cyklu.
+- `docs/specs/p1-budget-mechanical-and-cost-closure.md` — naciąg pasa, podparty
+  wał, łożyska, sprzęgło, CAD i kontrakt kosztowy.
+- `BOM_budget_delta.md` — aktywna, prowizoryczna lista budżetowa 5 821,97 PLN.
 - `docs/specs/p1-single-drive.md` — kandydat jednego napędu i test P1.
 - `docs/specs/p1-transmission-selection.md` — dokładny dobór przekładni 18/90.
 - `docs/specs/p1-single-axis-bench-lld.md` — stanowisko jednej osi w ForgeCAD.
@@ -30,6 +35,8 @@ planem zakupowym.
 - `docs/specs/p1-test-instrumentation.md` — aparatura i niezależny tor pomiarowy.
 - `docs/p1-bench-fabrication-package.md` — wymiary, datums i blokery wydania
   rysunków stanowiska.
+- `docs/p1-budget-bench-fabrication-package.md` — odpowiednik dla budżetowego
+  stanowiska 20/60.
 - `docs/p1-procurement-checklist.md` — kolejność ofert, zakupu jednej osi,
   pomiarów, obróbki i fizycznego gate'u P1.
 - `docs/p1-supplier-research-poland-2026-07-20.md` — datowana migawka cen,
@@ -58,9 +65,11 @@ uv run python scripts/generate_p0_artifacts.py
 uv run python scripts/generate_dynamic_sizing.py
 uv run python scripts/generate_design_profiles.py
 uv run python scripts/generate_budget_performance_envelope.py
+uv run python scripts/generate_budget_mechanical_closure.py
+uv run python scripts/generate_budget_bom.py
 uv run python scripts/select_p1_transmission.py
 uv run python scripts/run_p1_bench_simulation.py
-forgecad run cad/2026/07/20/p1-single-axis-bench/main.forge.js
+forgecad run cad/2026/07/22/p1-budget-single-axis-bench/main.forge.js
 ```
 
 Powstają raporty walidacyjne oraz `workspace.json`, `pose.json`,
@@ -76,13 +85,28 @@ czasu sprawdzenia dynamiki, kolizji i sprzętu.
 `industrial_reference` zachowuje obliczenia Leadshine/Gates dla 0,50 kg / 1 Hz.
 Aktywny `budget_demonstrator` rejestruje zestaw StepperOnline `3-CLYS30-V20`.
 `artifacts/budget_performance_envelope.json` porównuje HTD 5M 3:1, 4:1 i 5:1
-i rekomenduje do dalszego domknięcia katalogowy wariant 20/60, 15 mm, 450 mm.
-Model nie odrzuca go dla 0,50 kg / 1,50 s ani 0,30 kg / 1,25 s, ale odrzuca
-0,50 kg / 1,00 s. Krzywa momentu dotyczy dokładnego silnika, lecz innego
-drivera i 36 V, więc ma status `proxy_only`: wynik nie jest dowodem przejścia
-P1 ani zgodą na zakup.
+i wybiera do fizycznego P1 katalogowy wariant 20/60, 15 mm, 450 mm. Model nie
+odrzuca go dla 0,50 kg / 1,50 s ani 0,30 kg / 1,25 s, ale odrzuca 0,50 kg /
+1,00 s. `artifacts/budget_mechanical_closure.json` odrzuca koło bezpośrednio na
+silniku i sprawdza osobno podparty wał Ø8 mm, dwa 608 oraz sprzęgło BKL3.
+Krzywa momentu dotyczy dokładnego silnika, lecz innego drivera i 36 V, więc ma
+status `proxy_only`: wynik nie jest dowodem przejścia P1 ani zgodą na zakup.
 
-## Referencyjne stanowisko CAD P1
+## Budżetowe stanowisko CAD P1
+
+Model aktywnej osi 20/60 znajduje się w
+`cad/2026/07/22/p1-budget-single-axis-bench/main.forge.js`. Ma regulację pasa
+-15…+3 mm, ruch wyjścia -45…+80° i osobno podparty wał wejściowy. Gotowe pliki:
+
+- `artifacts/cad/p1-budget-single-axis-bench-hero.png`;
+- `artifacts/cad/p1-budget-single-axis-bench-report.pdf`;
+- `artifacts/cad/p1-budget-single-axis-bench.step`.
+
+Dokładny sweep zgłasza 0 kolizji w sześciu pozach, a testy integralności
+przechodzą dla -45°, 0° i +80°. Pasowania, rowki/retencja i otwory konkretnej
+serii pozostają do zamknięcia po pomiarze dostarczonych części.
+
+## Referencyjne stanowisko przemysłowe CAD P1
 
 Ten model dotyczy profilu przemysłowego Leadshine/Gates. Nie jest modelem
 wykonawczym aktywnej osi budżetowej. Ma parametry kąta `-45…+80°` i regulacji

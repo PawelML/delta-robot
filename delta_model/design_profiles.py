@@ -29,13 +29,16 @@ class IndustrialReferenceProfile:
 
 @dataclass(frozen=True, slots=True)
 class BudgetDemonstratorProfile:
-    """Budget drive candidate with intentionally incomplete transmission data."""
+    """Budget drive candidate with a screened but not physically frozen transmission."""
 
     profile_id: Literal["budget_demonstrator"]
     role: Literal["active_development"]
     motor: ClosedLoopStepperCandidate
     transmission: None
-    evidence_status: Literal["candidate_curve_proxy_transmission_pending"]
+    provisional_transmission_id: Literal["catalogue_20_60_450"]
+    provisional_payload_kg: float
+    provisional_cycle_duration_s: float
+    evidence_status: Literal["proxy_mechanical_screened_physical_p1_pending"]
     total_budget_min_pln_gross: int
     total_budget_max_pln_gross: int
     delivery_country: str
@@ -120,7 +123,10 @@ BUDGET_DEMONSTRATOR_PROFILE = BudgetDemonstratorProfile(
     role="active_development",
     motor=STEPPERONLINE_3_CLYS30_V20,
     transmission=None,
-    evidence_status="candidate_curve_proxy_transmission_pending",
+    provisional_transmission_id="catalogue_20_60_450",
+    provisional_payload_kg=0.50,
+    provisional_cycle_duration_s=1.50,
+    evidence_status="proxy_mechanical_screened_physical_p1_pending",
     total_budget_min_pln_gross=5000,
     total_budget_max_pln_gross=6000,
     delivery_country="Poland",
@@ -163,7 +169,8 @@ def design_profiles_document() -> dict[str, object]:
         },
         "warnings": [
             "industrial_reference is retained but is not the active purchase plan",
-            "budget transmission, payload and cycle time are not selected",
+            "budget 20/60 transmission and 0.50 kg / 1.50 s point passed digital screens only",
+            "the base profile keeps transmission unset until physical P1 freezes measured hardware",
             "budget torque-speed curve uses the exact motor but a different driver and 36 V",
             "holding torque is not available running torque",
         ],

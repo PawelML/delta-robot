@@ -1,0 +1,1050 @@
+{
+  "schemaVersion": 1,
+  "generator": {
+    "command": "forgecad inspect fit interference",
+    "forgecadVersion": "0.10.3"
+  },
+  "source": {
+    "entryFile": "cad/2026/07/22/p1-budget-single-axis-bench/main.forge.js",
+    "projectRoot": "cad/2026/07/22/p1-budget-single-axis-bench"
+  },
+  "bundle": {
+    "evidenceRequested": [
+      "collisions"
+    ],
+    "evidenceEmitted": [
+      "collisions"
+    ],
+    "filters": {
+      "focus": null,
+      "hide": []
+    },
+    "sizePx": 1024,
+    "quality": "default",
+    "renderStyle": "inspection",
+    "edges": "off",
+    "deterministic": true
+  },
+  "views": {
+    "iso": {
+      "kind": "preset",
+      "framing": {
+        "method": "bbox-frustum-v1",
+        "objectCount": 18,
+        "inFrame": [
+          "Base plate",
+          "Adjustable input carrier",
+          "Input bearing housing",
+          "Input front 608 bearing",
+          "Input rear 608 bearing",
+          "Input jackshaft",
+          "HTD 20T pulley",
+          "R+W BKL3 coupling",
+          "Motor bracket",
+          "23HS40 closed-loop stepper",
+          "Output bearing housing",
+          "Output front bearing",
+          "Output rear bearing",
+          "Output shaft",
+          "HTD 60T pulley",
+          "Representative upper arm",
+          "Representative test mass",
+          "450-5M-15 belt envelope"
+        ],
+        "partiallyOutOfFrame": [],
+        "fullyOutOfFrame": []
+      }
+    }
+  },
+  "scene": {
+    "bbox": {
+      "min": [
+        -240,
+        -176,
+        0
+      ],
+      "max": [
+        550,
+        140,
+        182.9963606968522
+      ]
+    },
+    "volume": 2915932.982814076,
+    "params": [
+      {
+        "name": "Output angle",
+        "value": 0,
+        "defaultValue": 0,
+        "min": -45,
+        "max": 80,
+        "step": 1,
+        "unit": "deg",
+        "integer": false
+      },
+      {
+        "name": "Input carrier adjustment",
+        "value": 0,
+        "defaultValue": 0,
+        "min": -15,
+        "max": 3,
+        "step": 0.5,
+        "unit": "mm",
+        "integer": false
+      },
+      {
+        "name": "Representative arm length",
+        "value": 280,
+        "defaultValue": 280,
+        "min": 260,
+        "max": 300,
+        "step": 5,
+        "unit": "mm",
+        "integer": false
+      },
+      {
+        "name": "Representative test mass",
+        "value": 0.5,
+        "defaultValue": 0.5,
+        "min": 0.1,
+        "max": 1,
+        "step": 0.05,
+        "unit": "kg",
+        "integer": false
+      }
+    ],
+    "cutPlanes": [],
+    "animations": [
+      {
+        "name": "Accepted shoulder sweep",
+        "duration": 4,
+        "loop": true
+      }
+    ],
+    "defaultAnimation": null,
+    "verifications": [
+      {
+        "id": "verify-1",
+        "label": "Input 608 envelope is seated without positive housing interference",
+        "kind": "interface",
+        "status": "pass",
+        "message": "exact gap 0.02 mm in [-0.01, 0.05] mm",
+        "expected": "[-0.01, 0.05] mm",
+        "actual": "0.02 mm"
+      },
+      {
+        "id": "verify-2",
+        "label": "Output bearing envelope is seated without positive housing interference",
+        "kind": "interface",
+        "status": "pass",
+        "message": "exact gap 0.02 mm in [-0.01, 0.05] mm",
+        "expected": "[-0.01, 0.05] mm",
+        "actual": "0.02 mm"
+      },
+      {
+        "id": "verify-3",
+        "label": "Exact budget transmission ratio",
+        "status": "pass",
+        "message": "3 ≈ 3",
+        "expected": "3",
+        "actual": "3"
+      },
+      {
+        "id": "verify-4",
+        "label": "Calculated nominal centre distance",
+        "status": "pass",
+        "message": "120.8065 ≈ 120.8065",
+        "expected": "120.8065",
+        "actual": "120.8065"
+      },
+      {
+        "id": "verify-5",
+        "label": "Output angle stays inside accepted shoulder range",
+        "status": "pass",
+        "message": "0 in [-45, 80]",
+        "expected": "[-45, 80]",
+        "actual": "0"
+      },
+      {
+        "id": "verify-6",
+        "label": "Input carrier stays inside slots",
+        "status": "pass",
+        "message": "0 in [-15, 3]",
+        "expected": "[-15, 3]",
+        "actual": "0"
+      }
+    ],
+    "objects": [
+      {
+        "id": "obj-1",
+        "name": "Base plate",
+        "treePath": [
+          "Base plate"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-2",
+        "name": "Adjustable input carrier",
+        "treePath": [
+          "Adjustable input carrier"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-3",
+        "name": "Input bearing housing",
+        "treePath": [
+          "Input bearing housing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-4",
+        "name": "Input front 608 bearing",
+        "treePath": [
+          "Input front 608 bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-5",
+        "name": "Input rear 608 bearing",
+        "treePath": [
+          "Input rear 608 bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-6",
+        "name": "Input jackshaft",
+        "treePath": [
+          "Input jackshaft"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-7",
+        "name": "HTD 20T pulley",
+        "treePath": [
+          "HTD 20T pulley"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-8",
+        "name": "R+W BKL3 coupling",
+        "treePath": [
+          "R+W BKL3 coupling"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-9",
+        "name": "Motor bracket",
+        "treePath": [
+          "Motor bracket"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-10",
+        "name": "23HS40 closed-loop stepper",
+        "treePath": [
+          "23HS40 closed-loop stepper"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-11",
+        "name": "Output bearing housing",
+        "treePath": [
+          "Output bearing housing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-12",
+        "name": "Output front bearing",
+        "treePath": [
+          "Output front bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-13",
+        "name": "Output rear bearing",
+        "treePath": [
+          "Output rear bearing"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-14",
+        "name": "Output shaft",
+        "treePath": [
+          "Output shaft"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-15",
+        "name": "HTD 60T pulley",
+        "treePath": [
+          "HTD 60T pulley"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-16",
+        "name": "Representative upper arm",
+        "treePath": [
+          "Representative upper arm"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-17",
+        "name": "Representative test mass",
+        "treePath": [
+          "Representative test mass"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      },
+      {
+        "id": "obj-18",
+        "name": "450-5M-15 belt envelope",
+        "treePath": [
+          "450-5M-15 belt envelope"
+        ],
+        "mock": false,
+        "visible": true,
+        "renderable": true
+      }
+    ]
+  },
+  "evidence": {
+    "collisions": {
+      "format": "png",
+      "encoding": "rgb8-collision-highlight",
+      "backgroundColor": [
+        0,
+        0,
+        0
+      ],
+      "decode": "source objects are translucent ghost geometry; boolean intersection volumes use per-finding collisions[].color palette entries",
+      "status": "pass",
+      "method": "boolean-intersection",
+      "options": {
+        "minOverlapVolume": 0.1,
+        "maxCandidatePairs": null,
+        "maxElapsedMs": null,
+        "bboxPadding": 0,
+        "skipIntraGroup": false,
+        "skipMockPairs": false,
+        "includeBBoxCandidates": true
+      },
+      "broadphase": {
+        "method": "aabb-bvh",
+        "allPairCount": 153,
+        "bboxPairChecks": 24,
+        "bboxVolumePrunedPairCount": 0,
+        "booleanPairChecks": 24
+      },
+      "candidatePairCount": 24,
+      "bboxVolumePrunedPairCount": 0,
+      "testedPairCount": 24,
+      "skippedPairCount": 0,
+      "pairLimitSkippedPairCount": 0,
+      "timeBudgetSkippedPairCount": 0,
+      "exactCheckMs": 286.5,
+      "style": {
+        "sourceOpacity": 0.22,
+        "sourceColor": [
+          180,
+          200,
+          220
+        ],
+        "collisionColor": [
+          255,
+          68,
+          16
+        ],
+        "collisionHex": "#ff4410",
+        "collisionPalette": [
+          {
+            "index": 1,
+            "color": [
+              255,
+              68,
+              16
+            ],
+            "hex": "#ff4410"
+          },
+          {
+            "index": 2,
+            "color": [
+              0,
+              204,
+              255
+            ],
+            "hex": "#00ccff"
+          },
+          {
+            "index": 3,
+            "color": [
+              255,
+              214,
+              0
+            ],
+            "hex": "#ffd600"
+          },
+          {
+            "index": 4,
+            "color": [
+              66,
+              220,
+              120
+            ],
+            "hex": "#42dc78"
+          },
+          {
+            "index": 5,
+            "color": [
+              255,
+              76,
+              196
+            ],
+            "hex": "#ff4cc4"
+          },
+          {
+            "index": 6,
+            "color": [
+              142,
+              106,
+              255
+            ],
+            "hex": "#8e6aff"
+          },
+          {
+            "index": 7,
+            "color": [
+              255,
+              145,
+              48
+            ],
+            "hex": "#ff9130"
+          },
+          {
+            "index": 8,
+            "color": [
+              86,
+              232,
+              202
+            ],
+            "hex": "#56e8ca"
+          },
+          {
+            "index": 9,
+            "color": [
+              210,
+              245,
+              60
+            ],
+            "hex": "#d2f53c"
+          },
+          {
+            "index": 10,
+            "color": [
+              255,
+              120,
+              120
+            ],
+            "hex": "#ff7878"
+          },
+          {
+            "index": 11,
+            "color": [
+              80,
+              150,
+              255
+            ],
+            "hex": "#5096ff"
+          },
+          {
+            "index": 12,
+            "color": [
+              190,
+              110,
+              60
+            ],
+            "hex": "#be6e3c"
+          }
+        ]
+      },
+      "objectCount": 18,
+      "collisionCount": 0,
+      "objects": [
+        {
+          "index": 0,
+          "id": "obj-1",
+          "name": "Base plate",
+          "treePath": [
+            "Base plate"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              -240,
+              -140,
+              0
+            ],
+            "max": [
+              240,
+              140,
+              10
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "id": "obj-2",
+          "name": "Adjustable input carrier",
+          "treePath": [
+            "Adjustable input carrier"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              49.193533093422644,
+              -135,
+              10
+            ],
+            "max": [
+              153.19353309342264,
+              85,
+              22
+            ]
+          }
+        },
+        {
+          "index": 2,
+          "id": "obj-3",
+          "name": "Input bearing housing",
+          "treePath": [
+            "Input bearing housing"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              74.19353309342264,
+              -115,
+              22
+            ],
+            "max": [
+              128.19353309342264,
+              -55,
+              153
+            ]
+          }
+        },
+        {
+          "index": 3,
+          "id": "obj-4",
+          "name": "Input front 608 bearing",
+          "treePath": [
+            "Input front 608 bearing"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              90.19353309342264,
+              -113.5,
+              124
+            ],
+            "max": [
+              112.19353309342264,
+              -106.5,
+              146
+            ]
+          }
+        },
+        {
+          "index": 4,
+          "id": "obj-5",
+          "name": "Input rear 608 bearing",
+          "treePath": [
+            "Input rear 608 bearing"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              90.19353309342264,
+              -63.5,
+              124
+            ],
+            "max": [
+              112.19353309342264,
+              -56.5,
+              146
+            ]
+          }
+        },
+        {
+          "index": 5,
+          "id": "obj-6",
+          "name": "Input jackshaft",
+          "treePath": [
+            "Input jackshaft"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              97.19353309342264,
+              -120,
+              131
+            ],
+            "max": [
+              105.19353309342264,
+              -20,
+              139
+            ]
+          }
+        },
+        {
+          "index": 6,
+          "id": "obj-7",
+          "name": "HTD 20T pulley",
+          "treePath": [
+            "HTD 20T pulley"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              83.19353309342264,
+              -96.75,
+              117
+            ],
+            "max": [
+              119.19353309342264,
+              -68.25,
+              153
+            ]
+          }
+        },
+        {
+          "index": 7,
+          "id": "obj-8",
+          "name": "R+W BKL3 coupling",
+          "treePath": [
+            "R+W BKL3 coupling"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              88.69353309342264,
+              -38,
+              122.5
+            ],
+            "max": [
+              113.69353309342264,
+              -6,
+              147.5
+            ]
+          }
+        },
+        {
+          "index": 8,
+          "id": "obj-9",
+          "name": "Motor bracket",
+          "treePath": [
+            "Motor bracket"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              49.193533093422644,
+              -6,
+              22
+            ],
+            "max": [
+              153.19353309342264,
+              70,
+              170
+            ]
+          }
+        },
+        {
+          "index": 9,
+          "id": "obj-10",
+          "name": "23HS40 closed-loop stepper",
+          "treePath": [
+            "23HS40 closed-loop stepper"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              72.69353309342264,
+              -20,
+              106.5
+            ],
+            "max": [
+              129.69353309342264,
+              122,
+              163.5
+            ]
+          }
+        },
+        {
+          "index": 10,
+          "id": "obj-11",
+          "name": "Output bearing housing",
+          "treePath": [
+            "Output bearing housing"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              200,
+              -121,
+              10
+            ],
+            "max": [
+              244,
+              -49,
+              158
+            ]
+          }
+        },
+        {
+          "index": 11,
+          "id": "obj-12",
+          "name": "Output front bearing",
+          "treePath": [
+            "Output front bearing"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              208,
+              -119,
+              121
+            ],
+            "max": [
+              236,
+              -111,
+              149
+            ]
+          }
+        },
+        {
+          "index": 12,
+          "id": "obj-13",
+          "name": "Output rear bearing",
+          "treePath": [
+            "Output rear bearing"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              208,
+              -59,
+              121
+            ],
+            "max": [
+              236,
+              -51,
+              149
+            ]
+          }
+        },
+        {
+          "index": 13,
+          "id": "obj-14",
+          "name": "Output shaft",
+          "treePath": [
+            "Output shaft"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              216,
+              -155,
+              129
+            ],
+            "max": [
+              228,
+              -25,
+              141
+            ]
+          }
+        },
+        {
+          "index": 14,
+          "id": "obj-15",
+          "name": "HTD 60T pulley",
+          "treePath": [
+            "HTD 60T pulley"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              174.825,
+              -95.25,
+              87.825
+            ],
+            "max": [
+              269.175,
+              -65.15,
+              182.175
+            ]
+          }
+        },
+        {
+          "index": 15,
+          "id": "obj-16",
+          "name": "Representative upper arm",
+          "treePath": [
+            "Representative upper arm"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              200,
+              -161,
+              113
+            ],
+            "max": [
+              502,
+              -149,
+              157
+            ]
+          }
+        },
+        {
+          "index": 16,
+          "id": "obj-17",
+          "name": "Representative test mass",
+          "treePath": [
+            "Representative test mass"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              502,
+              -176,
+              111
+            ],
+            "max": [
+              550,
+              -134,
+              159
+            ]
+          }
+        },
+        {
+          "index": 17,
+          "id": "obj-18",
+          "name": "450-5M-15 belt envelope",
+          "treePath": [
+            "450-5M-15 belt envelope"
+          ],
+          "mock": false,
+          "bbox": {
+            "min": [
+              85.07558438926935,
+              -92.5,
+              87.00363930314779
+            ],
+            "max": [
+              269.9482924118638,
+              -77.5,
+              182.9963606968522
+            ]
+          }
+        }
+      ],
+      "collisions": [],
+      "warnings": [],
+      "jointSweep": {
+        "method": "cli-joint-sweep-v1",
+        "status": "pass",
+        "expression": "output_angle=-45..80:6",
+        "rawExpression": "output_angle=-45..80:6",
+        "joint": "output_angle",
+        "start": -45,
+        "end": 80,
+        "sampleCount": 6,
+        "values": [
+          -45,
+          -20,
+          5,
+          30,
+          55,
+          80
+        ],
+        "baseOverrides": {},
+        "poseCount": 6,
+        "collidingPoseCount": 0,
+        "maxCollisionCount": 0,
+        "maxOverlapVolume": 0,
+        "worstCollisions": [],
+        "warnings": [],
+        "poses": [
+          {
+            "index": 1,
+            "joint": "output_angle",
+            "value": -45,
+            "overrides": {
+              "output_angle": -45
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-001/iso.png"
+              }
+            }
+          },
+          {
+            "index": 2,
+            "joint": "output_angle",
+            "value": -20,
+            "overrides": {
+              "output_angle": -20
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-002/iso.png"
+              }
+            }
+          },
+          {
+            "index": 3,
+            "joint": "output_angle",
+            "value": 5,
+            "overrides": {
+              "output_angle": 5
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-003/iso.png"
+              }
+            }
+          },
+          {
+            "index": 4,
+            "joint": "output_angle",
+            "value": 30,
+            "overrides": {
+              "output_angle": 30
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-004/iso.png"
+              }
+            }
+          },
+          {
+            "index": 5,
+            "joint": "output_angle",
+            "value": 55,
+            "overrides": {
+              "output_angle": 55
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-005/iso.png"
+              }
+            }
+          },
+          {
+            "index": 6,
+            "joint": "output_angle",
+            "value": 80,
+            "overrides": {
+              "output_angle": 80
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-006/iso.png"
+              }
+            }
+          }
+        ]
+      },
+      "views": {
+        "iso": {
+          "path": "evidence/collisions/iso.png"
+        }
+      }
+    }
+  }
+}

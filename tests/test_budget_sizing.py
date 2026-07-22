@@ -107,7 +107,7 @@ def test_catalogue_candidate_has_a_proxy_supported_half_kilogram_point() -> None
         BUDGET_TRANSMISSION_CANDIDATES[0], payload_kg=0.5, cycle_duration_s=1.5
     )
     assert result.status == "not_rejected_by_proxy"
-    assert result.worst_curve_utilization == pytest.approx(0.8527920579946716)
+    assert result.worst_curve_utilization == pytest.approx(0.852963138085264)
 
 
 def test_budget_report_is_finite_deterministic_and_matches_artifact() -> None:
