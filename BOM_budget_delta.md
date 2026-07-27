@@ -27,7 +27,7 @@ dowodem obliczeń i nie należy poprawiać ich ręcznie.
 | Dokładna tożsamość zestawu napędowego i różnice między profilami | `docs/specs/p1-design-profiles.md` oraz `artifacts/design_profiles.json` | Modele silników i sterowników, zasilanie, parametry obu profili oraz ograniczenia danych z opublikowanej charakterystyki silnika. |
 | Dlaczego przyjęto HTD 5M 20/60, pas 450 mm i które cykle są obiecujące | `docs/specs/p1-budget-transmission-and-envelope.md` | Kryteria wyboru przełożenia i opis budżetowej obwiedni osiągów. |
 | Pełne wyniki porównania obciążeń, czasów cyklu i wariantów transmisji | `artifacts/budget_performance_envelope.json` | Liczbowe wyniki całego przemiatania wariantów, także tych niewybranych. Jest generowany przez `scripts/generate_budget_performance_envelope.py`. |
-| Siły w pasie, odrzucenie montażu 20T na silniku, wałek 8 mm, łożyska i sprzęgło | `docs/specs/p1-budget-mechanical-and-cost-closure.md` | Założenia i kryteria mechanicznego domknięcia jednej budżetowej osi. |
+| Siły w pasie, odrzucenie montażu 20T na silniku, wałek 8 mm, wybrane łożyska wyjściowe i sprzęgło | `docs/specs/p1-budget-mechanical-and-cost-closure.md` | Założenia i kryteria mechanicznego domknięcia jednej budżetowej osi oraz dobór SKF `6001-2RSH`. |
 | Dokładne naprężenia, zapasy i obciążenia elementów transmisji | `artifacts/budget_mechanical_closure.json` | Wyniki liczbowe dla pasa, wału, łożysk i sprzęgła. Jest generowany przez `scripts/generate_budget_mechanical_closure.py`. |
 | Co wykonać, jakie wymiary zmierzyć po dostawie i czego jeszcze nie zamrażać | `docs/p1-budget-bench-fabrication-package.md` | Pakiet wykonawczy stanowiska jednej osi, kontrolowane wymiary, otwarte pasowania i blokery zwolnienia części do obróbki. |
 | Parametryczny model CAD stanowiska | `cad/2026/07/22/p1-budget-single-axis-bench/main.forge.js` | Źródłowy model ForgeCAD; to tutaj zmienia się parametry modelu, a nie w plikach eksportowych. |
@@ -94,6 +94,7 @@ po cichu: przekroczenie pozycji ma być zapisane i odjęte od 650 PLN.
 | Pas `450-5M-15` | 3 + 1 zapas | 49,45 PLN/szt. | Oznaczenie podziałki, szerokość, metoda i pomiar napięcia montażowego |
 | Sprzęgło R+W `BKL/3/8/8` | 3 | 130,38 PLN/szt. | Oba otwory 8 mm, 3 Nm, instrukcja momentu śrub zaciskowych |
 | Łożysko SKF `608-2RS/2RSH` | 6 | 6,62 PLN/szt. | Jedna zgodna seria 8x22x7; pasowanie dopiero z aktualnej karty i pomiaru części |
+| Łożysko wyjściowe SKF `6001-2RSH`, luz CN | 6 | 18,39 PLN/szt. | Na P1 kupić dwie sztuki 12x28x8 z dokładnym oznaczeniem bez sufiksu C3; zmierzyć przed wydaniem wału |
 
 Pełne adresy ofert i stany dowodowe są zapisane przy każdej pozycji w JSON.
 Ceny i magazyn należy sprawdzić ponownie w dniu tworzenia koszyka.
@@ -112,7 +113,7 @@ Mechanikę należy jednak uwolnić tylko dla **jednej osi**:
 
 1. jedno koło 20T, jedno 60T, jeden pas i jedno sprzęgło;
 2. dwa łożyska 608, jeden wałek wejściowy i jeden regulowany wspornik;
-3. prowizoryczny wał wyjściowy, dwa wybrane łożyska wyjściowe i piasta ramienia;
+3. prowizoryczny wał wyjściowy, dwa SKF `6001-2RSH` CN i piasta ramienia;
 4. płytę/bracket stanowiska oraz podstawową elektrykę odcięcia i pomiaru;
 5. dopiero po dostawie: pomiary części, pasowania, retencja i rysunki do obróbki.
 
@@ -124,7 +125,7 @@ kupować elementów P3/P4. Najpierw jedna oś ma przejść wymagania fizycznego 
 - wałek wejściowy C45 Ø8 mm z kołem między dwoma łożyskami oddalonymi o 50 mm;
 - regulowany nośnik wejścia z zakresem -15 do +3 mm;
 - obudowy i retencję łożysk na podstawie pomiaru dostarczonej serii;
-- wał i piastę wyjściową po wyborze konkretnego łożyska 12x28x8;
+- wał i piastę wyjściową po dostawie i pomiarze SKF `6001-2RSH` 12x28x8;
 - wspornik NEMA 23 według dostarczonego silnika;
 - bezpieczne mechanicznie mocowanie ramienia i masy testowej;
 - okablowanie, odcięcie oraz logowanie napięcia szyny, temperatury i błędu

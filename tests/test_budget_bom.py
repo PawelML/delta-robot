@@ -42,6 +42,16 @@ def test_owned_camera_is_not_costed_and_external_printing_is_budgeted() -> None:
     assert printing.subtotal_pln_gross == 250.0
 
 
+def test_output_bearings_are_exactly_costed_without_changing_output_allowance_total() -> None:
+    bearing = next(line for line in LINES if line.item_id == "bearing_6001_2rsh")
+    supports = next(line for line in LINES if line.item_id == "output_supports")
+    assert bearing.description.startswith("SKF 6001-2RSH CN")
+    assert bearing.quantity == 6
+    assert bearing.unit_price_pln_gross == 18.39
+    assert supports.unit_price_pln_gross == 73.22
+    assert bearing.subtotal_pln_gross + supports.subtotal_pln_gross == 330.0
+
+
 def test_budget_bom_is_finite_deterministic_and_matches_artifact() -> None:
     document = budget_bom_document()
     encoded = json.dumps(document, allow_nan=False, sort_keys=True)

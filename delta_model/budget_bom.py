@@ -154,16 +154,28 @@ LINES: tuple[BudgetBomLine, ...] = (
         "inspect adjustment rigidity.",
     ),
     BudgetBomLine(
+        "bearing_6001_2rsh",
+        "transmissions",
+        "SKF 6001-2RSH CN sealed output bearings, 12x28x8 mm",
+        6,
+        18.39,
+        "dated_catalogue_price",
+        "P1_one_axis_then_P2_balance",
+        "https://www.ebmia.pl/lozyska-kulkowe-zwykle/9900-lozysko-kulkowe-zwykle-6001-2rsh-skf-12x28x8.html",
+        "Buy two for P1; verify exact 6001-2RSH marking, CN normal clearance, "
+        "12x28x8 mm dimensions and retain the supplier invoice/packaging.",
+    ),
+    BudgetBomLine(
         "output_supports",
         "transmissions",
-        "Three provisional 12 mm output shafts, two bearings/axis, hubs and retention",
+        "Three provisional 12 mm output shafts, housings, hubs and retention excluding bearings",
         3,
-        110.00,
+        73.22,
         "capped_allowance",
         "P1_one_axis_then_P2_balance",
         None,
-        "Freeze actual bearing series, fits, keyways and arm-hub retention only after "
-        "P1 component measurement.",
+        "Freeze shaft/housing fits, keyways and arm-hub retention after measuring "
+        "the delivered SKF 6001-2RSH bearings and P1 components.",
     ),
     BudgetBomLine(
         "delta_links_platform",

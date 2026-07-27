@@ -133,16 +133,28 @@
       "unit_price_pln_gross": 60.0
     },
     {
-      "acceptance_or_measurement": "Freeze actual bearing series, fits, keyways and arm-hub retention only after P1 component measurement.",
+      "acceptance_or_measurement": "Buy two for P1; verify exact 6001-2RSH marking, CN normal clearance, 12x28x8 mm dimensions and retain the supplier invoice/packaging.",
       "category": "transmissions",
-      "description": "Three provisional 12 mm output shafts, two bearings/axis, hubs and retention",
+      "description": "SKF 6001-2RSH CN sealed output bearings, 12x28x8 mm",
+      "evidence_state": "dated_catalogue_price",
+      "gate": "P1_one_axis_then_P2_balance",
+      "item_id": "bearing_6001_2rsh",
+      "quantity": 6,
+      "source_url": "https://www.ebmia.pl/lozyska-kulkowe-zwykle/9900-lozysko-kulkowe-zwykle-6001-2rsh-skf-12x28x8.html",
+      "subtotal_pln_gross": 110.34,
+      "unit_price_pln_gross": 18.39
+    },
+    {
+      "acceptance_or_measurement": "Freeze shaft/housing fits, keyways and arm-hub retention after measuring the delivered SKF 6001-2RSH bearings and P1 components.",
+      "category": "transmissions",
+      "description": "Three provisional 12 mm output shafts, housings, hubs and retention excluding bearings",
       "evidence_state": "capped_allowance",
       "gate": "P1_one_axis_then_P2_balance",
       "item_id": "output_supports",
       "quantity": 3,
       "source_url": null,
-      "subtotal_pln_gross": 330.0,
-      "unit_price_pln_gross": 110.0
+      "subtotal_pln_gross": 219.66,
+      "unit_price_pln_gross": 73.22
     },
     {
       "acceptance_or_measurement": "Select parts within the accepted mass model; weigh every completed assembly and rerun dynamics if exceeded.",

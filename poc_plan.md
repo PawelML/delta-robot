@@ -425,7 +425,8 @@ Przed obróbką i testem wariantu budżetowego trzeba:
 
 1. potwierdzić dokładne rewizje, ceny z dostawą do Polski, gwarancję i zwrot
    zestawu StepperOnline oraz katalogowych elementów jednej osi;
-2. wybrać dokładną serię łożysk wyjściowych i uzyskać ofertę obróbki jednej osi;
+2. kupić i zmierzyć dwie wybrane SKF `6001-2RSH` CN oraz uzyskać ofertę
+   obróbki jednej osi;
 3. kupić najwyżej elementy jednej przekładni P1; zestaw trzyosiowy jest jednym
    SKU, ale mechanika pozostałych dwóch osi pozostaje zablokowana;
 4. zmierzyć dostarczone części, zamknąć pasowania, retencję i wymiary otworów,

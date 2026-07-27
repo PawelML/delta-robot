@@ -58,8 +58,9 @@ testem. Nie zmienia docelowych ilości zapisanych w BOM-ie.
 | [Pas `450-5M-15`](https://www.ebmia.pl/pasy-zebate-htd-5m/1350-pas-zebaty-450-5m-15-z90.html) | `belt_450_5m_15` | 1 | Potwierdzić 90 zębów, HTD 5M i szerokość 15 mm |
 | [Sprzęgło R+W `BKL/3/8/8`](https://www.ebmia.pl/sprzegla-mieszkowe-bkl/91682-sprzeglo-bezluzowe-bkl-3-8-8.html) | `coupling_bkl3_8_8` | 1 | Potwierdzić dwa otwory 8 mm i moment znamionowy 3 Nm |
 | [Łożyska wejściowe 608](https://www.hurtowniatechpol.pl/product/Lozysko-608-2RS-SKF-IND-8x22x7-s20832) | `bearing_608_2rs` | 2 | Wybrać jedną dokładną serię 8x22x7 mm |
+| [Łożyska wyjściowe SKF `6001-2RSH`](https://www.ebmia.pl/lozyska-kulkowe-zwykle/9900-lozysko-kulkowe-zwykle-6001-2rsh-skf-12x28x8.html) | `bearing_6001_2rsh` | 2 | Wybrano 12x28x8, uszczelnienie obustronne i luz CN; potwierdzić oznaczenie bez `/C3` |
 | Podpora i wałek wejściowy | `input_support_fabrication` | oferta dla 1 | Materiał i obróbka po pomiarze koła, łożysk i sprzęgła |
-| Podpora i wał wyjściowy | `output_supports` | oferta dla 1 | Najpierw wybrać dokładne łożyska; Ø12 pozostaje prowizoryczne |
+| Podpora i wał wyjściowy | `output_supports` | oferta dla 1 | Ø12 wynika z wybranego 6001; pasowania i wykonanie dopiero po pomiarze |
 | Podstawowa elektryka stanowiska | część `electrical_panel` | 1 tor P1 | Dobór po otrzymaniu instrukcji zasilacza i sterownika |
 
 ## 4. Potwierdzenia przed płatnością
@@ -100,8 +101,9 @@ otwór Ø8 mm i jawnie wybrana retencja na osobno podpartym wałku.
 Kandydacki link BOM-u prowadzi do aluminiowego `60-5M-15`. Strona katalogowa
 podaje 60 zębów, podziałkę 5 mm, szerokość pasa 15 mm, średnicę podziałową
 95,49 mm, średnicę zewnętrzną 94,35 mm, piastę Ø50 mm, długość 30 mm i otwór
-bazowy Ø8 mm. CAD odwzorowuje te gabaryty. Otwór Ø12 mm w kandydackim CAD-zie
-jest prowizoryczny do czasu wyboru wału i dokładnej serii łożysk wyjściowych.
+bazowy Ø8 mm. CAD odwzorowuje te gabaryty. Wybrane łożysko wyjściowe
+SKF `6001-2RSH` ustala nominalny czop wału na Ø12 mm, ale pasowanie, tolerancja
+i retencja koła nadal czekają na pomiar dostarczonych części.
 
 - [ ] Potwierdzono dokładny wariant, materiał, gabaryt piasty i aktualny
   rysunek.
@@ -111,7 +113,7 @@ jest prowizoryczny do czasu wyboru wału i dokładnej serii łożysk wyjściowyc
 - [ ] Uzyskano osobną ofertę na wykończenie jednej sztuki po pomiarze koła,
   wału i piasty; oferta obejmuje kontrolę bicia.
 
-### 4.4 Pas, sprzęgło i łożyska wejściowe
+### 4.4 Pas, sprzęgło i łożyska
 
 - [ ] Pas ma oznaczenie `450-5M-15`: 450 mm długości podziałowej, HTD 5M,
   15 mm szerokości i 90 zębów.
@@ -120,7 +122,12 @@ jest prowizoryczny do czasu wyboru wału i dokładnej serii łożysk wyjściowyc
   i dostępną instrukcję momentu śrub zaciskowych.
 - [ ] Dwa łożyska wejściowe są z jednej serii 608, mają 8x22x7 mm, uszczelnienie
   i aktualną kartę producenta.
-- [ ] Wybrano dokładną serię dwóch łożysk wyjściowych; dopóki jej nie ma,
+- [x] Wybrano SKF `6001-2RSH`, 12x28x8 mm, uszczelnienie obustronne i luz
+  normalny CN; ekran obciążenia i prędkości zapisano w
+  `artifacts/budget_mechanical_closure.json`.
+- [ ] Oferta i dostawa dotyczą dokładnie `6001-2RSH` bez `/C3`; kupowane są
+  dwie sztuki z jednej partii dla P1.
+- [ ] Po dostawie potwierdzono oznaczenia i wymiary obu łożysk; do tego czasu
   wykonanie wału wyjściowego i gniazd pozostaje zablokowane.
 
 ### 4.5 Zasilanie i warsztatowe odcięcie
@@ -160,7 +167,7 @@ poniżej pozostają puste, dopóki nie pochodzą z realnie dostarczonej części
 | Pas | | oznaczenie, szerokość i stan zębów; długości podziałowej nie wyznaczać suwmiarką | |
 | Sprzęgło | | oba otwory, długość, średnica zewnętrzna, śruby i dostęp narzędzia | |
 | Dwa 608 | | dokładne oznaczenia, otwory, średnice zewnętrzne i szerokości | |
-| Łożyska wyjściowe | | dokładne oznaczenia, otwory, średnice zewnętrzne, szerokości i wymagane promienie barków | |
+| Łożyska wyjściowe | SKF 6001-2RSH CN | dokładne oznaczenia, otwory, średnice zewnętrzne, szerokości i wymagane promienie barków | |
 | Wałek wejściowy | | średnica w kilku przekrojach, prostoliniowość, długość i bicie po wykonaniu | |
 | Wał wyjściowy | | średnica czopów, barki, długość i bicie po wykonaniu | |
 
@@ -209,7 +216,7 @@ przenoszących moment.
 | Oferta i karta koła 20T | |
 | Oferta i karta koła 60T | |
 | Oferta pasa, sprzęgła i łożysk wejściowych | |
-| Wybór dokładnych łożysk wyjściowych | |
+| Wybór dokładnych łożysk wyjściowych | `docs/specs/p1-budget-mechanical-and-cost-closure.md` v1.2; `artifacts/budget_mechanical_closure.json`, 2026-07-27 |
 | Wycena obróbki jednej osi | |
 | Lista i zdjęcia dostarczonych części | |
 | Arkusz pomiarów z przyrządami | |

@@ -433,7 +433,7 @@ bom(1, '450-5M-15 synchronous belt');
 bom(1, 'R+W BKL/3/8/8 bellows coupling, 3 Nm');
 bom(2, 'SKF 608-2RS/2RSH-envelope bearing, 8 x 22 x 7 mm');
 bom(1, 'C45 input jackshaft, 8 mm x 100 mm prototype blank');
-bom(2, '12 x 28 x 8 mm sealed output bearing; exact series VERIFY BEFORE PURCHASE');
+bom(2, 'SKF 6001-2RSH CN sealed output bearing, 12 x 28 x 8 mm; fits VERIFY AFTER DELIVERY');
 bom(1, 'C45 output shaft, 12 mm x 130 mm prototype blank');
 bom(1, '480 x 280 x 10 mm aluminium base plate');
 bom(1, '104 x 220 x 12 mm adjustable input carrier');

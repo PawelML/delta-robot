@@ -26,7 +26,7 @@
 | Input bearing-centre span | 50 mm |
 | Coupling envelope | BKL/3/8/8, Ø25 x 32 mm |
 | Output shaft | provisional Ø12 x 130 mm blank |
-| Output bearing envelope | provisional 12x28x8 mm |
+| Output bearing | selected SKF 6001-2RSH CN, 12x28x8 mm; fits pending |
 | Output bearing-centre span | 60 mm |
 | Representative arm | 280 mm shaft centre to nominal load point |
 | Base plate | 480x280x10 mm |
@@ -65,7 +65,7 @@ Do not machine the bearing seats, pulley bores/keyways, shaft shoulders,
 retainer grooves or supplier-specific motor holes directly from nominal
 envelopes. Release them only after:
 
-1. one motor, coupling, both pulleys, belt and selected bearings are delivered;
+1. one motor, coupling, both pulleys, belt and the selected bearings are delivered;
 2. critical diameters, widths, runout and hole patterns are measured;
 3. shaft/housing fits and axial retention are calculated for the actual series;
 4. the assembled belt plane and adjustment travel are checked on the bench;

@@ -20,6 +20,10 @@ GATES_5M_15_MIN_INSTALLATION_TENSION_N = 13.5 * LBF_TO_N
 MOTOR_DYNAMIC_RADIAL_LIMIT_N = 75.0
 INPUT_BEARING_SPAN_M = 0.050
 SKF_608_DYNAMIC_RATING_N = 3320.0
+OUTPUT_BEARING_SPAN_M = 0.060
+SKF_6001_2RSH_DYNAMIC_RATING_N = 5400.0
+SKF_6001_2RSH_STATIC_RATING_N = 2360.0
+SKF_6001_2RSH_LIMITING_SPEED_RPM = 17000.0
 BKL3_RATED_TORQUE_NM = 3.0
 PROVISIONAL_C45_YIELD_STRENGTH_PA = 300.0e6
 KEYWAY_FATIGUE_STRESS_MULTIPLIER = 1.50
@@ -56,6 +60,23 @@ class SupportedShaftScreen:
     bearing_rating_utilization: float
     coupling_rated_torque_nm: float
     coupling_torque_factor: float
+
+
+@dataclass(frozen=True, slots=True)
+class OutputBearingScreen:
+    """Belt-load and speed screen for the two output-shaft bearings."""
+
+    bearing_count: int
+    bearing_span_m: float
+    belt_radial_load_n: float
+    belt_reaction_per_bearing_n: float
+    dynamic_rating_n: float
+    dynamic_rating_utilization: float
+    static_rating_n: float
+    static_safety_factor: float
+    maximum_output_speed_rpm: float
+    limiting_speed_rpm: float
+    speed_utilization: float
 
 
 def _positive_finite(name: str, value: float) -> None:
@@ -137,6 +158,35 @@ def screen_supported_input_shaft(
     )
 
 
+def screen_output_bearings(
+    *, belt_radial_load_n: float, maximum_output_speed_rpm: float
+) -> OutputBearingScreen:
+    """Screen the selected pair of 6001-2RSH bearings for belt load and speed.
+
+    The 60T pulley is centred between the two bearing centres, so the belt-only
+    radial reaction is shared equally. Link/joint side loads remain a separate
+    physical-P1 uncertainty and are not hidden in this calculation.
+    """
+
+    _positive_finite("belt_radial_load_n", belt_radial_load_n)
+    _positive_finite("maximum_output_speed_rpm", maximum_output_speed_rpm)
+    reaction = belt_radial_load_n / 2.0
+    return OutputBearingScreen(
+        bearing_count=2,
+        bearing_span_m=OUTPUT_BEARING_SPAN_M,
+        belt_radial_load_n=belt_radial_load_n,
+        belt_reaction_per_bearing_n=reaction,
+        dynamic_rating_n=SKF_6001_2RSH_DYNAMIC_RATING_N,
+        dynamic_rating_utilization=reaction / SKF_6001_2RSH_DYNAMIC_RATING_N,
+        static_rating_n=SKF_6001_2RSH_STATIC_RATING_N,
+        static_safety_factor=SKF_6001_2RSH_STATIC_RATING_N / reaction,
+        maximum_output_speed_rpm=maximum_output_speed_rpm,
+        limiting_speed_rpm=SKF_6001_2RSH_LIMITING_SPEED_RPM,
+        speed_utilization=maximum_output_speed_rpm
+        / SKF_6001_2RSH_LIMITING_SPEED_RPM,
+    )
+
+
 def budget_mechanical_closure_document() -> dict[str, object]:
     """Return deterministic mechanical evidence for the selected 20/60 drive."""
 
@@ -159,6 +209,11 @@ def budget_mechanical_closure_document() -> dict[str, object]:
         radial_load_n=load.resultant_radial_load_n,
         design_torque_nm=performance.required_peak_torque_nm,
     )
+    output_bearings = screen_output_bearings(
+        belt_radial_load_n=load.resultant_radial_load_n,
+        maximum_output_speed_rpm=performance.maximum_motor_speed_rpm
+        / candidate.belt.ratio,
+    )
     transmission = budget_transmission(candidate)
     accepted = (
         direct_rejected
@@ -166,6 +221,9 @@ def budget_mechanical_closure_document() -> dict[str, object]:
         and shaft.yield_safety_factor >= 2.0
         and shaft.bearing_rating_utilization < 0.10
         and shaft.coupling_torque_factor >= 1.30
+        and output_bearings.dynamic_rating_utilization < 0.10
+        and output_bearings.static_safety_factor >= 3.0
+        and output_bearings.speed_utilization < 0.10
     )
     return {
         "schema": "delta-robot-budget-mechanical-closure/v1",
@@ -196,18 +254,45 @@ def budget_mechanical_closure_document() -> dict[str, object]:
             "coupling_outer_diameter_m": BKL3_COUPLING_OUTER_DIAMETER_M,
             "coupling_inertia_upper_bound_kg_m2": transmission.inertia.coupling_kg_m2,
         },
+        "supported_output": {
+            "arrangement": (
+                "60T pulley centred between two SKF 6001-2RSH bearings at "
+                "60 mm bearing-centre span"
+            ),
+            "selected_bearing": {
+                "manufacturer": "SKF",
+                "designation": "6001-2RSH",
+                "internal_clearance": "CN (normal)",
+                "sealing": "contact seals on both sides",
+                "bore_m": 0.012,
+                "outside_diameter_m": 0.028,
+                "width_m": 0.008,
+            },
+            "bearing_screen": asdict(output_bearings),
+            "screen_scope": (
+                "belt-only equal-reaction capacity and speed screen; final link/joint "
+                "side loads, fits, axial location and oscillating-duty behaviour "
+                "require the released shaft design and physical P1"
+            ),
+        },
         "sources": {
             "belt_installation_tension": (
                 "Gates PowerGrip GT3 Design Manual, 5M HTD, 15 mm, "
                 "Min Tst 13.5 lbf"
             ),
             "bearing": "SKF 608-2RSH envelope, C=3.32 kN",
+            "output_bearing": (
+                "SKF 6001-2RSH, CN, 12x28x8 mm, C=5.4 kN, C0=2.36 kN, "
+                "limiting speed 17000 rpm"
+            ),
             "coupling": "R+W BKL size 3, rated torque 3 Nm",
         },
         "remaining_blockers": [
             "measure delivered pulley, shaft, bearing and coupling dimensions before "
             "fabrication release",
             "freeze fits, keyway and axial retention after delivered-part measurement",
+            "close output link/joint side loads and oscillating-duty fit after the "
+            "actual arm/hub stack is defined",
             "set and measure belt installation tension on the physical bench",
             "run physical P1 temperature, following-error and bus-voltage tests",
         ],

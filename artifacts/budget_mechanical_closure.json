@@ -36,6 +36,7 @@
   "remaining_blockers": [
     "measure delivered pulley, shaft, bearing and coupling dimensions before fabrication release",
     "freeze fits, keyway and axial retention after delivered-part measurement",
+    "close output link/joint side loads and oscillating-duty fit after the actual arm/hub stack is defined",
     "set and measure belt installation tension on the physical bench",
     "run physical P1 temperature, following-error and bus-voltage tests"
   ],
@@ -43,7 +44,8 @@
   "sources": {
     "bearing": "SKF 608-2RSH envelope, C=3.32 kN",
     "belt_installation_tension": "Gates PowerGrip GT3 Design Manual, 5M HTD, 15 mm, Min Tst 13.5 lbf",
-    "coupling": "R+W BKL size 3, rated torque 3 Nm"
+    "coupling": "R+W BKL size 3, rated torque 3 Nm",
+    "output_bearing": "SKF 6001-2RSH, CN, 12x28x8 mm, C=5.4 kN, C0=2.36 kN, limiting speed 17000 rpm"
   },
   "status": "digital_screen_passed_physical_p1_pending",
   "supported_input": {
@@ -77,6 +79,32 @@
       "reaction_per_bearing_n": 117.20866236265667,
       "shaft_diameter_m": 0.008,
       "yield_safety_factor": 2.9777447045472556
+    }
+  },
+  "supported_output": {
+    "arrangement": "60T pulley centred between two SKF 6001-2RSH bearings at 60 mm bearing-centre span",
+    "bearing_screen": {
+      "bearing_count": 2,
+      "bearing_span_m": 0.06,
+      "belt_radial_load_n": 234.41732472531334,
+      "belt_reaction_per_bearing_n": 117.20866236265667,
+      "dynamic_rating_n": 5400.0,
+      "dynamic_rating_utilization": 0.02170530784493642,
+      "limiting_speed_rpm": 17000.0,
+      "maximum_output_speed_rpm": 44.06334973430554,
+      "speed_utilization": 0.0025919617490767965,
+      "static_rating_n": 2360.0,
+      "static_safety_factor": 20.135030572210585
+    },
+    "screen_scope": "belt-only equal-reaction capacity and speed screen; final link/joint side loads, fits, axial location and oscillating-duty behaviour require the released shaft design and physical P1",
+    "selected_bearing": {
+      "bore_m": 0.012,
+      "designation": "6001-2RSH",
+      "internal_clearance": "CN (normal)",
+      "manufacturer": "SKF",
+      "outside_diameter_m": 0.028,
+      "sealing": "contact seals on both sides",
+      "width_m": 0.008
     }
   },
   "transmission_id": "catalogue_20_60_450"

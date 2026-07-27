@@ -1,7 +1,7 @@
 # P1 budget mechanical and cost closure
 
 **Status:** implementation specification  
-**Version:** 1.1
+**Version:** 1.2
 **Date:** 2026-07-27
 
 ## 1. Problem and decision boundary
@@ -33,6 +33,9 @@ Fixed inputs:
 - input shaft: provisional C45 steel, 8 mm diameter and 100 mm model length;
 - input support: two SKF 608-2RSH-envelope bearings, 8x22x7 mm, with the 20T
   pulley centred in a 50 mm bearing span;
+- output support: two selected SKF `6001-2RSH` bearings with CN (normal)
+  internal clearance, contact seals, 12x28x8 mm envelope and 60 mm
+  bearing-centre span;
 - coupling: R+W BKL/3/8/8 envelope, 3 Nm rated torque, 25 mm diameter, 32 mm
   length and 0.027 kg catalogue mass;
 - provisional shaft yield strength for screening: 300 MPa, not a material
@@ -42,6 +45,8 @@ Fixed inputs:
 - minimum coupling rated-torque factor: 1.3;
 - bearing load screen uses the 3.32 kN SKF 608 basic dynamic rating; bearing
   life is not frozen until speed, fit, lubrication and duty are physical data.
+- output-bearing catalogue screen uses 5.4 kN dynamic rating, 2.36 kN static
+  rating and 17,000 rpm limiting speed for SKF `6001-2RSH`.
 
 Primary technical evidence:
 
@@ -49,6 +54,10 @@ Primary technical evidence:
   <https://www.gates.com/content/dam/documents-library/catalogs/powergrip-gt3-drive-design-manual-en.pdf>;
 - SKF E2 deep-groove bearing brochure:
   <https://www.skf.com/binaries/pub12/Images/PUB%20BU_P2%206692_3%20EN_E2%20DGBB%20brochure_LoResSingles_tcm_12-234805.pdf>;
+- exact SKF `6001-2RSH` catalogue ratings and CN clearance:
+  <https://pl.rs-online.com/web/p/lozyska-kulkowe/4419975>;
+- exact Polish purchase candidate:
+  <https://www.ebmia.pl/lozyska-kulkowe-zwykle/9900-lozysko-kulkowe-zwykle-6001-2rsh-skf-12x28x8.html>;
 - R+W BKL product data: <https://www.rw-america.com/product/bkl/>;
 - exact stepper candidate and drawing link are stored in the design-profile
   artifact.
@@ -92,6 +101,14 @@ model. Shaft inertia is derived from its steel cylinder. Coupling inertia uses
 the conservative full-cylinder upper bound `0.5*m*r^2`; no hidden zero-inertia
 components remain in the selected budget candidate.
 
+The same two belt-span forces act on the 60T output pulley with the opposite
+resultant direction. With that pulley centred between two output bearings, the
+belt-only radial reaction is one half of the resultant per bearing. This is a
+catalogue capacity and speed screen only: the current dynamics model supplies
+shoulder torque, not an independent complete set of link/joint side forces.
+Those side forces, oscillating-duty behaviour and final fits remain physical-P1
+and released-shaft checks rather than hidden zero loads.
+
 ## 4. Budget CAD contract
 
 A new date-based ForgeCAD model shall represent one budget axis and shall not
@@ -104,7 +121,8 @@ The model shall visibly include:
 - 8/8 mm bellows coupling;
 - a separate 8 mm input jackshaft, two 608 bearings and rigid carrier;
 - 20T and 60T pulleys, a 450 mm belt envelope and adjustment slots;
-- provisional 12 mm output shaft, two bearing supports and the 280 mm arm;
+- nominal 12 mm output shaft, two SKF `6001-2RSH` bearing envelopes and the
+  280 mm arm;
 - a representative removable test mass and base plate;
 - distinct solids with bores/clearance where physical parts pass through one
   another.
@@ -162,6 +180,9 @@ may be hidden by clipping or relabelled as a physical pass.
 - Increasing installation tension increases calculated radial load.
 - The chosen supported shaft has yield safety factor at least 2.0, each bearing
   reaction below 10% of the SKF dynamic rating and coupling factor at least 1.3.
+- Each selected output bearing uses less than 10% of its basic dynamic rating
+  under the belt-only reaction, has static safety factor at least 3.0 and runs
+  below 10% of its limiting speed.
 - The selected-candidate performance result remains `not_rejected_by_proxy` at
   0.50 kg / 1.50 s after shaft/coupling inertia is included.
 - Mechanical and BOM documents are finite, deterministic and exactly match
@@ -178,6 +199,9 @@ may be hidden by clipping or relabelled as a physical pass.
 - belt installation tension must be set and checked on hardware;
 - actual pulley bores, bearing fits, shaft retention and part masses remain
   delivery/fabrication measurements;
+- output-link/joint side forces are not yet an independent bearing-load oracle;
+  the belt-only catalogue screen cannot replace the released shaft stack and
+  physical P1;
 - price and stock are a dated Polish-market snapshot, not a quotation;
 - the 500 W kit supply and driver over-voltage behaviour must be observed under
   deceleration before three-axis duty is accepted;
@@ -191,6 +215,15 @@ With the 1.30 application factor and 60.051 N installation tension per span,
 the supported input sees a 234.417 N radial resultant, or 117.209 N per 608
 bearing. The provisional Ø8 mm shaft screen gives yield safety factor 2.978,
 bearing-rating utilization 3.53% and BKL3 rated-torque factor 1.549.
+
+The selected output bearing is SKF `6001-2RSH`, 12x28x8 mm, CN normal
+clearance, with contact seals on both sides. With the 60T pulley centred in the
+60 mm bearing span, the same belt resultant gives 117.209 N belt-only reaction
+per bearing. This is 2.17% of the 5.4 kN dynamic rating; the static safety
+factor against 2.36 kN is 20.14. Maximum modelled output speed is 44.06 rpm,
+or 0.26% of the 17,000 rpm limiting speed. These large catalogue margins
+justify buying two bearings for P1, but do not close unmodelled link side loads
+or final fits.
 
 Adding the shaft and conservative coupling inertia changes worst proxy-curve
 utilization at 0.50 kg / 1.50 s only from 0.85279 to 0.85296, so the point

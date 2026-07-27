@@ -9,6 +9,7 @@ from delta_model.budget_mechanics import (
     MOTOR_DYNAMIC_RADIAL_LIMIT_N,
     budget_mechanical_closure_document,
     calculate_belt_radial_load,
+    screen_output_bearings,
 )
 
 
@@ -58,6 +59,35 @@ def test_gates_tension_conversion_is_exactly_traceable() -> None:
     assert pytest.approx(13.5 * 4.4482216152605, abs=1e-12) == (
         GATES_5M_15_MIN_INSTALLATION_TENSION_N
     )
+
+
+def test_selected_output_bearings_have_capacity_and_speed_margin() -> None:
+    screen = screen_output_bearings(
+        belt_radial_load_n=234.41732472531334,
+        maximum_output_speed_rpm=44.06334973430553,
+    )
+    assert screen.bearing_count == 2
+    assert screen.bearing_span_m == pytest.approx(0.060)
+    assert screen.belt_reaction_per_bearing_n == pytest.approx(
+        screen.belt_radial_load_n / 2.0
+    )
+    assert screen.dynamic_rating_utilization < 0.10
+    assert screen.static_safety_factor >= 3.0
+    assert screen.speed_utilization < 0.10
+
+
+def test_output_bearing_selection_is_exact_and_not_c3() -> None:
+    document = budget_mechanical_closure_document()
+    supported_output = document["supported_output"]
+    assert isinstance(supported_output, dict)
+    selected = supported_output["selected_bearing"]
+    assert isinstance(selected, dict)
+    assert selected["manufacturer"] == "SKF"
+    assert selected["designation"] == "6001-2RSH"
+    assert selected["internal_clearance"] == "CN (normal)"
+    assert selected["bore_m"] == pytest.approx(0.012)
+    assert selected["outside_diameter_m"] == pytest.approx(0.028)
+    assert selected["width_m"] == pytest.approx(0.008)
 
 
 def test_budget_mechanical_report_is_finite_deterministic_and_matches_artifact() -> None:
