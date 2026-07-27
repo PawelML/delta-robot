@@ -1,8 +1,8 @@
 # P1 budget mechanical and cost closure
 
 **Status:** implementation specification  
-**Version:** 1.0  
-**Date:** 2026-07-22
+**Version:** 1.1
+**Date:** 2026-07-27
 
 ## 1. Problem and decision boundary
 
@@ -135,7 +135,10 @@ precedes fabrication or purchase of the other two transmission sets.
 The low-cost plan may omit industrial metrology from ownership cost only if it
 states how the needed evidence will be borrowed, rented or replaced with a
 calibrated lower-cost measurement. It may reuse an existing PC and workshop
-tools, but must list that assumption.
+tools, but must list that assumption. Camera and controlled lighting are
+owner-supplied and shall not be costed. No 3D printer is assumed: printed
+prototypes are an explicit outsourced-fabrication allowance, while critical
+drive supports remain metal parts unless separately validated.
 
 ## 6. Outputs and failure behaviour
 
@@ -197,3 +200,8 @@ The complete-demonstrator base estimate is 5,171.97 PLN gross plus 650 PLN
 explicit contingency, total 5,821.97 PLN. The budget ForgeCAD bench passes the
 exact six-pose interference sweep with zero colliding poses and the
 mechanical-integrity checks at -45, 0 and +80 degrees.
+
+On 2026-07-27 the unchanged 250 PLN camera/lighting allowance was reassigned to
+batched outsourced FDM printing because those vision components are already
+owned and no 3D printer is available. The total cost therefore remains
+5,821.97 PLN rather than hiding a printer purchase outside the project budget.

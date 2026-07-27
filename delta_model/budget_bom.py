@@ -14,13 +14,20 @@ BudgetCategory = Literal[
     "control",
     "electrical",
     "vacuum",
-    "vision",
+    "outsourced_3d_printing",
     "conveyor_feedback",
     "integration",
     "logistics",
 ]
 EvidenceState = Literal["dated_catalogue_price", "capped_allowance"]
-Gate = Literal["P1_buy_once", "P1_one_axis_then_P2_balance", "P2", "P3", "P4"]
+Gate = Literal[
+    "P1_buy_once",
+    "P1_one_axis_then_P2_balance",
+    "P1_and_P2",
+    "P2",
+    "P3",
+    "P4",
+]
 
 
 @dataclass(frozen=True, slots=True)
@@ -218,16 +225,17 @@ LINES: tuple[BudgetBomLine, ...] = (
         "Size from the real test part and demonstrate retention/release before conveyor operation.",
     ),
     BudgetBomLine(
-        "camera_lighting",
-        "vision",
-        "USB/global-shutter candidate camera, lens, mount and controlled lighting",
+        "outsourced_3d_printing",
+        "outsourced_3d_printing",
+        "Batched outsourced FDM prototypes, jigs, covers and low-load adapters",
         1,
         250.00,
         "capped_allowance",
-        "P4",
-        None,
-        "Select from field of view, exposure and calibration tests; the allowance is "
-        "not a frozen model.",
+        "P1_and_P2",
+        "https://drukex.pl/wycena/",
+        "Request STL/STEP quotes by batch and record material, orientation, wall "
+        "count, infill, delivery and actual mass; do not use ordinary FDM for "
+        "critical drive supports.",
     ),
     BudgetBomLine(
         "conveyor_feedback",
@@ -243,7 +251,7 @@ LINES: tuple[BudgetBomLine, ...] = (
     BudgetBomLine(
         "integration_consumables",
         "integration",
-        "Connectors, extra cable, drag management, printed prototypes and workshop consumables",
+        "Connectors, extra cable, drag management and workshop consumables",
         1,
         250.00,
         "capped_allowance",
@@ -273,7 +281,7 @@ REQUIRED_CATEGORIES: tuple[BudgetCategory, ...] = (
     "control",
     "electrical",
     "vacuum",
-    "vision",
+    "outsourced_3d_printing",
     "conveyor_feedback",
     "integration",
     "logistics",
@@ -301,6 +309,7 @@ def budget_bom_document() -> dict[str, object]:
         "schema": "delta-robot-budget-bom/v1",
         "status": "provisional_cost_envelope_not_purchase_authorization",
         "price_snapshot_date": "2026-07-22",
+        "assumptions_updated_date": "2026-07-27",
         "delivery_country": BUDGET_DEMONSTRATOR_PROFILE.delivery_country,
         "currency": "PLN_gross",
         "lines": [
@@ -325,13 +334,16 @@ def budget_bom_document() -> dict[str, object]:
         ],
         "reused_or_borrowed_not_costed": [
             "existing PC for supervision, development and logging",
-            "existing workshop tools and 3D printer",
+            "existing workshop tools",
+            "existing camera and controlled lighting for P4",
             "borrowed/rented calibrated tachometry, temperature and belt-force measurement for P1",
             "existing conveyor if available; this BOM covers feedback integration, "
             "not a new conveyor",
         ],
         "excluded": [
             "industrial Leadshine/Gates reference hardware",
+            "purchase of a 3D printer; required FDM parts are commissioned externally",
+            "purchase of camera and lighting already owned by the project owner",
             "ownership of TC-08, US Digital E6, Mark-10 gauge or Mesa 7I96S",
             "production safety certification, production guarding and CE conformity work",
             "labour, workshop rent and replacement of an existing conveyor/PC",
@@ -339,6 +351,7 @@ def budget_bom_document() -> dict[str, object]:
         "cost_risks": [
             "allowances for frame, joints and machining require quotations and may "
             "consume contingency",
+            "small outsourced print batches may hit minimum-order and delivery charges",
             "catalogue stock and Polish/German-warehouse shipping can change after the snapshot",
             "a failed physical P1 may require a different ratio, driver supply or drive kit",
         ],

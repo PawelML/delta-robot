@@ -1,4 +1,5 @@
 {
+  "assumptions_updated_date": "2026-07-27",
   "base_total_pln_gross": 5171.97,
   "budget_bounds_pln_gross": {
     "maximum": 6000,
@@ -12,14 +13,15 @@
     "frame": 650.0,
     "integration": 250.0,
     "logistics": 200.0,
+    "outsourced_3d_printing": 250.0,
     "robot_mechanics": 600.0,
     "transmissions": 1581.13,
-    "vacuum": 250.0,
-    "vision": 250.0
+    "vacuum": 250.0
   },
   "contingency_pln_gross": 650.0,
   "cost_risks": [
     "allowances for frame, joints and machining require quotations and may consume contingency",
+    "small outsourced print batches may hit minimum-order and delivery charges",
     "catalogue stock and Polish/German-warehouse shipping can change after the snapshot",
     "a failed physical P1 may require a different ratio, driver supply or drive kit"
   ],
@@ -27,6 +29,8 @@
   "delivery_country": "Poland",
   "excluded": [
     "industrial Leadshine/Gates reference hardware",
+    "purchase of a 3D printer; required FDM parts are commissioned externally",
+    "purchase of camera and lighting already owned by the project owner",
     "ownership of TC-08, US Digital E6, Mark-10 gauge or Mesa 7I96S",
     "production safety certification, production guarding and CE conformity work",
     "labour, workshop rent and replacement of an existing conveyor/PC"
@@ -201,14 +205,14 @@
       "unit_price_pln_gross": 250.0
     },
     {
-      "acceptance_or_measurement": "Select from field of view, exposure and calibration tests; the allowance is not a frozen model.",
-      "category": "vision",
-      "description": "USB/global-shutter candidate camera, lens, mount and controlled lighting",
+      "acceptance_or_measurement": "Request STL/STEP quotes by batch and record material, orientation, wall count, infill, delivery and actual mass; do not use ordinary FDM for critical drive supports.",
+      "category": "outsourced_3d_printing",
+      "description": "Batched outsourced FDM prototypes, jigs, covers and low-load adapters",
       "evidence_state": "capped_allowance",
-      "gate": "P4",
-      "item_id": "camera_lighting",
+      "gate": "P1_and_P2",
+      "item_id": "outsourced_3d_printing",
       "quantity": 1,
-      "source_url": null,
+      "source_url": "https://drukex.pl/wycena/",
       "subtotal_pln_gross": 250.0,
       "unit_price_pln_gross": 250.0
     },
@@ -227,7 +231,7 @@
     {
       "acceptance_or_measurement": "Track actual spend; do not consume contingency invisibly.",
       "category": "integration",
-      "description": "Connectors, extra cable, drag management, printed prototypes and workshop consumables",
+      "description": "Connectors, extra cable, drag management and workshop consumables",
       "evidence_state": "capped_allowance",
       "gate": "P2",
       "item_id": "integration_consumables",
@@ -259,7 +263,8 @@
   ],
   "reused_or_borrowed_not_costed": [
     "existing PC for supervision, development and logging",
-    "existing workshop tools and 3D printer",
+    "existing workshop tools",
+    "existing camera and controlled lighting for P4",
     "borrowed/rented calibrated tachometry, temperature and belt-force measurement for P1",
     "existing conveyor if available; this BOM covers feedback integration, not a new conveyor"
   ],

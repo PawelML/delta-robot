@@ -2,6 +2,7 @@
 
 **Status:** aktywna prowizoryczna obwiednia kosztowa; nie jest zgodą na zakup  
 **Migawka cen:** 2026-07-22  
+**Aktualizacja zasobów:** 2026-07-27
 **Dostawa:** Polska  
 **Profil:** `budget_demonstrator`
 
@@ -21,7 +22,7 @@ i otwarte decyzje. Przemysłowy wariant Leadshine/Gates pozostaje osobno w
 | Sterowanie lokalne | 200,00 |
 | Rozdzielnia, odcięcie, E-stop, zabezpieczenia i przewody | 300,00 |
 | Podciśnienie | 250,00 |
-| Kamera i oświetlenie | 250,00 |
+| Zlecany druk 3D prototypów i adapterów | 250,00 |
 | Sprzężenie z taśmy | 150,00 |
 | Integracja i materiały | 250,00 |
 | Dostawy do Polski | 200,00 |
@@ -46,6 +47,10 @@ po cichu: przekroczenie pozycji ma być zapisane i odjęte od 650 PLN.
 
 Pełne adresy ofert i stany dowodowe są zapisane przy każdej pozycji w JSON.
 Ceny i magazyn należy sprawdzić ponownie w dniu tworzenia koszyka.
+
+Kamera i kontrolowane oświetlenie są już posiadane, więc nie występują jako
+pozycja zakupowa. Zwolnione 250 PLN przechodzi na zewnętrzny druk FDM. Drukarka
+3D nie jest wymagana ani ujęta w kosztach demonstratora.
 
 ## 3. Co wolno kupić na P1
 
@@ -79,10 +84,16 @@ pakiet wymiarowy znajdują się w `artifacts/cad/`.
 
 ## 5. Założenia utrzymujące limit
 
-W budżecie są ponownie użyte: komputer, narzędzia warsztatowe, drukarka 3D i
-istniejąca taśma. Przemysłowa aparatura TC-08/E6/Mark-10/Mesa nie jest kupowana;
-potrzebne wielkości na P1 trzeba zmierzyć pożyczoną/wynajętą aparaturą albo
-tańszym torem z udokumentowaną kalibracją i rozdzielczością.
+W budżecie są ponownie użyte: komputer, narzędzia warsztatowe, kamera,
+oświetlenie i istniejąca taśma. Projekt nie zakłada własnej drukarki 3D.
+Prototypy, uchwyty, szablony, osłony i nisko obciążone adaptery mogą być
+zamawiane partiami z PLA/PETG/ASA/PA w ramach limitu 250 PLN. Zwykły FDM nie
+zastępuje metalowych podpór wałów, mocowań łożysk ani elementów przenoszących
+moment bez osobnego obliczenia i walidacji.
+
+Przemysłowa aparatura TC-08/E6/Mark-10/Mesa nie jest kupowana; potrzebne
+wielkości na P1 trzeba zmierzyć pożyczoną/wynajętą aparaturą albo tańszym torem
+z udokumentowaną kalibracją i rozdzielczością.
 
 Największe ryzyka przekroczenia ceny to przeguby/pręty, rama i lokalna obróbka.
 Niepowodzenie fizycznego P1 może też wymusić inne przełożenie lub napęd; dlatego

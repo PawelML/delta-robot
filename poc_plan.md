@@ -25,11 +25,13 @@ Projekt ma być dowodem kompetencji inżynierskich, dlatego każda ważna deklar
 Cały kupowany demonstrator ma zmieścić się w przedziale **5 000--6 000 PLN
 brutto z dostawą do Polski**. Limit obejmuje mechanikę robota, trzy napędy,
 zasilanie i sterowanie, warsztatowe odcięcie napędów, efektor podciśnieniowy
-oraz budżetową kamerę i enkoder taśmy. Nie obejmuje posiadanego komputera,
-taśmy, drukarki 3D, podstawowych narzędzi ani aparatury pożyczonej lub
-wynajętej. W 6 000 PLN musi pozostać rezerwa na wysyłkę, drobne elementy i
-nieprzewidziane poprawki. `BOM_budget_delta.md` zamyka bieżącą obwiednię na
-5 821,97 PLN z rezerwą 650 PLN, nadal przed potwierdzeniem ofert i fizycznym P1.
+oraz enkoder taśmy. Nie obejmuje posiadanego komputera, taśmy, kamery,
+oświetlenia, podstawowych narzędzi ani aparatury pożyczonej lub wynajętej.
+Projekt nie zakłada posiadania ani zakupu drukarki 3D: potrzebne prototypy FDM
+są zlecane zewnętrznie i mają osobny limit w BOM-ie. W 6 000 PLN musi pozostać
+rezerwa na wysyłkę, drobne elementy i nieprzewidziane poprawki.
+`BOM_budget_delta.md` zamyka bieżącą obwiednię na 5 821,97 PLN z rezerwą
+650 PLN, nadal przed potwierdzeniem ofert i fizycznym P1.
 
 ## 2. Zakres i założenia początkowe
 

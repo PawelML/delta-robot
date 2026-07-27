@@ -34,6 +34,14 @@ def test_all_required_lines_are_positively_costed_and_traceable() -> None:
     )
 
 
+def test_owned_camera_is_not_costed_and_external_printing_is_budgeted() -> None:
+    item_ids = {line.item_id for line in LINES}
+    assert "camera_lighting" not in item_ids
+    assert "outsourced_3d_printing" in item_ids
+    printing = next(line for line in LINES if line.item_id == "outsourced_3d_printing")
+    assert printing.subtotal_pln_gross == 250.0
+
+
 def test_budget_bom_is_finite_deterministic_and_matches_artifact() -> None:
     document = budget_bom_document()
     encoded = json.dumps(document, allow_nan=False, sort_keys=True)
