@@ -7,8 +7,9 @@
 **Zakres:** jedna reprezentatywna oś stanowiska P1
 
 Nie używać tej checklisty do zakupów aktywnego `budget_demonstrator`. Wróci do
-użycia tylko po świadomej decyzji o budowie profilu przemysłowego. Budżetowa
-checklista powstanie po wyborze przekładni i zamknięciu pełnego BOM-u <=6 000 PLN.
+użycia tylko po świadomej decyzji o budowie profilu przemysłowego. Aktywna
+checklista budżetowa znajduje się w
+`docs/p1-budget-procurement-checklist.md`.
 
 ## Zasady użycia
 

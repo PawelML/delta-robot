@@ -22,6 +22,7 @@ dowodem obliczeń i nie należy poprawiać ich ręcznie.
 |---|---|---|
 | Aktualna lista zakupów, ilości, ceny i linki do ofert | `artifacts/budget_bom.json` | Dokładne pozycje kosztowe, `source_url`, stan dowodu, bramkę zakupu, założenia i wyłączenia. Jest generowany przez `scripts/generate_budget_bom.py`. |
 | Co wolno kupić teraz i w jakiej kolejności | `BOM_budget_delta.md`, szczególnie sekcje 2--4 | Czytelny skrót aktywnego BOM-u oraz ograniczenie mechaniki do jednej osi przed fizycznym P1. |
+| Co sprawdzić przed płatnością, zmierzyć po dostawie i przekazać do obróbki | `docs/p1-budget-procurement-checklist.md` | Aktywna checklista jednej osi P1: dokładne wersje, otwory kół, pomiary odbiorcze, bramka zakupu i rejestr dowodów. |
 | Cel projektu, budżet, geometria, pole robocze i bramki P0--P4 | `poc_plan.md` | HLD całego demonstratora i nadrzędne wymagania, których BOM nie może samodzielnie zmieniać. |
 | Dokładna tożsamość zestawu napędowego i różnice między profilami | `docs/specs/p1-design-profiles.md` oraz `artifacts/design_profiles.json` | Modele silników i sterowników, zasilanie, parametry obu profili oraz ograniczenia danych z opublikowanej charakterystyki silnika. |
 | Dlaczego przyjęto HTD 5M 20/60, pas 450 mm i które cykle są obiecujące | `docs/specs/p1-budget-transmission-and-envelope.md` | Kryteria wyboru przełożenia i opis budżetowej obwiedni osiągów. |
@@ -36,7 +37,8 @@ dowodem obliczeń i nie należy poprawiać ich ręcznie.
 
 Najkrótsza ścieżka przed wydaniem pieniędzy to:
 
-1. sprawdzić dozwolony zakres P1 w sekcji 3 tego dokumentu;
+1. przejść pola przedpłatowe w
+   `docs/p1-budget-procurement-checklist.md`;
 2. otworzyć `artifacts/budget_bom.json` i potwierdzić dokładne modele, ilości,
    aktualne ceny oraz dostawę do Polski;
 3. dla transmisji porównać pozycję z
@@ -55,12 +57,9 @@ Najkrótsza ścieżka przed wydaniem pieniędzy to:
 demonstratora budżetowego. Służą jako punkt porównania i nie wchodzą do sumy
 5 821,97 PLN.
 
-Repozytorium nie ma jeszcze osobnej, aktywnej checklisty przedpłatowej dla
-profilu `budget_demonstrator`, która w jednym miejscu zbiera potwierdzenia
-dostawców i pomiary odbiorcze. Do czasu jej przygotowania obowiązują sekcja 3
-tego dokumentu oraz blokery z
-`docs/p1-budget-bench-fabrication-package.md`. Sam BOM nadal nie jest zgodą na
-zakup.
+Aktywne potwierdzenia dostawców, pomiary odbiorcze i zwolnienie obróbki zapisuje
+się w `docs/p1-budget-procurement-checklist.md`. Sam BOM nadal nie jest zgodą
+na zakup.
 
 ## 1. Wynik kosztowy
 
@@ -98,6 +97,8 @@ po cichu: przekroczenie pozycji ma być zapisane i odjęte od 650 PLN.
 
 Pełne adresy ofert i stany dowodowe są zapisane przy każdej pozycji w JSON.
 Ceny i magazyn należy sprawdzić ponownie w dniu tworzenia koszyka.
+Przed płatnością należy wypełnić odpowiednie pola w
+`docs/p1-budget-procurement-checklist.md`.
 
 Kamera i kontrolowane oświetlenie są już posiadane, więc nie występują jako
 pozycja zakupowa. Zwolnione 250 PLN przechodzi na zewnętrzny druk FDM. Drukarka
