@@ -3,6 +3,7 @@
 **Status:** aktywna prowizoryczna obwiednia kosztowa; nie jest zgodą na zakup  
 **Migawka cen:** 2026-07-22  
 **Aktualizacja zasobów:** 2026-07-27
+
 **Dostawa:** Polska  
 **Profil:** `budget_demonstrator`
 
@@ -10,6 +11,56 @@ Maszynowym źródłem sum i pozycji jest `artifacts/budget_bom.json`, generowany
 przez `scripts/generate_budget_bom.py`. Ten dokument tłumaczy kolejność zakupów
 i otwarte decyzje. Przemysłowy wariant Leadshine/Gates pozostaje osobno w
 `BOM_delta.md` i nie wchodzi do poniższej sumy.
+
+## Mapa plików — gdzie szukać szczegółów
+
+Najpierw należy czytać dokument opisowy `.md`, a do pliku JSON zaglądać po
+dokładne wartości, warianty i adresy źródeł. Pliki w `artifacts/` są generowanym
+dowodem obliczeń i nie należy poprawiać ich ręcznie.
+
+| Potrzebna informacja | Główne źródło | Co można tam znaleźć |
+|---|---|---|
+| Aktualna lista zakupów, ilości, ceny i linki do ofert | `artifacts/budget_bom.json` | Dokładne pozycje kosztowe, `source_url`, stan dowodu, bramkę zakupu, założenia i wyłączenia. Jest generowany przez `scripts/generate_budget_bom.py`. |
+| Co wolno kupić teraz i w jakiej kolejności | `BOM_budget_delta.md`, szczególnie sekcje 2--4 | Czytelny skrót aktywnego BOM-u oraz ograniczenie mechaniki do jednej osi przed fizycznym P1. |
+| Cel projektu, budżet, geometria, pole robocze i bramki P0--P4 | `poc_plan.md` | HLD całego demonstratora i nadrzędne wymagania, których BOM nie może samodzielnie zmieniać. |
+| Dokładna tożsamość zestawu napędowego i różnice między profilami | `docs/specs/p1-design-profiles.md` oraz `artifacts/design_profiles.json` | Modele silników i sterowników, zasilanie, parametry obu profili oraz ograniczenia danych z opublikowanej charakterystyki silnika. |
+| Dlaczego przyjęto HTD 5M 20/60, pas 450 mm i które cykle są obiecujące | `docs/specs/p1-budget-transmission-and-envelope.md` | Kryteria wyboru przełożenia i opis budżetowej obwiedni osiągów. |
+| Pełne wyniki porównania obciążeń, czasów cyklu i wariantów transmisji | `artifacts/budget_performance_envelope.json` | Liczbowe wyniki całego przemiatania wariantów, także tych niewybranych. Jest generowany przez `scripts/generate_budget_performance_envelope.py`. |
+| Siły w pasie, odrzucenie montażu 20T na silniku, wałek 8 mm, łożyska i sprzęgło | `docs/specs/p1-budget-mechanical-and-cost-closure.md` | Założenia i kryteria mechanicznego domknięcia jednej budżetowej osi. |
+| Dokładne naprężenia, zapasy i obciążenia elementów transmisji | `artifacts/budget_mechanical_closure.json` | Wyniki liczbowe dla pasa, wału, łożysk i sprzęgła. Jest generowany przez `scripts/generate_budget_mechanical_closure.py`. |
+| Co wykonać, jakie wymiary zmierzyć po dostawie i czego jeszcze nie zamrażać | `docs/p1-budget-bench-fabrication-package.md` | Pakiet wykonawczy stanowiska jednej osi, kontrolowane wymiary, otwarte pasowania i blokery zwolnienia części do obróbki. |
+| Parametryczny model CAD stanowiska | `cad/2026/07/22/p1-budget-single-axis-bench/main.forge.js` | Źródłowy model ForgeCAD; to tutaj zmienia się parametry modelu, a nie w plikach eksportowych. |
+| Rysunki poglądowe i model do konsultacji z wykonawcą | `artifacts/cad/p1-budget-single-axis-bench-report.pdf`, `artifacts/cad/p1-budget-single-axis-bench.step` | PDF z widokami i wymiarami oraz STEP do wymiany. Są materiałem kandydackim; pasowania końcowe zależą od pomiaru dostarczonych części. |
+| Zbliżenia pasa i wałka oraz wynik kontroli CAD | `artifacts/cad/p1-budget-single-axis-bench-belt.png`, `artifacts/cad/p1-budget-single-axis-bench-jackshaft.png`, `artifacts/cad/inspections/p1-budget-single-axis-bench/` | Szybka kontrola wizualna układu i zapis inspekcji kolizji oraz łączności części. |
+| Zakres fizycznego testu P1 | `poc_plan.md` | Kryteria przejścia bramki. `docs/specs/p1-bench-software.md` opisuje istniejący symulator, logowanie i raportowanie, ale adapter sprzętowy jest obecnie przygotowany dla przemysłowego Leadshine, a nie potwierdzonego `CL57Y-V20`. |
+
+Najkrótsza ścieżka przed wydaniem pieniędzy to:
+
+1. sprawdzić dozwolony zakres P1 w sekcji 3 tego dokumentu;
+2. otworzyć `artifacts/budget_bom.json` i potwierdzić dokładne modele, ilości,
+   aktualne ceny oraz dostawę do Polski;
+3. dla transmisji porównać pozycję z
+   `docs/specs/p1-budget-mechanical-and-cost-closure.md`;
+4. przed zleceniem obróbki użyć
+   `docs/p1-budget-bench-fabrication-package.md`;
+5. po dostawie zmierzyć rzeczywiste części i dopiero wtedy zamrozić pasowania
+   oraz rysunki wykonawcze.
+
+### Dokumenty nieaktywne dla budżetowych zakupów
+
+`BOM_delta.md`, `docs/specs/p1-single-drive.md`,
+`docs/p1-procurement-checklist.md`, `docs/p1-bench-fabrication-package.md` i
+`docs/p1-supplier-research-poland-2026-07-20.md` dotyczą zachowanego profilu
+`industrial_reference`. Nie należy na ich podstawie kupować części do aktywnego
+demonstratora budżetowego. Służą jako punkt porównania i nie wchodzą do sumy
+5 821,97 PLN.
+
+Repozytorium nie ma jeszcze osobnej, aktywnej checklisty przedpłatowej dla
+profilu `budget_demonstrator`, która w jednym miejscu zbiera potwierdzenia
+dostawców i pomiary odbiorcze. Do czasu jej przygotowania obowiązują sekcja 3
+tego dokumentu oraz blokery z
+`docs/p1-budget-bench-fabrication-package.md`. Sam BOM nadal nie jest zgodą na
+zakup.
 
 ## 1. Wynik kosztowy
 
