@@ -133,13 +133,14 @@ LINES: tuple[BudgetBomLine, ...] = (
     BudgetBomLine(
         "bearing_608_2rs",
         "transmissions",
-        "SKF 608-2RS/2RSH-envelope sealed input bearings",
+        "SKF 608-2RSH CN sealed input bearings, 8x22x7 mm",
         6,
-        6.62,
+        14.64,
         "dated_catalogue_price",
         "P1_one_axis_then_P2_balance",
-        "https://www.hurtowniatechpol.pl/product/Lozysko-608-2RS-SKF-IND-8x22x7-s20832",
-        "Use one matched bearing series and close housing/shaft fits from its current SKF data.",
+        "https://www.ebmia.pl/lozyska-kulkowe-zwykle/80366-lozysko-kulkowe-zwykle-608-2rsh-skf-8x22x7.html",
+        "Buy two for P1; verify exact 608-2RSH marking, CN normal clearance, "
+        "8x22x7 mm dimensions and retain the supplier invoice/packaging.",
     ),
     BudgetBomLine(
         "input_support_fabrication",

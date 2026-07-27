@@ -1,6 +1,6 @@
 {
   "assumptions_updated_date": "2026-07-27",
-  "base_total_pln_gross": 5171.97,
+  "base_total_pln_gross": 5220.09,
   "budget_bounds_pln_gross": {
     "maximum": 6000,
     "minimum": 5000
@@ -15,7 +15,7 @@
     "logistics": 200.0,
     "outsourced_3d_printing": 250.0,
     "robot_mechanics": 600.0,
-    "transmissions": 1581.13,
+    "transmissions": 1629.25,
     "vacuum": 250.0
   },
   "contingency_pln_gross": 650.0,
@@ -109,16 +109,16 @@
       "unit_price_pln_gross": 130.38
     },
     {
-      "acceptance_or_measurement": "Use one matched bearing series and close housing/shaft fits from its current SKF data.",
+      "acceptance_or_measurement": "Buy two for P1; verify exact 608-2RSH marking, CN normal clearance, 8x22x7 mm dimensions and retain the supplier invoice/packaging.",
       "category": "transmissions",
-      "description": "SKF 608-2RS/2RSH-envelope sealed input bearings",
+      "description": "SKF 608-2RSH CN sealed input bearings, 8x22x7 mm",
       "evidence_state": "dated_catalogue_price",
       "gate": "P1_one_axis_then_P2_balance",
       "item_id": "bearing_608_2rs",
       "quantity": 6,
-      "source_url": "https://www.hurtowniatechpol.pl/product/Lozysko-608-2RS-SKF-IND-8x22x7-s20832",
-      "subtotal_pln_gross": 39.72,
-      "unit_price_pln_gross": 6.62
+      "source_url": "https://www.ebmia.pl/lozyska-kulkowe-zwykle/80366-lozysko-kulkowe-zwykle-608-2rsh-skf-8x22x7.html",
+      "subtotal_pln_gross": 87.84,
+      "unit_price_pln_gross": 14.64
     },
     {
       "acceptance_or_measurement": "Fabricate one after delivered-part measurement; weigh, check runout and inspect adjustment rigidity.",
@@ -282,6 +282,6 @@
   ],
   "schema": "delta-robot-budget-bom/v1",
   "status": "provisional_cost_envelope_not_purchase_authorization",
-  "total_with_contingency_pln_gross": 5821.97,
+  "total_with_contingency_pln_gross": 5870.09,
   "within_budget_cap": true
 }

@@ -14,7 +14,7 @@
 - The project has two explicit profiles from `docs/specs/p1-design-profiles.md`: active `budget_demonstrator` and retained `industrial_reference`. They share one Python model; do not duplicate formulas between profiles.
 - Industrial P1 calculations, the ForgeCAD bench, simulated drive and automated report pipeline are implemented, but they are reference evidence and have not passed a physical gate. The budget HTD 5M 20/60 radial-load closure, bench CAD and provisional BOM are implemented; physical proof and delivered-part fits are still missing.
 - The Python model is authoritative for kinematics, differential kinematics, trajectories, dynamics and transmission calculations. Three.js and ForgeCAD visualize or package exported/modelled results and must not become independent mathematical sources of truth.
-- `BOM_delta.md` preserves the inactive industrial-reference purchase specification. `BOM_budget_delta.md` is the active provisional 5,821.97 PLN cost envelope, not a purchase authorization. Buy/fabricate at most one axis of transmission hardware before physical P1; the three-axis drive kit is one indivisible candidate SKU.
+- `BOM_delta.md` preserves the inactive industrial-reference purchase specification. `BOM_budget_delta.md` is the active provisional 5,870.09 PLN cost envelope, not a purchase authorization. Buy/fabricate at most one axis of transmission hardware before physical P1; the three-axis drive kit is one indivisible candidate SKU.
 - Do not purchase or specify three production axes, start P2 construction, or introduce ROS2, a motion controller, cloud services, agent frameworks or production safety architecture unless an accepted specification explicitly advances the project beyond P1.
 
 ## Accepted engineering baseline

@@ -1,7 +1,7 @@
 # P1 budget mechanical and cost closure
 
 **Status:** implementation specification  
-**Version:** 1.2
+**Version:** 1.3
 **Date:** 2026-07-27
 
 ## 1. Problem and decision boundary
@@ -31,7 +31,8 @@ Fixed inputs:
 - Gates minimum installation tension for a 15 mm-wide 5M HTD belt:
   13.5 lbf per span, converted with exactly 4.4482216152605 N/lbf;
 - input shaft: provisional C45 steel, 8 mm diameter and 100 mm model length;
-- input support: two SKF 608-2RSH-envelope bearings, 8x22x7 mm, with the 20T
+- input support: two selected SKF `608-2RSH` bearings with CN (normal)
+  internal clearance, contact seals and 8x22x7 mm envelope, with the 20T
   pulley centred in a 50 mm bearing span;
 - output support: two selected SKF `6001-2RSH` bearings with CN (normal)
   internal clearance, contact seals, 12x28x8 mm envelope and 60 mm
@@ -58,6 +59,8 @@ Primary technical evidence:
   <https://pl.rs-online.com/web/p/lozyska-kulkowe/4419975>;
 - exact Polish purchase candidate:
   <https://www.ebmia.pl/lozyska-kulkowe-zwykle/9900-lozysko-kulkowe-zwykle-6001-2rsh-skf-12x28x8.html>;
+- exact Polish SKF `608-2RSH` input-bearing candidate:
+  <https://www.ebmia.pl/lozyska-kulkowe-zwykle/80366-lozysko-kulkowe-zwykle-608-2rsh-skf-8x22x7.html>;
 - R+W BKL product data: <https://www.rw-america.com/product/bkl/>;
 - exact stepper candidate and drawing link are stored in the design-profile
   artifact.
@@ -229,12 +232,14 @@ Adding the shaft and conservative coupling inertia changes worst proxy-curve
 utilization at 0.50 kg / 1.50 s only from 0.85279 to 0.85296, so the point
 remains `not_rejected_by_proxy`. It is still not a physical pass.
 
-The complete-demonstrator base estimate is 5,171.97 PLN gross plus 650 PLN
-explicit contingency, total 5,821.97 PLN. The budget ForgeCAD bench passes the
+The complete-demonstrator base estimate is 5,220.09 PLN gross plus 650 PLN
+explicit contingency, total 5,870.09 PLN. The budget ForgeCAD bench passes the
 exact six-pose interference sweep with zero colliding poses and the
 mechanical-integrity checks at -45, 0 and +80 degrees.
 
 On 2026-07-27 the unchanged 250 PLN camera/lighting allowance was reassigned to
 batched outsourced FDM printing because those vision components are already
-owned and no 3D printer is available. The total cost therefore remains
-5,821.97 PLN rather than hiding a printer purchase outside the project budget.
+owned and no 3D printer is available. After selecting the exact SKF
+`608-2RSH` input bearing from EBMiA, the total cost remains 5,870.09 PLN rather
+than hiding either a printer purchase or the bearing-price increase outside
+the project budget.

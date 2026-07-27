@@ -6,7 +6,7 @@ do fizycznego robota i trackingu ruchomej taśmy.
 
 Aktualny etap: **cyfrowe P0 oraz mechaniczne/kosztowe domknięcie budżetowego P1
 zakończone; następny jest zakup i fizyczny test jednej osi**. Obwiednia całego
-demonstratora wynosi 5 821,97 PLN brutto z rezerwą, nadal bez fizycznego
+demonstratora wynosi 5 870,09 PLN brutto z rezerwą, nadal bez fizycznego
 zaliczenia. Dotychczasowy
 Leadshine/Gates pozostaje uruchamialnym profilem referencyjnym, a nie aktywnym
 planem zakupowym.
@@ -27,7 +27,7 @@ planem zakupowym.
   przełożeń i obwiednia udźwig/czas cyklu.
 - `docs/specs/p1-budget-mechanical-and-cost-closure.md` — naciąg pasa, podparty
   wał, łożyska, sprzęgło, CAD i kontrakt kosztowy.
-- `BOM_budget_delta.md` — aktywna, prowizoryczna lista budżetowa 5 821,97 PLN.
+- `BOM_budget_delta.md` — aktywna, prowizoryczna lista budżetowa 5 870,09 PLN.
 - `docs/specs/p1-single-drive.md` — kandydat jednego napędu i test P1.
 - `docs/specs/p1-transmission-selection.md` — dokładny dobór przekładni 18/90.
 - `docs/specs/p1-single-axis-bench-lld.md` — stanowisko jednej osi w ForgeCAD.

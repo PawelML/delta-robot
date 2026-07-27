@@ -30,7 +30,7 @@ oświetlenia, podstawowych narzędzi ani aparatury pożyczonej lub wynajętej.
 Projekt nie zakłada posiadania ani zakupu drukarki 3D: potrzebne prototypy FDM
 są zlecane zewnętrznie i mają osobny limit w BOM-ie. W 6 000 PLN musi pozostać
 rezerwa na wysyłkę, drobne elementy i nieprzewidziane poprawki.
-`BOM_budget_delta.md` zamyka bieżącą obwiednię na 5 821,97 PLN z rezerwą
+`BOM_budget_delta.md` zamyka bieżącą obwiednię na 5 870,09 PLN z rezerwą
 650 PLN, nadal przed potwierdzeniem ofert i fizycznym P1.
 
 ## 2. Zakres i założenia początkowe
@@ -331,7 +331,7 @@ nieodrzuconym punktem siatki jest 1,25 s. Mechaniczne domknięcie odrzuca koło
 20T bezpośrednio na wale silnika: sama różnica naciągów 92,8 N przekracza limit
 75 N przed napięciem montażowym. Osobno podparty wał Ø8 mm z dwoma 608 daje w
 ekranie obliczeniowym zapas plastyczności 2,98, a sprzęgło BKL3 zapas momentu
-1,55. Pełny prowizoryczny BOM wynosi 5 821,97 PLN. Nadal nie jest to
+1,55. Pełny prowizoryczny BOM wynosi 5 870,09 PLN. Nadal nie jest to
 zatwierdzenie napędu: zgodność krzywej, temperatura, błąd nadążania, napięcie
 szyny i rzeczywiste masy wymagają jednej fizycznej osi. Pozostała mechanika
 dwóch osi zostaje za właściwym P1.
@@ -359,7 +359,7 @@ wprowadzają ROS2 ani Klippera.
 3. **Zakończone cyfrowo:** profile przemysłowy/budżetowy i budżetowa obwiednia
    udźwig/czas cyklu/przełożenie z krzywej proxy.
 4. **Zakończone cyfrowo:** domknięcie mechaniczne wariantu 20/60, osobno
-   podparty wał wejściowy, budżetowy CAD i BOM 5 821,97 PLN z rezerwą.
+   podparty wał wejściowy, budżetowy CAD i BOM 5 870,09 PLN z rezerwą.
 5. **Teraz:** potwierdzenie rewizji/cen i zakup wyłącznie elementów jednej
    budżetowej osi potrzebnych do P1 i zwymiarowania.
 6. Pomiar dostarczonych części, zamknięcie pasowań/retencji i dopiero wtedy

@@ -55,7 +55,7 @@ Najkrótsza ścieżka przed wydaniem pieniędzy to:
 `docs/p1-supplier-research-poland-2026-07-20.md` dotyczą zachowanego profilu
 `industrial_reference`. Nie należy na ich podstawie kupować części do aktywnego
 demonstratora budżetowego. Służą jako punkt porównania i nie wchodzą do sumy
-5 821,97 PLN.
+5 870,09 PLN.
 
 Aktywne potwierdzenia dostawców, pomiary odbiorcze i zwolnienie obróbki zapisuje
 się w `docs/p1-budget-procurement-checklist.md`. Sam BOM nadal nie jest zgodą
@@ -76,9 +76,9 @@ na zakup.
 | Sprzężenie z taśmy | 150,00 |
 | Integracja i materiały | 250,00 |
 | Dostawy do Polski | 200,00 |
-| **Suma bazowa** | **5 171,97** |
+| **Suma bazowa** | **5 220,09** |
 | **Rezerwa jawna** | **650,00** |
-| **Razem** | **5 821,97** |
+| **Razem** | **5 870,09** |
 
 Suma mieści się w przyjętym limicie 5--6 tys. PLN, ale część pozycji to limity
 kosztowe wymagające ofert, a nie potwierdzone ceny. Rezerwy nie wolno wydawać
@@ -93,7 +93,7 @@ po cichu: przekroczenie pozycji ma być zapisane i odjęte od 650 PLN.
 | Koło HTD `60-5M-15` | 3 | 57,49 + 50,00 PLN/szt. obróbki | Najpierw jedna sztuka; zmierzyć piastę, dobrać otwór/rowek lub zacisk i sprawdzić bicie |
 | Pas `450-5M-15` | 3 + 1 zapas | 49,45 PLN/szt. | Oznaczenie podziałki, szerokość, metoda i pomiar napięcia montażowego |
 | Sprzęgło R+W `BKL/3/8/8` | 3 | 130,38 PLN/szt. | Oba otwory 8 mm, 3 Nm, instrukcja momentu śrub zaciskowych |
-| Łożysko SKF `608-2RS/2RSH` | 6 | 6,62 PLN/szt. | Jedna zgodna seria 8x22x7; pasowanie dopiero z aktualnej karty i pomiaru części |
+| Łożysko wejściowe SKF `608-2RSH`, luz CN | 6 | 14,64 PLN/szt. | Na P1 kupić dwie sztuki 8x22x7 z dokładnym oznaczeniem bez sufiksu C3; zmierzyć przed wydaniem wałka |
 | Łożysko wyjściowe SKF `6001-2RSH`, luz CN | 6 | 18,39 PLN/szt. | Na P1 kupić dwie sztuki 12x28x8 z dokładnym oznaczeniem bez sufiksu C3; zmierzyć przed wydaniem wału |
 
 Pełne adresy ofert i stany dowodowe są zapisane przy każdej pozycji w JSON.

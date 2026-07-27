@@ -42,6 +42,15 @@ def test_owned_camera_is_not_costed_and_external_printing_is_budgeted() -> None:
     assert printing.subtotal_pln_gross == 250.0
 
 
+def test_input_bearings_are_exactly_costed_from_ebmia() -> None:
+    bearing = next(line for line in LINES if line.item_id == "bearing_608_2rs")
+    assert bearing.description == "SKF 608-2RSH CN sealed input bearings, 8x22x7 mm"
+    assert bearing.quantity == 6
+    assert bearing.unit_price_pln_gross == 14.64
+    assert bearing.source_url is not None
+    assert bearing.source_url.startswith("https://www.ebmia.pl/")
+
+
 def test_output_bearings_are_exactly_costed_without_changing_output_allowance_total() -> None:
     bearing = next(line for line in LINES if line.item_id == "bearing_6001_2rsh")
     supports = next(line for line in LINES if line.item_id == "output_supports")

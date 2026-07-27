@@ -3,8 +3,9 @@
 **Status:** aktywna checklista przygotowania jednej osi; nie jest automatyczną
 zgodą na zakup  
 **Profil:** `budget_demonstrator`  
-**Data danych katalogowych:** 2026-07-22, z doprecyzowaniem otworów kół
-2026-07-27  
+**Data danych katalogowych:** 2026-07-22, z doprecyzowaniem otworów kół oraz
+łożysk SKF `608-2RSH` i `6001-2RSH` 2026-07-27
+
 **Dostawa:** Polska
 
 ## 1. Cel i źródła
@@ -57,7 +58,7 @@ testem. Nie zmienia docelowych ilości zapisanych w BOM-ie.
 | Obróbka koła 60T | `pulley_60t_machining` | oferta dla 1 | Wycena wstępna; wykonanie dopiero po pomiarach |
 | [Pas `450-5M-15`](https://www.ebmia.pl/pasy-zebate-htd-5m/1350-pas-zebaty-450-5m-15-z90.html) | `belt_450_5m_15` | 1 | Potwierdzić 90 zębów, HTD 5M i szerokość 15 mm |
 | [Sprzęgło R+W `BKL/3/8/8`](https://www.ebmia.pl/sprzegla-mieszkowe-bkl/91682-sprzeglo-bezluzowe-bkl-3-8-8.html) | `coupling_bkl3_8_8` | 1 | Potwierdzić dwa otwory 8 mm i moment znamionowy 3 Nm |
-| [Łożyska wejściowe 608](https://www.hurtowniatechpol.pl/product/Lozysko-608-2RS-SKF-IND-8x22x7-s20832) | `bearing_608_2rs` | 2 | Wybrać jedną dokładną serię 8x22x7 mm |
+| [Łożyska wejściowe SKF `608-2RSH`](https://www.ebmia.pl/lozyska-kulkowe-zwykle/80366-lozysko-kulkowe-zwykle-608-2rsh-skf-8x22x7.html) | `bearing_608_2rs` | 2 | Wybrano 8x22x7, uszczelnienie obustronne i luz CN; potwierdzić oznaczenie bez `/C3` |
 | [Łożyska wyjściowe SKF `6001-2RSH`](https://www.ebmia.pl/lozyska-kulkowe-zwykle/9900-lozysko-kulkowe-zwykle-6001-2rsh-skf-12x28x8.html) | `bearing_6001_2rsh` | 2 | Wybrano 12x28x8, uszczelnienie obustronne i luz CN; potwierdzić oznaczenie bez `/C3` |
 | Podpora i wałek wejściowy | `input_support_fabrication` | oferta dla 1 | Materiał i obróbka po pomiarze koła, łożysk i sprzęgła |
 | Podpora i wał wyjściowy | `output_supports` | oferta dla 1 | Ø12 wynika z wybranego 6001; pasowania i wykonanie dopiero po pomiarze |
@@ -120,8 +121,10 @@ i retencja koła nadal czekają na pomiar dostarczonych części.
 - [ ] Zapisano producenta pasa oraz zalecaną metodę ustawienia napięcia.
 - [ ] Sprzęgło ma dokładny kod `BKL/3/8/8`, oba otwory 8 mm, znamionowe 3 Nm
   i dostępną instrukcję momentu śrub zaciskowych.
-- [ ] Dwa łożyska wejściowe są z jednej serii 608, mają 8x22x7 mm, uszczelnienie
-  i aktualną kartę producenta.
+- [x] Wybrano SKF `608-2RSH`, 8x22x7 mm, uszczelnienie obustronne i luz
+  normalny CN.
+- [ ] Oferta i dostawa dwóch łożysk wejściowych dotyczą dokładnie
+  `608-2RSH` bez `/C3`; zachowano fakturę i opakowania.
 - [x] Wybrano SKF `6001-2RSH`, 12x28x8 mm, uszczelnienie obustronne i luz
   normalny CN; ekran obciążenia i prędkości zapisano w
   `artifacts/budget_mechanical_closure.json`.
