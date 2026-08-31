@@ -4,12 +4,82 @@ Warsztatowy demonstrator robota delta do pick-and-place nad taśmą. Projekt jes
 rozwijany od zweryfikowanego modelu cyfrowego, przez test pojedynczego napędu,
 do fizycznego robota i trackingu ruchomej taśmy.
 
+> **English summary:** A specification-driven, AI-assisted delta-robot R&D
+> project. Codex works under repository-level engineering constraints, while
+> generated changes are accepted through reference cases, automated checks,
+> reproducible evidence and explicit human-controlled gates. Digital P0 is
+> complete; physical P1 is still pending.
+
 Aktualny etap: **cyfrowe P0 oraz mechaniczne/kosztowe domknięcie budżetowego P1
 zakończone; następny jest zakup i fizyczny test jednej osi**. Obwiednia całego
 demonstratora wynosi 5 870,09 PLN brutto z rezerwą, nadal bez fizycznego
 zaliczenia. Dotychczasowy
 Leadshine/Gates pozostaje uruchamialnym profilem referencyjnym, a nie aktywnym
 planem zakupowym.
+
+## Jak rozwijam ten projekt z AI
+
+Projekt jest praktycznym laboratorium **specification-driven, AI-assisted
+engineering**. Codex wspiera analizę, implementację, testy i dokumentację, ale
+nie jest źródłem wymagań ani dowodem poprawności. Człowiek zachowuje decyzje o
+zakresie, ryzyku, sprzęcie i przejściu przez kolejne bramki projektu.
+
+```text
+HLD i mierzalna bramka
+          ↓
+Mała specyfikacja + kryteria akceptacji
+          ↓
+Przypadki referencyjne i testy
+          ↓
+Implementacja wspomagana przez Codex
+          ↓
+Walidacja automatyczna, numeryczna i wizualna
+          ↓
+Odtwarzalne artefakty + jawne ograniczenia
+          ↓
+Decyzja człowieka: zaakceptuj, popraw albo odrzuć
+```
+
+Workflow jest zapisany w repozytorium, a nie tylko w historii rozmów:
+
+| Element | Rola w procesie |
+|---|---|
+| [`poc_plan.md`](poc_plan.md) | HLD, zaakceptowane wymagania i bramki P0--P4 |
+| [`docs/specs/`](docs/specs/) | Małe kontrakty: problem, wejścia, wyjścia, jednostki, ograniczenia, błędy i testy akceptacyjne |
+| [`AGENTS.md`](AGENTS.md) | Trwałe instrukcje dla narzędzi kodujących: źródła prawdy, granice autonomii i wymagane dowody |
+| [`docs/development-process.md`](docs/development-process.md) | Lekki playbook prowadzenia zmian z AI |
+| [`tests/`](tests/) | Wykonywalne kryteria, własności geometryczne, regresje i przypadki niezależne od implementacji |
+| [`scripts/`](scripts/) i [`artifacts/`](artifacts/) | Powtarzalne generatory oraz wersjonowane dowody liczbowe i wizualne |
+
+### Gdy wiarygodnie brzmiący wynik AI nie wystarczył
+
+- **Dobór napędu:** początkowa propozycja krokowca 2,0--2,2 Nm wyglądała
+  rozsądnie na podstawie statycznego udźwigu i momentu trzymającego. Model
+  czasowy wykazał 8,190 Nm momentu szczytowego i 3,507 Nm RMS na wyjściu dla
+  konserwatywnego cyklu, więc odrzucił tę podstawę wyboru i zablokował zakup
+  trzech osi. Szczegóły i konsekwencje są zapisane w
+  [`p1-dynamics-and-drive-sizing.md`](docs/specs/p1-dynamics-and-drive-sizing.md).
+- **Kod działający w prawdziwej przeglądarce:** testy kontraktowe i build
+  wizualizatora przechodziły, lecz pierwszy smoke test w Chrome wykrył błędny
+  indeks próbki, ponieważ callback animacji uruchomiono bez timestampu. Od tego
+  momentu wykonanie w przeglądarce jest obowiązkową bramką zmian wizualnych;
+  zobacz
+  [`p0-threejs-visualizer.md`](docs/specs/p0-threejs-visualizer.md).
+- **Tolerancja niezależnego źródła:** pozornie zbyt duży błąd FK nie został
+  „naprawiony” przez poluzowanie tolerancji solvera. Najpierw sprawdzono wszystkie
+  kombinacje niepewności wymiarów z publikacji i wykazano, że rozrzut pochodzi z
+  dokładności danych referencyjnych. Uzasadnienie pozostaje w
+  [`p0-kinematics.md`](docs/specs/p0-kinematics.md).
+- **Symulacja nie udaje sprzętu:** poprawny przebieg symulatora stanowiska zawsze
+  otrzymuje `simulation_only`, nigdy `passed`. Dopiero telemetria z fizycznego
+  napędu może spełnić P1; kontrakt opisuje
+  [`p1-bench-software.md`](docs/specs/p1-bench-software.md).
+
+To repozytorium pokazuje workflow na poziomie jednego projektu. Nie jest dowodem
+wdrożenia Agentic SDLC w wielu zespołach, pomiaru produktywności organizacji ani
+implementacji autonomicznego frameworka agentowego. Te granice są celowe:
+model cyfrowy może potwierdzić oprogramowanie i obliczenia, ale nie zastępuje
+pomiaru rzeczywistej mechaniki.
 
 ## Dokumentacja
 
@@ -41,6 +111,8 @@ planem zakupowym.
   pomiarów, obróbki i fizycznego gate'u P1.
 - `docs/p1-supplier-research-poland-2026-07-20.md` — datowana migawka cen,
   dostępności, blokery oraz gotowe zapytania ofertowe dla dostawy do Polski.
+- `docs/specs/public-repository-release.md` — kryteria przygotowania i audytu
+  publicznego wydania repozytorium.
 - `AGENTS.md` — instrukcje obowiązujące narzędzia kodujące.
 
 ## Środowisko developerskie
@@ -152,3 +224,10 @@ Build produkcyjny wraz z aktualnymi plikami JSON powstaje przez:
 cd visualizer
 npm run build
 ```
+
+## Licencja
+
+Kod i powiązana dokumentacja w tym repozytorium są udostępniane na licencji
+[MIT](LICENSE). Projekt jest demonstratorem R&D; licencja nie zmienia jawnie
+opisanych ograniczeń walidacji ani nie stanowi deklaracji przydatności projektu
+do zastosowań produkcyjnych lub związanych z bezpieczeństwem.

@@ -14,6 +14,7 @@ build/
 .idea/
 .vscode/
 .DS_Store
+.playwright-mcp/
 
 # Local career material, not part of the robot project.
 CV_Pawel_Orawiec-22.pdf
