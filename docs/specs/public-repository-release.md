@@ -106,6 +106,9 @@ Audit run on 2026-08-31 against the complete reachable local Git history:
 - the original commit identity used a personal Gmail address; the owner selected
   GitHub identity `PawelML` and
   `117289196+PawelML@users.noreply.github.com` for the rewritten public history;
+  all 48 commits existing at rewrite time were rewritten, the root tree and
+  commit count were preserved, and reachable refs plus subsequent commits contain
+  only the selected `noreply` identity;
 - no sensitive-looking filenames were found in reachable commits;
 - `gitleaks` is not installed, so the audit uses a documented high-confidence
   content-pattern fallback and cannot claim equivalent scanner coverage; that
@@ -118,6 +121,10 @@ Audit run on 2026-08-31 against the complete reachable local Git history:
 - the owner selected MIT and the standard license text is present in `LICENSE`;
 - no remote is configured, so the preparation changes cannot accidentally alter a
   public repository.
+
+A verified pre-rewrite Git bundle was stored outside the repository before old
+objects and reflogs were pruned. Its local path is intentionally omitted from the
+public document and is reported directly to the owner.
 
 Release-candidate verification on the same date:
 
