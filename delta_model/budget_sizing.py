@@ -15,8 +15,14 @@ from delta_model.drive_sizing import (
     calculate_refined_drive_load,
     solid_cylinder_axial_inertia,
 )
-from delta_model.dynamics import DESIGN_FACTOR, DynamicMassCase, evaluate_dynamic_case
-from delta_model.trajectory import generate_trajectory
+from delta_model.dynamics import (
+    DESIGN_FACTOR,
+    NOMINAL_MASS_CASE,
+    DynamicCaseResult,
+    DynamicMassCase,
+    evaluate_dynamic_case,
+)
+from delta_model.trajectory import Trajectory, generate_trajectory
 from delta_model.transmission import BeltCandidate, pitch_diameter_m, solve_open_belt_geometry
 
 BUDGET_TRANSMISSION_EFFICIENCY = 0.85
@@ -263,6 +269,24 @@ def _rms(times: tuple[float, ...], values: tuple[float, ...]) -> float:
     return math.sqrt(integral / (times[-1] - times[0]))
 
 
+def budget_output_load(
+    *,
+    payload_kg: float,
+    cycle_duration_s: float,
+) -> tuple[Trajectory, DynamicCaseResult]:
+    """Return the budget trajectory and its external load at the output joint."""
+
+    trajectory = generate_trajectory(cycle_time_scale=cycle_duration_s)
+    mass_case = DynamicMassCase(
+        case_id=f"budget_{payload_kg:.2f}kg",
+        payload_kg=payload_kg,
+        platform_tooling_kg=NOMINAL_MASS_CASE.platform_tooling_kg,
+        upper_arm_each_kg=NOMINAL_MASS_CASE.upper_arm_each_kg,
+        lower_assemblies_total_kg=NOMINAL_MASS_CASE.lower_assemblies_total_kg,
+    )
+    return trajectory, evaluate_dynamic_case(trajectory, mass_case)
+
+
 def assess_budget_operating_point(
     candidate: BudgetTransmissionCandidate,
     *,
@@ -271,15 +295,9 @@ def assess_budget_operating_point(
 ) -> BudgetEnvelopeResult:
     """Screen one operating point sample by sample against the proxy curve."""
 
-    trajectory = generate_trajectory(cycle_time_scale=cycle_duration_s)
-    mass_case = DynamicMassCase(
-        case_id=f"budget_{payload_kg:.2f}kg",
-        payload_kg=payload_kg,
-        platform_tooling_kg=0.250,
-        upper_arm_each_kg=0.200,
-        lower_assemblies_total_kg=0.300,
+    trajectory, dynamic = budget_output_load(
+        payload_kg=payload_kg, cycle_duration_s=cycle_duration_s
     )
-    dynamic = evaluate_dynamic_case(trajectory, mass_case)
     transmission = budget_transmission(candidate)
     trace = calculate_refined_drive_load(
         trajectory,
@@ -386,9 +404,9 @@ def budget_performance_envelope_document() -> dict[str, object]:
             "status_not_rejected_is_not_a_physical_pass": True,
         },
         "mass_baseline_kg": {
-            "platform_tooling": 0.250,
-            "upper_arm_each": 0.200,
-            "lower_assemblies_total": 0.300,
+            "platform_tooling": NOMINAL_MASS_CASE.platform_tooling_kg,
+            "upper_arm_each": NOMINAL_MASS_CASE.upper_arm_each_kg,
+            "lower_assemblies_total": NOMINAL_MASS_CASE.lower_assemblies_total_kg,
         },
         "transmission_candidates": [
             _candidate_document(candidate) for candidate in BUDGET_TRANSMISSION_CANDIDATES

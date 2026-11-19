@@ -61,6 +61,17 @@ def test_gates_tension_conversion_is_exactly_traceable() -> None:
     )
 
 
+def test_faster_point_governs_the_belt_load_and_meets_provisional_screen() -> None:
+    document = budget_mechanical_closure_document()
+    faster = document["faster_operating_point"]
+    assert isinstance(faster, dict)
+    assert faster["performance_point"]["payload_kg"] == 0.30
+    assert faster["performance_point"]["cycle_duration_s"] == 1.25
+    assert faster["belt_load"]["resultant_radial_load_n"] == pytest.approx(245.49, abs=0.01)
+    assert faster["shaft_screen"]["coupling_torque_factor"] == pytest.approx(1.41, abs=0.01)
+    assert faster["passes_provisional_screen"] is True
+
+
 def test_selected_output_bearings_have_capacity_and_speed_margin() -> None:
     screen = screen_output_bearings(
         belt_radial_load_n=234.41732472531334,

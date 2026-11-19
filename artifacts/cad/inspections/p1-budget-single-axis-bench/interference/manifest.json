@@ -19,7 +19,7 @@
       "focus": null,
       "hide": []
     },
-    "sizePx": 1024,
+    "sizePx": 600,
     "quality": "default",
     "renderStyle": "inspection",
     "edges": "off",
@@ -69,7 +69,7 @@
         182.9963606968522
       ]
     },
-    "volume": 2915932.982814076,
+    "volume": 2971368.4479859862,
     "params": [
       {
         "name": "Output angle",
@@ -390,7 +390,7 @@
       "skippedPairCount": 0,
       "pairLimitSkippedPairCount": 0,
       "timeBudgetSkippedPairCount": 0,
-      "exactCheckMs": 286.5,
+      "exactCheckMs": 291.8000000002794,
       "style": {
         "sourceOpacity": 0.22,
         "sourceColor": [
@@ -533,7 +533,7 @@
               0
             ],
             "max": [
-              240,
+              260,
               140,
               10
             ]
@@ -902,22 +902,27 @@
       "jointSweep": {
         "method": "cli-joint-sweep-v1",
         "status": "pass",
-        "expression": "output_angle=-45..80:6",
-        "rawExpression": "output_angle=-45..80:6",
+        "expression": "output_angle=-45..80:11",
+        "rawExpression": "output_angle=-45..80:11",
         "joint": "output_angle",
         "start": -45,
         "end": 80,
-        "sampleCount": 6,
+        "sampleCount": 11,
         "values": [
           -45,
+          -32.5,
           -20,
+          -7.5,
           5,
+          17.5,
           30,
+          42.5,
           55,
+          67.5,
           80
         ],
         "baseOverrides": {},
-        "poseCount": 6,
+        "poseCount": 11,
         "collidingPoseCount": 0,
         "maxCollisionCount": 0,
         "maxOverlapVolume": 0,
@@ -946,9 +951,9 @@
           {
             "index": 2,
             "joint": "output_angle",
-            "value": -20,
+            "value": -32.5,
             "overrides": {
-              "output_angle": -20
+              "output_angle": -32.5
             },
             "collisionCount": 0,
             "candidatePairCount": 25,
@@ -965,9 +970,9 @@
           {
             "index": 3,
             "joint": "output_angle",
-            "value": 5,
+            "value": -20,
             "overrides": {
-              "output_angle": 5
+              "output_angle": -20
             },
             "collisionCount": 0,
             "candidatePairCount": 25,
@@ -984,9 +989,9 @@
           {
             "index": 4,
             "joint": "output_angle",
-            "value": 30,
+            "value": -7.5,
             "overrides": {
-              "output_angle": 30
+              "output_angle": -7.5
             },
             "collisionCount": 0,
             "candidatePairCount": 25,
@@ -1003,9 +1008,9 @@
           {
             "index": 5,
             "joint": "output_angle",
-            "value": 55,
+            "value": 5,
             "overrides": {
-              "output_angle": 55
+              "output_angle": 5
             },
             "collisionCount": 0,
             "candidatePairCount": 25,
@@ -1022,6 +1027,101 @@
           {
             "index": 6,
             "joint": "output_angle",
+            "value": 17.5,
+            "overrides": {
+              "output_angle": 17.5
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-006/iso.png"
+              }
+            }
+          },
+          {
+            "index": 7,
+            "joint": "output_angle",
+            "value": 30,
+            "overrides": {
+              "output_angle": 30
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-007/iso.png"
+              }
+            }
+          },
+          {
+            "index": 8,
+            "joint": "output_angle",
+            "value": 42.5,
+            "overrides": {
+              "output_angle": 42.5
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-008/iso.png"
+              }
+            }
+          },
+          {
+            "index": 9,
+            "joint": "output_angle",
+            "value": 55,
+            "overrides": {
+              "output_angle": 55
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-009/iso.png"
+              }
+            }
+          },
+          {
+            "index": 10,
+            "joint": "output_angle",
+            "value": 67.5,
+            "overrides": {
+              "output_angle": 67.5
+            },
+            "collisionCount": 0,
+            "candidatePairCount": 25,
+            "testedPairCount": 25,
+            "skippedPairCount": 0,
+            "warnings": [],
+            "collisions": [],
+            "views": {
+              "iso": {
+                "path": "evidence/collisions/sweep/pose-010/iso.png"
+              }
+            }
+          },
+          {
+            "index": 11,
+            "joint": "output_angle",
             "value": 80,
             "overrides": {
               "output_angle": 80
@@ -1034,7 +1134,7 @@
             "collisions": [],
             "views": {
               "iso": {
-                "path": "evidence/collisions/sweep/pose-006/iso.png"
+                "path": "evidence/collisions/sweep/pose-011/iso.png"
               }
             }
           }

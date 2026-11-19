@@ -66,6 +66,41 @@ testem. Nie zmienia docelowych ilości zapisanych w BOM-ie.
 
 ## 4. Potwierdzenia przed płatnością
 
+### 4.0 Migawka cen jednej osi, 2026-11-19
+
+Modele i linki są w tabeli w sekcji 3. Odczytano publiczne ceny produktów
+oraz dopłatę za wybór magazynu Niemcy na stronie StepperOnline.
+Wartości poniżej nie obejmują opłat dostawy, przygotowania ani obróbki.
+
+| Pozycja | Ilość | Cena jednostkowa PLN | Razem PLN |
+|---|---:|---:|---:|
+| `3-CLYS30-V20`, 740,84 + 113,06 za magazyn Niemcy | 1 zestaw | 853,90 | 853,90 |
+| Surowe koło `20-5M-15/2F`, otwór bazowy Ø6 mm | 1 | 11,29 | 11,29 |
+| Surowe koło `60-5M-15/2`, otwór bazowy Ø8 mm | 1 | 57,49 | 57,49 |
+| Pas Optibelt `450-5M-15` | 1 | 49,45 | 49,45 |
+| Sprzęgło R+W `BKL/3/8/8` | 1 | 130,38 | 130,38 |
+| SKF `608-2RSH` CN | 2 | 14,64 | 29,28 |
+| SKF `6001-2RSH` CN | 2 | 18,39 | 36,78 |
+| **Pozycje EBMiA** | | | **314,67** |
+| **Razem katalogowe części P1** | | | **1 168,57** |
+
+EBMiA podaje dostawę od 10,90 PLN. Cena StepperOnline 853,90 PLN to suma
+ceny bazowej i widocznej dopłaty magazynu, do sprawdzenia w koszyku dla Polski.
+Dostawa z obu sklepów, VAT dostawy, warunki zwrotu, ewentualny koszt
+przygotowania części i końcowa dostępność pozostają do potwierdzenia.
+Doliczenie samej dopłaty 113,06 PLN do dotychczasowej obwiedni daje 5 983,15
+PLN z zachowaniem rezerwy 650 PLN, przy pozostałych pozycjach bez zmian.
+Do limitu 6 000 PLN zostaje wtedy 16,85 PLN ponad tę rezerwę.
+
+Do wyceny po otrzymaniu części pozostaje obróbka obu kół, dwa wały z
+podporami, poprawiona płyta 500 × 280 × 10 mm, mocowanie ramienia i ciężaru,
+osłona, odcięcie zasilania oraz wyposażenie pomiarowe według
+[specyfikacji próby](specs/p1-budget-bench-test.md). Koszt dodatkowych
+elementów stanowiska trzeba pokazać oddzielnie od części używanych później
+w demonstratorze. Przed zamówieniem zestawu potrzebne jest potwierdzenie
+dokładnej rewizji i ceny z dostawą oraz dopuszczalnych warunków pracy
+pary S-500-48 / CL57Y-V20 dla powtarzanych nawrotów.
+
 ### 4.1 Zestaw napędowy
 
 - [ ] Oferta wskazuje dokładnie StepperOnline `3-CLYS30-V20`.

@@ -1,0 +1,3 @@
+# Review the ForgeCAD source for changes to generated exchange files.
+artifacts/cad/*.pdf -diff
+artifacts/cad/*.step -diff

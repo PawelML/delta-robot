@@ -9,6 +9,7 @@ from delta_model.budget_sizing import (
     BUDGET_TRANSMISSION_CANDIDATES,
     SUPPORTED_INPUT_SHAFT_DIAMETER_M,
     SUPPORTED_INPUT_SHAFT_LENGTH_M,
+    BudgetEnvelopeResult,
     assess_budget_operating_point,
     budget_transmission,
 )
@@ -187,23 +188,18 @@ def screen_output_bearings(
     )
 
 
-def budget_mechanical_closure_document() -> dict[str, object]:
-    """Return deterministic mechanical evidence for the selected 20/60 drive."""
-
-    candidate = BUDGET_TRANSMISSION_CANDIDATES[0]
-    geometry = solve_open_belt_geometry(candidate.belt)
-    performance = assess_budget_operating_point(
-        candidate, payload_kg=0.50, cycle_duration_s=1.50
-    )
-    direct_rejected = (
-        performance.peak_belt_tension_difference_n > MOTOR_DYNAMIC_RADIAL_LIMIT_N
-    )
+def _screen_operating_point(
+    performance: BudgetEnvelopeResult,
+    *,
+    span_included_angle_rad: float,
+    ratio: float,
+) -> tuple[BeltRadialLoad, SupportedShaftScreen, OutputBearingScreen, bool]:
     load = calculate_belt_radial_load(
         effective_tension_difference_n=(
             DESIGN_FACTOR * performance.peak_belt_tension_difference_n
         ),
         installation_tension_per_span_n=GATES_5M_15_MIN_INSTALLATION_TENSION_N,
-        span_included_angle_rad=math.pi - geometry.small_wrap_angle_rad,
+        span_included_angle_rad=span_included_angle_rad,
     )
     shaft = screen_supported_input_shaft(
         radial_load_n=load.resultant_radial_load_n,
@@ -211,13 +207,10 @@ def budget_mechanical_closure_document() -> dict[str, object]:
     )
     output_bearings = screen_output_bearings(
         belt_radial_load_n=load.resultant_radial_load_n,
-        maximum_output_speed_rpm=performance.maximum_motor_speed_rpm
-        / candidate.belt.ratio,
+        maximum_output_speed_rpm=performance.maximum_motor_speed_rpm / ratio,
     )
-    transmission = budget_transmission(candidate)
     accepted = (
-        direct_rejected
-        and performance.status == "not_rejected_by_proxy"
+        performance.status == "not_rejected_by_proxy"
         and shaft.yield_safety_factor >= 2.0
         and shaft.bearing_rating_utilization < 0.10
         and shaft.coupling_torque_factor >= 1.30
@@ -225,12 +218,45 @@ def budget_mechanical_closure_document() -> dict[str, object]:
         and output_bearings.static_safety_factor >= 3.0
         and output_bearings.speed_utilization < 0.10
     )
+    return load, shaft, output_bearings, accepted
+
+
+def budget_mechanical_closure_document() -> dict[str, object]:
+    """Return deterministic mechanical evidence for the two selected 20/60 test points."""
+
+    candidate = BUDGET_TRANSMISSION_CANDIDATES[0]
+    geometry = solve_open_belt_geometry(candidate.belt)
+    performance = assess_budget_operating_point(
+        candidate, payload_kg=0.50, cycle_duration_s=1.50
+    )
+    faster_performance = assess_budget_operating_point(
+        candidate, payload_kg=0.30, cycle_duration_s=1.25
+    )
+    span_angle = math.pi - geometry.small_wrap_angle_rad
+    load, shaft, output_bearings, primary_accepted = _screen_operating_point(
+        performance, span_included_angle_rad=span_angle, ratio=candidate.belt.ratio
+    )
+    faster_load, faster_shaft, faster_bearings, faster_accepted = _screen_operating_point(
+        faster_performance, span_included_angle_rad=span_angle, ratio=candidate.belt.ratio
+    )
+    direct_rejected = (
+        performance.peak_belt_tension_difference_n > MOTOR_DYNAMIC_RADIAL_LIMIT_N
+    )
+    accepted = direct_rejected and primary_accepted and faster_accepted
+    transmission = budget_transmission(candidate)
     return {
         "schema": "delta-robot-budget-mechanical-closure/v1",
         "status": "digital_screen_passed_physical_p1_pending" if accepted else "rejected",
         "transmission_id": candidate.candidate_id,
         "geometry": asdict(geometry),
         "performance_point": asdict(performance),
+        "faster_operating_point": {
+            "performance_point": asdict(faster_performance),
+            "belt_load": asdict(faster_load),
+            "shaft_screen": asdict(faster_shaft),
+            "output_bearing_screen": asdict(faster_bearings),
+            "passes_provisional_screen": faster_accepted,
+        },
         "direct_motor_shaft": {
             "status": "rejected" if direct_rejected else "not_rejected",
             "motor_dynamic_radial_limit_n": MOTOR_DYNAMIC_RADIAL_LIMIT_N,
@@ -293,7 +319,8 @@ def budget_mechanical_closure_document() -> dict[str, object]:
             "freeze fits, keyway and axial retention after delivered-part measurement",
             "close output link/joint side loads and oscillating-duty fit after the "
             "actual arm/hub stack is defined",
-            "set and measure belt installation tension on the physical bench",
+            "check the selected belt's reversing capacity, then set and measure "
+            "its installation tension on the physical bench",
             "run physical P1 temperature, following-error and bus-voltage tests",
         ],
     }

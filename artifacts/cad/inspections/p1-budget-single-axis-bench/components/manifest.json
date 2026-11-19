@@ -19,7 +19,7 @@
       "focus": null,
       "hide": []
     },
-    "sizePx": 1024,
+    "sizePx": 900,
     "quality": "default",
     "renderStyle": "inspection",
     "edges": "off",
@@ -69,7 +69,7 @@
         182.9963606968522
       ]
     },
-    "volume": 2915932.982814076,
+    "volume": 2971368.4479859862,
     "params": [
       {
         "name": "Output angle",
@@ -431,7 +431,7 @@
               0
             ],
             "max": [
-              244,
+              260,
               140,
               170
             ]
@@ -624,7 +624,7 @@
               0
             ],
             "max": [
-              240,
+              260,
               140,
               10
             ]

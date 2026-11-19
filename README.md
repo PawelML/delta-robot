@@ -107,6 +107,10 @@ pomiaru rzeczywistej mechaniki.
   rysunków stanowiska.
 - `docs/p1-budget-bench-fabrication-package.md` — odpowiednik dla budżetowego
   stanowiska 20/60.
+- `docs/specs/p1-budget-bench-test.md` — obciążenie stanowiska, eksport
+  przebiegów momentu i kryteria pomiaru jednej osi.
+- `docs/p1-budget-procurement-checklist.md` — koszyk i potwierdzenia dla
+  jednej osi budżetowej.
 - `docs/p1-procurement-checklist.md` — kolejność ofert, zakupu jednej osi,
   pomiarów, obróbki i fizycznego gate'u P1.
 - `docs/p1-supplier-research-poland-2026-07-20.md` — datowana migawka cen,
@@ -174,9 +178,11 @@ Model aktywnej osi 20/60 znajduje się w
 - `artifacts/cad/p1-budget-single-axis-bench-report.pdf`;
 - `artifacts/cad/p1-budget-single-axis-bench.step`.
 
-Dokładny sweep zgłasza 0 kolizji w sześciu pozach, a testy integralności
-przechodzą dla -45°, 0° i +80°. Pasowania, rowki/retencja i otwory konkretnej
-serii pozostają do zamknięcia po pomiarze dostarczonych części.
+Sprawdzono 11 pozycji bez kolizji i dziewięć kombinacji położenia osi oraz
+regulacji pasa. Przekrój potwierdza zamknięte otwory mocujące na poprawionej
+płycie 500 × 280 × 10 mm. Pasowania, retencja i otwory zależne od konkretnej
+serii pozostają do zamknięcia po pomiarze dostarczonych części. Obciążenie i
+rejestrację próby opisuje [specyfikacja P1](docs/specs/p1-budget-bench-test.md).
 
 ## Referencyjne stanowisko przemysłowe CAD P1
 

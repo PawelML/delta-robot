@@ -1,7 +1,8 @@
 # Budget P1 single-axis bench — candidate fabrication package
 
-**Status:** layout validated; delivered-part fits and retention not released  
-**Date:** 2026-07-22
+**Status:** revised mounting layout verified in CAD, delivered-part fits and retention pending
+
+**Date:** 2026-11-19
 
 ## Controlled source and outputs
 
@@ -29,23 +30,30 @@
 | Output bearing | selected SKF 6001-2RSH CN, 12x28x8 mm; fits pending |
 | Output bearing-centre span | 60 mm |
 | Representative arm | 280 mm shaft centre to nominal load point |
-| Base plate | 480x280x10 mm |
+| Base plate | 500x280x10 mm, X = −240 to +260 mm |
+| Base anchor holes | Ø13 mm at X = −210/+180 mm and Y = ±115 mm |
+| Output support holes | Ø9 mm at X = 206/238 mm and Y = −120/−50 mm |
 | Adjustable carrier | 104x220x12 mm |
 
 The 0.5 kg visible mass is an envelope for bench loading, not proof that this
-is the final physical mass shape. The belt is a pitch-line envelope with a thin
+is the final physical mass shape. Use the
+[P1 load and measurement specification](specs/p1-budget-bench-test.md) for
+fixture inertia and time-domain load targets. The belt is a pitch-line envelope with a thin
 visual section; individual teeth and running tooth contact are intentionally
 not modelled.
 
 ## Validation evidence
 
 - `forgecad run` passes six verifications at output angles -45, 0 and +80 deg;
-- the assembly audit with exact geometry and an eight-step joint sweep reports
-  zero errors and zero warnings;
-- mechanical-integrity inspection passes at -45, 0 and +80 deg with zero
-  collisions;
-- the independent fit-interference bundle sweeps six poses from -45 to +80 deg
-  and reports 0/6 colliding poses;
+- mechanical-integrity inspection passes at −45°, 0° and +80° for carrier
+  adjustments −15, 0 and +3 mm with zero collisions in nine combinations;
+- the fit-interference bundle sweeps 11 poses from −45° to +80° at nominal
+  carrier adjustment and reports 0/11 colliding poses;
+- the [XY section at Z = 5 mm](../artifacts/cad/inspections/p1-budget-single-axis-bench/base-section/section.png)
+  shows the complete Ø9 mm outer bores with 17.5 mm of material before the
+  plate edge and 10.8 mm between the relocated right anchor bore and the
+  nearest carrier slot. The computed minimum gap from that anchor bore to
+  the adjacent output-support bore is 15.5 mm;
 - the physical-component inspection records the current envelope assembly.
 
 The mechanical-integrity graph reports six contact components because
@@ -58,6 +66,19 @@ The first plausible CAD layout did fail the exact sweep because the arm crossed
 the base at +80 deg. The output axis was moved to the bench edge and the arm
 plane outside the plate before the clean evidence above was generated. This is
 why the sweep is a release check rather than an optional visual review.
+The November audit found through-edge output mounting bores and a merged
+anchor bore in that layout. Extending the positive X edge and moving the two
+right anchors resolved those findings while preserving the axis datums.
+
+To reproduce the section and motion check with ForgeCAD 0.10.3:
+
+```bash
+bench=cad/2026/07/22/p1-budget-single-axis-bench/main.forge.js
+forgecad inspect section "$bench" --plane xy --offset 5 \
+  --ray 'outer-front:225,-120:265,-120' --ray 'outer-rear:225,-50:265,-50' \
+  --ray 'anchor-and-slot:140,-115:265,-115'
+forgecad inspect fit interference "$bench" --joint-sweep 'output_angle=-45..80:11' --size 600
+```
 
 ## Blocked fabrication details
 

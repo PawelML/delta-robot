@@ -41,8 +41,19 @@ const representativeMass = param('Representative test mass', 0.5, {
   unit: 'kg',
 });
 
-// The shoulder axis sits at the bench edge so the +80 deg arm pose clears the
-// plate instead of sweeping through it.
+const BASE_LEFT_X = -240;
+const BASE_RIGHT_X = 260;
+const BASE_WIDTH = BASE_RIGHT_X - BASE_LEFT_X;
+const BASE_DEPTH = 280;
+const BASE_THICKNESS = 10;
+const ANCHOR_X = [-210, 180];
+const ANCHOR_Y = [-115, 115];
+const ANCHOR_BORE_RADIUS = 6.5;
+const OUTPUT_MOUNT_X_OFFSETS = [-16, 16];
+const OUTPUT_MOUNT_Y = [-120, -50];
+const OUTPUT_MOUNT_BORE_RADIUS = 4.5;
+
+// Keep the output axis and the arm plane at their original clearance datums.
 const OUTPUT_X = 222;
 const INPUT_X = OUTPUT_X - NOMINAL_CENTRE - beltAdjustment;
 const NOMINAL_INPUT_X = OUTPUT_X - NOMINAL_CENTRE;
@@ -119,20 +130,21 @@ function carrierSlot(x, y) {
 }
 
 function basePlate() {
-  let plate = box(480, 280, 10);
+  let plate = box(BASE_WIDTH, BASE_DEPTH, BASE_THICKNESS)
+    .translate((BASE_LEFT_X + BASE_RIGHT_X) / 2, 0, 0);
   for (const localX of [-42, 42]) {
     for (const y of [-115, 65]) {
       plate = difference(plate, carrierSlot(NOMINAL_INPUT_X + localX, y));
     }
   }
-  for (const x of [OUTPUT_X - 16, OUTPUT_X + 16]) {
-    for (const y of [-120, -50]) {
-      plate = difference(plate, verticalHole(16, 4.5, x, y, -2));
+  for (const offsetX of OUTPUT_MOUNT_X_OFFSETS) {
+    for (const y of OUTPUT_MOUNT_Y) {
+      plate = difference(plate, verticalHole(16, OUTPUT_MOUNT_BORE_RADIUS, OUTPUT_X + offsetX, y, -2));
     }
   }
-  for (const x of [-210, 210]) {
-    for (const y of [-115, 115]) {
-      plate = difference(plate, verticalHole(16, 6.5, x, y, -2));
+  for (const x of ANCHOR_X) {
+    for (const y of ANCHOR_Y) {
+      plate = difference(plate, verticalHole(16, ANCHOR_BORE_RADIUS, x, y, -2));
     }
   }
   return plate
@@ -274,9 +286,9 @@ function outputSupport() {
   const blocks = OUTPUT_BEARING_Y.map((y) => bearingBlock(y, 44, 12, -125, 23, 14.02));
   const bridge = box(44, 72, 16).translate(0, -85, -125);
   let housingShape = union(blocks[0], blocks[1], bridge);
-  for (const x of [-16, 16]) {
-    for (const y of [-120, -50]) {
-      housingShape = difference(housingShape, verticalHole(20, 4.5, x, y, -128));
+  for (const x of OUTPUT_MOUNT_X_OFFSETS) {
+    for (const y of OUTPUT_MOUNT_Y) {
+      housingShape = difference(housingShape, verticalHole(20, OUTPUT_MOUNT_BORE_RADIUS, x, y, -128));
     }
   }
   const bearing = () => axialRing(8, 14, 6.05, 0)
@@ -435,7 +447,7 @@ bom(2, 'SKF 608-2RS/2RSH-envelope bearing, 8 x 22 x 7 mm');
 bom(1, 'C45 input jackshaft, 8 mm x 100 mm prototype blank');
 bom(2, 'SKF 6001-2RSH CN sealed output bearing, 12 x 28 x 8 mm; fits VERIFY AFTER DELIVERY');
 bom(1, 'C45 output shaft, 12 mm x 130 mm prototype blank');
-bom(1, '480 x 280 x 10 mm aluminium base plate');
+bom(1, `${BASE_WIDTH} x ${BASE_DEPTH} x ${BASE_THICKNESS} mm aluminium base plate`);
 bom(1, '104 x 220 x 12 mm adjustable input carrier');
 bom(1, 'fabricated input housing, 50 mm bearing-centre span');
 bom(1, 'fabricated output housing, 60 mm bearing-centre span');
@@ -459,7 +471,9 @@ dim([OUTPUT_X, ARM_Y, SHAFT_Z], [OUTPUT_X + armLength, ARM_Y, SHAFT_Z], {
   label: 'Representative arm radius',
   color: '#f4a041',
 });
-dim([-240, -140, 0], [240, -140, 0], { label: 'Base width 480 mm' });
+dim([BASE_LEFT_X, -BASE_DEPTH / 2, 0], [BASE_RIGHT_X, -BASE_DEPTH / 2, 0], {
+  label: `Base width ${BASE_WIDTH} mm`,
+});
 dim([NOMINAL_INPUT_X, 105, SHAFT_Z], [NOMINAL_INPUT_X - RELAXED_ADJUSTMENT, 105, SHAFT_Z], {
   label: 'Relaxed installation travel 15 mm',
   color: '#77d792',

@@ -1,8 +1,34 @@
 # P1 budget mechanical and cost closure
 
 **Status:** implementation specification  
-**Version:** 1.3
-**Date:** 2026-07-27
+**Version:** 1.4
+**Date:** 2026-11-19
+
+## November audit follow-up
+
+The budget bench keeps its transmission, shaft axes and motion limits. In
+the bench frame (mm), extend the right plate edge from X = 240 to X = 260
+and move the right pair of bench anchor holes from X = 210 to X = 180.
+Keep Y = ±115 for the anchors and the four output-support bores at
+X = 206/238, Y = −120/−50. The resulting plate is 500 × 280 × 10 mm.
+This preserves the shaft centre datums and the input carrier travel.
+
+The plate acceptance checks are complete through bores, at least 9 mm of
+material between the affected bores, carrier slots and edges, and no
+unexpected interpart collision through the accepted joint travel and carrier
+adjustment range at the sampled poses. The 9 mm layout criterion is one
+output-support bore diameter. Fastener preload, material and final hole
+fits still require fabrication release under the existing procurement rules.
+
+For the load and measurement procedure, use the
+[budget bench test specification](p1-budget-bench-test.md).
+The closure generator now applies the same mechanical screen to both planned
+points and records the fast point under `faster_operating_point`. At
+0.30 kg / 1.25 s the unfactored tension difference is 101.40 N, the
+factored radial load is 245.49 N, the provisional yield factor is 2.81, and
+the coupling factor is 1.41. Both points meet the existing numerical
+thresholds. These checks use the Gates preload proxy. Use the exact belt
+manufacturer's reversing-duty capacity and tension guidance for the build.
 
 ## 1. Problem and decision boundary
 

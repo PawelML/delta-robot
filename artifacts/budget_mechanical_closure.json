@@ -5,6 +5,66 @@
     "reason": "effective tension alone exceeds motor limit before installation tension",
     "status": "rejected"
   },
+  "faster_operating_point": {
+    "belt_load": {
+      "effective_tension_difference_n": 131.8178070674665,
+      "installation_tension_per_span_n": 60.05099180601675,
+      "resultant_radial_load_n": 245.4871006719768,
+      "slack_span_tension_n": 60.05099180601675,
+      "span_included_angle_rad": 0.5332712694280062,
+      "tight_span_tension_n": 191.86879887348326
+    },
+    "output_bearing_screen": {
+      "bearing_count": 2,
+      "bearing_span_m": 0.06,
+      "belt_radial_load_n": 245.4871006719768,
+      "belt_reaction_per_bearing_n": 122.7435503359884,
+      "dynamic_rating_n": 5400.0,
+      "dynamic_rating_utilization": 0.02273028709925711,
+      "limiting_speed_rpm": 17000.0,
+      "maximum_output_speed_rpm": 52.8766519540334,
+      "speed_utilization": 0.003110391291413729,
+      "static_rating_n": 2360.0,
+      "static_safety_factor": 19.227079496559487
+    },
+    "passes_provisional_screen": true,
+    "performance_point": {
+      "cycle_duration_s": 1.25,
+      "maximum_motor_acceleration_rad_s2": 178.42362899504306,
+      "maximum_motor_speed_rpm": 158.6299558621002,
+      "payload_kg": 0.3,
+      "peak_belt_tension_difference_n": 101.39831312882039,
+      "required_peak_torque_nm": 2.120926588345789,
+      "required_rms_torque_nm_by_axis": [
+        0.7326574266263441,
+        0.9829906347402031,
+        0.9829906347402031
+      ],
+      "speed_evidence_exceeded": false,
+      "status": "not_rejected_by_proxy",
+      "transmission_id": "catalogue_20_60_450",
+      "worst_axis": 2,
+      "worst_curve_utilization": 0.9343288935444004,
+      "worst_time_s": 0.254
+    },
+    "shaft_screen": {
+      "bearing_dynamic_rating_n": 3320.0,
+      "bearing_rating_utilization": 0.03697094889638205,
+      "bearing_span_m": 0.05,
+      "coupling_rated_torque_nm": 3.0,
+      "coupling_torque_factor": 1.4144761145834106,
+      "design_torque_nm": 2.120926588345789,
+      "factored_von_mises_stress_pa": 106722602.45377547,
+      "maximum_bending_moment_nm": 3.0685887583997102,
+      "nominal_bending_stress_pa": 61047633.651941955,
+      "nominal_torsional_shear_pa": 21097246.90439136,
+      "provisional_yield_strength_pa": 300000000.0,
+      "radial_load_n": 245.4871006719768,
+      "reaction_per_bearing_n": 122.7435503359884,
+      "shaft_diameter_m": 0.008,
+      "yield_safety_factor": 2.8110259036265384
+    }
+  },
   "geometry": {
     "centre_distance_m": 0.12080646689509073,
     "large_pitch_diameter_m": 0.0954929658551372,
@@ -37,7 +97,7 @@
     "measure delivered pulley, shaft, bearing and coupling dimensions before fabrication release",
     "freeze fits, keyway and axial retention after delivered-part measurement",
     "close output link/joint side loads and oscillating-duty fit after the actual arm/hub stack is defined",
-    "set and measure belt installation tension on the physical bench",
+    "check the selected belt's reversing capacity, then set and measure its installation tension on the physical bench",
     "run physical P1 temperature, following-error and bus-voltage tests"
   ],
   "schema": "delta-robot-budget-mechanical-closure/v1",
