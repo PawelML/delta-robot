@@ -92,6 +92,13 @@ Doliczenie samej dopłaty 113,06 PLN do dotychczasowej obwiedni daje 5 983,15
 PLN z zachowaniem rezerwy 650 PLN, przy pozostałych pozycjach bez zmian.
 Do limitu 6 000 PLN zostaje wtedy 16,85 PLN ponad tę rezerwę.
 
+**Zamówienie 2026-11-21:** zestaw `3-CLYS30-V20` kupiono za 932,33 PLN
+brutto z dostawą do Polski. To o 191,49 PLN więcej niż pozycja BOM-u
+`drive_kit_3axis` (740,84 PLN): 113,06 PLN to dopłata za magazyn Niemcy, a
+78,43 PLN to dostawa i inne opłaty koszyka. Dostawę można pokryć z pozycji
+„Dostawy do Polski” (200 PLN), dopłatę magazynową z rezerwy 650 PLN.
+Generator BOM-u nie został jeszcze zaktualizowany o cenę faktyczną.
+
 Do wyceny po otrzymaniu części pozostaje obróbka obu kół, dwa wały z
 podporami, poprawiona płyta 500 × 280 × 10 mm, mocowanie ramienia i ciężaru,
 osłona, odcięcie zasilania oraz wyposażenie pomiarowe według
@@ -103,14 +110,14 @@ pary S-500-48 / CL57Y-V20 dla powtarzanych nawrotów.
 
 ### 4.1 Zestaw napędowy
 
-- [ ] Oferta wskazuje dokładnie StepperOnline `3-CLYS30-V20`.
-- [ ] Potwierdzono trzy silniki `23HS40-5004D-E1000`.
-- [ ] Potwierdzono trzy sterowniki `CL57Y-V20`, ich rewizję i instrukcję.
-- [ ] Potwierdzono zasilacz 48 V / 500 W oraz zawartość zestawu przewodów.
-- [ ] Zapisano cenę brutto z dostawą do Polski, magazyn wysyłkowy i termin.
-- [ ] Zapisano warunki gwarancji, zwrotu oraz procedurę dla uszkodzonej części
+- [x] Oferta wskazuje dokładnie StepperOnline `3-CLYS30-V20`.
+- [x] Potwierdzono trzy silniki `23HS40-5004D-E1000`.
+- [x] Potwierdzono trzy sterowniki `CL57Y-V20`, ich rewizję i instrukcję.
+- [x] Potwierdzono zasilacz 48 V / 500 W oraz zawartość zestawu przewodów.
+- [x] Zapisano cenę brutto z dostawą do Polski, magazyn wysyłkowy i termin.
+- [x] Zapisano warunki gwarancji, zwrotu oraz procedurę dla uszkodzonej części
   niepodzielnego zestawu.
-- [ ] Uzyskano zgodną charakterystykę moment--prędkość dla tego sterownika i
+- [x] Uzyskano zgodną charakterystykę moment--prędkość dla tego sterownika i
   napięcia albo zachowano status `proxy_only`; brak krzywej nie jest ukryty.
 
 ### 4.2 Koło wejściowe HTD 20T
@@ -121,7 +128,7 @@ podaje 20 zębów, podziałkę 5 mm, szerokość pasa 15 mm, średnicę podział
 otwór bazowy Ø6 mm. CAD odwzorowuje te gabaryty. Wymagane wyjście projektu to
 otwór Ø8 mm i jawnie wybrana retencja na osobno podpartym wałku.
 
-- [ ] Potwierdzono dokładny wariant, materiał, liczbę kołnierzy i aktualny
+- [x] Potwierdzono dokładny wariant, materiał, liczbę kołnierzy i aktualny
   rysunek.
 - [ ] Wybrano jedną ścieżkę: koło z otworem bazowym Ø6 mm do obróbki **albo**
   identyfikowalny wariant fabrycznie wykończony na Ø8 mm.
@@ -249,8 +256,8 @@ przenoszących moment.
 
 | Dowód | Plik, numer oferty lub data |
 |---|---|
-| Koszyk StepperOnline z dostawą i rewizjami | |
-| Potwierdzenie instrukcji/krzywej `CL57Y-V20` | |
+| Koszyk StepperOnline z dostawą i rewizjami | Zamówiono 2026-11-21: `3-CLYS30-V20`, magazyn DE, 932,33 PLN brutto z dostawą do Polski; dostawa planowana ok. 2026-11-28 |
+| Potwierdzenie instrukcji/krzywej `CL57Y-V20` | 2026-11-21: brak krzywej dla `CL57Y-V20` / 48 V; zachowano `proxy_only` (krzywa CL57T-V41 / 36 V), weryfikacja na stanowisku P1 |
 | Oferta i karta koła 20T | |
 | Oferta i karta koła 60T | |
 | Oferta pasa, sprzęgła i łożysk wejściowych | |
